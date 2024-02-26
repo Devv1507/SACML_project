@@ -1,2 +1,2 @@
 # SACML_project
-"Sistema de Automatización de Créditos basado en modelos de Machine Learning" (SACML) is a career project for SENA ADSO. 
+"Sistema de Asignación de Créditos basado en herramientas de Machine Learning" (SACML) is a career project for SENA ADSO. 
