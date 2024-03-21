@@ -1,5 +1,3 @@
-//import { User } from '../db/models/User.js';
-//import { Role } from '../db/models/Role.js';
 const models = require('../models');
 
 class UserServices {

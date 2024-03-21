@@ -25,7 +25,7 @@ const getOneUserById = async (req, res) => {
     res.status(500).send({ success: false, message: error.message });
   }
 };
-// function to add an user
+// function to add an user / sign up
 const addOneUser = async (req, res) => {
   const { body } = req;
   console.log(body);
@@ -76,6 +76,7 @@ module.exports = {
   getAllUsers,
   getOneUserById,
   addOneUser,
-  updateOneUserById
+  updateOneUserById,
+  deleteOneUserById
 };
 
