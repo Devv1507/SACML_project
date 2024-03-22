@@ -13,7 +13,7 @@ app.use(express.json()); // using body parser functionality to read and parse JS
 // Import routes
 const v1UserRouter = require('./v1/routes/usersRoutes.js'); // import the users router version 1
 const v1RoleRouter = require('./v1/routes/rolesRoutes.js'); // improt the roles router version 1
-const v1AuthRouter = require('./v1/routes/auth.user.js');
+const v1AuthRouter = require('./v1/routes/auth.js');
  // using the routers created
 app.use('/api/v1/users', v1UserRouter);
 app.use('/api/v1/roles', v1RoleRouter);

@@ -28,7 +28,6 @@ const getOneUserById = async (req, res) => {
 // function to add an user / sign up
 const addOneUser = async (req, res) => {
   const { body } = req;
-  console.log(body);
   if (
     !body.name ||
     !body.surname ||
