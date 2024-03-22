@@ -40,22 +40,23 @@ const signUp = async (req, res) => {
 
 const logIn = async (req, res) => {
   try {
-    const user = await models.Account.findOne({
+    const account = await models.Account.findOne({
       where: { email: req.body.email },
     }); // this not gonna run
-    if (!user) {
+    if (!account) {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
     const isPasswordValid = await bcrypt.compare(
       req.body.password,
-      user.password
+      account.password
     );
     if (!isPasswordValid) {
       return res.status(401).json({ message: 'Password not valid' });
     }
     const token = await jwt.sign(
-      { email: user.email, userId: user.id },
-      process.env.JWT_KEY
+      { email: account.email, accountId: account.id },
+      process.env.TOKEN_SECRET,
+      { expiresIn: '1800m' } //token expiry
     );
     res.status(200).json({ message: 'Authentication successful', token });
   } catch (error) {
