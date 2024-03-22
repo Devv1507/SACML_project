@@ -1,3 +1,2 @@
 # Ignore fields related with API keys and database credentials
 *.env
-node_modules/
