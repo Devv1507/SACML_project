@@ -4,10 +4,11 @@ const router = Router();
 const authController = require('../../controllers/authController');
 const authorize = require('../../middleware/authorize');
 
-// user authentication
-router.post('/sign-up', authController.signUp);
-router.post('/login', authController.logIn);
-router.get('/', authorize.validate, authController.getAll);
-// router.post('/authenticate', authenticate);     // public route     
+// User account sign up and login
+router.post('/sign-up', authController.signUp); // public route     
+router.post('/login', authController.logIn);    // public route
+
+// Authentication to get all user account information
+router.get('/', authorize.validate, authController.getAll); // private route     
 
 module.exports = router;

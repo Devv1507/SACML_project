@@ -1,6 +1,4 @@
-//import app from './app.js';
-//import {sequelize} from './db/connect/database.js';
-
+//importing default app from './app.js';
 const app = require('./app.js');
 //const {sequelize} = require('./db/connect/database.js');
 

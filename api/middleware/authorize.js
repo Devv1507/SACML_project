@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 
-// validation middleware
+// validation middleware, simply checks if the provided token is valid 
+//(token is different for every session login by the user and expires after 1800 minutes)
 const validate = (req, res, next) => {
     try{
         const token = req.headers.authorization.split(" ")[1]; 

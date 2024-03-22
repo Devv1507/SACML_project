@@ -1,14 +1,13 @@
 // importing the modules and assigning them in constants
-//import express from 'express';
-//import cors from 'cors';
 const express = require('express');
 const cors = require('cors');
 
-
-const app = express();  // assigning the express function to use cors module and others
+// assigning the express function to use cors module and others
+const app = express();  
 // Middlewares
 app.use(cors());
-app.use(express.json()); // using body parser functionality to read and parse JSON in req.body
+// using body parser functionality to read and parse JSON in req.body
+app.use(express.json()); 
 
 // Import routes
 const v1UserRouter = require('./v1/routes/usersRoutes.js'); // import the users router version 1

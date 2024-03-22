@@ -1,7 +1,5 @@
-//const dotenv = (require('dotenv').config()).parsed;
-//import dotenv from 'dotenv';
-//(dotenv.config()).parsed;
-const dotenv = require('dotenv');
+// This file setS the configuration for database connection
+const dotenv = require('dotenv'); // required module to use environment variables
 (dotenv.config()).parsed;
 
 const config = {
@@ -18,11 +16,5 @@ const config = {
       }
     }
 };
-
-/* export default {
-  development: config,
-  test: config,
-  production: config,
-}; */
 
 module.exports = { development: config, test: config, production: config };

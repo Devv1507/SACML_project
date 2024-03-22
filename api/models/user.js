@@ -1,5 +1,7 @@
 'use strict';
-
+// This is another way to set the models, besides '...extends Model'
+// I prefer to use this sequelize.define() for less code lines
+// and the ease of establishing the associations
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
     name: DataTypes.STRING,
@@ -18,37 +20,3 @@ module.exports = (sequelize, DataTypes) => {
   };
   return User;
 };
-
-/* 
-const {
-  Model
-} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
-  class User extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-
-    static associate({Role}) {
-      // define association here
-      this.belongsTo(Role, {
-        foreignKey: 'roleId',
-        targetKey: 'id'
-    });
-    }
-  }
-  User.init({
-    name: DataTypes.STRING,
-    surname: DataTypes.STRING,
-    address: DataTypes.STRING,
-    email: DataTypes.STRING,
-    roleId: DataTypes.INTEGER
-  }, {
-    sequelize,
-    modelName: 'User',
-    freezeTableName: true
-  });
-  return User;
-};
- */

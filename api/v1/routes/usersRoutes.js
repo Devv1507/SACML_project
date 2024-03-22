@@ -1,10 +1,6 @@
 const {Router} = require('express');
 const userController = require('../../controllers/userController.js');
 
-//import {Router} from 'express';
-//import userController from '../../controllers/userController.js'
-//import {addOneRole} from '../../controllers/roleController.js'
-
 // assignning the instance of Router class
 const router = Router();
 // our routes for user schema (this is adding to root route /api/v1/users)
