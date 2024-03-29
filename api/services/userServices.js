@@ -9,7 +9,7 @@ class UserServices {
     };
 
     async getUserById(id) {
-        const res = await models.User.findByPK(id);
+        const res = await models.User.findByPk(id);
         return res;
     };
 
@@ -25,7 +25,7 @@ class UserServices {
         return res;
     };
 
-    async deleteUserById() {
+    async deleteUserById(id) {
         const log = await this.findOne(id);
         await log.destroy();
         return {deleted : true};

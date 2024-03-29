@@ -7,7 +7,8 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     surname: DataTypes.STRING,
     address: DataTypes.STRING,
-    email: DataTypes.STRING
+    phone: DataTypes.STRING
+/*     email: DataTypes.STRING */
   }, {
     timestamps: true,
   });
@@ -16,6 +17,14 @@ module.exports = (sequelize, DataTypes) => {
     User.belongsTo(models.Role, {
       foreignKey: "roleId",
       targetKey: "id"
+    });
+    User.belongsTo(models.Account, {
+      foreignKey: "email",
+      targetKey: "email"
+    });
+    User.belongsTo(models.City, {
+      foreignKey: "city",
+      targetKey: "name"
     });
   };
   return User;

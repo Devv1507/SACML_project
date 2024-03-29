@@ -1,6 +1,7 @@
 // importing the service class created to get connection to model layer in a indirect way
 const UserServices = require('../services/userServices.js');
 const service = new UserServices();
+const models = require('../models');
 
 // function to get all users
 const getAllUsers = async (req, res) => {
@@ -28,20 +29,26 @@ const getOneUserById = async (req, res) => {
 // function to add an user / sign up
 const addOneUser = async (req, res) => {
   const { body } = req;
+  // Get the associated Account email
+  const { email } = await models.Account.findOne({ where: { name: body.name } });
   if (
     !body.name ||
     !body.surname ||
-    !body.id ||
     !body.address ||
+    !body.phone
     //!body.city ||
     //!body.department ||
-    !body.email
-    //!body.phone
   ) {
     return res.status(400).send('One of the fields is missing in the data');
   }
   try {
-    await service.addNewUser(body);
+    await service.addNewUser({
+      name: body.name,
+      surname: body.surname,
+      address: body.address,
+      email: email, // Set the email from the Account model
+      roleId: 1
+    });
     res.json({ success: true, message: 'User added succesfully' });
   } catch (error) {
     console.log(error);

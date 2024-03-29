@@ -31,7 +31,7 @@ const signUp = async (req, res) => {
       password: hash,
     };
     await models.Account.create(newAccount);
-    res.status(201).json({ message: 'User created successfully' });
+    res.status(201).json({ message: 'Account created successfully' });
   } catch (error) {
     console.error(error); // Log the error for debugging
     res.status(500).json({ message: 'Error creating user' }); // More user-friendly error message
@@ -42,7 +42,7 @@ const logIn = async (req, res) => {
   try {
     const account = await models.Account.findOne({
       where: { email: req.body.email },
-    }); // this not gonna run
+    });
     if (!account) {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
@@ -56,9 +56,10 @@ const logIn = async (req, res) => {
     const token = await jwt.sign(
       { email: account.email, accountId: account.id },
       process.env.TOKEN_SECRET,
-      { expiresIn: '1800m' } //token expiry
+      { expiresIn: '1800m' } //token expiration
     );
     res.status(200).json({ message: 'Authentication successful', token });
+    //res.cookie("token", token, { httpOnly: true, secure: true } ).status(200).send({token});
   } catch (error) {
     console.error(error); // Log the error for debugging
     res.status(500).json({ message: 'Something went wrong' });
