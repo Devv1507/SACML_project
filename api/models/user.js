@@ -26,6 +26,11 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: "city",
       targetKey: "name"
     });
+    User.hasMany(models.CreditRequest, {
+      foreignKey: "userId",
+      sourceKey: "id",
+      onDelete: 'cascade'
+    });
   };
   return User;
 };

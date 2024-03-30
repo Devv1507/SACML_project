@@ -21,6 +21,32 @@ const signUp = async (req, res) => {
 
     // Create user
     const { body } = req;
+
+    //Get account from database with same name if any
+    const validateAccountName = async (name) => {
+      const account = await models.Account.findOne({ name });
+      return account ? false : true;
+    };
+
+    // Validate the name
+    const nameNotTaken = await validateAccountName(body.name);
+    if (!nameNotTaken) {
+      return res.status(400).json({
+        message: `Account name is already taken.`,
+      });
+    }
+    //Get account from database with same email if any
+    const validateEmail = async (email) => {
+      const account = await models.Account.findOne({ email });
+      return account ? false : true;
+    };
+    // Validate the email
+    const emailNotRegistered = await validateEmail(body.email);
+    if (!emailNotRegistered) {
+      return res.status(400).json({
+        message: `Email is already registered.`,
+      });
+    }
     // Not null constrain
     if (!body.name || !body.email || !body.password) {
       return res.status(400).send('One of the fields is missing in the request');
@@ -40,12 +66,26 @@ const signUp = async (req, res) => {
 
 const logIn = async (req, res) => {
   try {
+    // Validate the name
     const account = await models.Account.findOne({
-      where: { email: req.body.email },
+      where: { email: req.body.email }
     });
     if (!account) {
-      return res.status(401).json({ message: 'Invalid credentials' });
+      return res
+        .status(404)
+        .json({
+          message: 'Account name is not found. Invalid login credentials',
+        });
     }
+    // We will check the if the account is logging in via the correct route
+    /* if (account.role !== role) {
+      return res.status(403).json({
+        message: 'Please make sure you are logging in from the right portal.',
+        success: false,
+      });
+    } */
+
+    // Checking if the password match
     const isPasswordValid = await bcrypt.compare(
       req.body.password,
       account.password
@@ -53,6 +93,7 @@ const logIn = async (req, res) => {
     if (!isPasswordValid) {
       return res.status(401).json({ message: 'Password not valid' });
     }
+    // If the password match, sign the token and give it to the employee
     const token = await jwt.sign(
       { email: account.email, accountId: account.id },
       process.env.TOKEN_SECRET,

@@ -9,6 +9,6 @@ router.post('/sign-up', authController.signUp); // public route
 router.post('/login', authController.logIn);    // public route
 
 // Authentication to get all user account information
-router.get('/:id', authorize.validate, authorize.checkRole([2]), authController.getAll); // private route     
+router.get('/:id', authorize.validate, authorize.checkRole([1]), authController.getAll); // private route     
 
 module.exports = router;

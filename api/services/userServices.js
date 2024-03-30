@@ -15,18 +15,17 @@ class UserServices {
 
     async addNewUser(data) {
         const res = await models.User.create(data);
-        console.log(res);
         return res;
     };
 
     async updateUserById(id, data) {
-        const log = await this.findOne(id);
+        const log = await models.User.findByPk(id);
         const res = await log.update(data);
         return res;
     };
 
     async deleteUserById(id) {
-        const log = await this.findOne(id);
+        const log = await models.User.findByPk(id);
         await log.destroy();
         return {deleted : true};
     };

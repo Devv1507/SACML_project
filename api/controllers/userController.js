@@ -19,42 +19,65 @@ const getAllUsers = async (req, res) => {
 // function to get a particular user by id
 const getOneUserById = async (req, res) => {
   try {
-    const { id } = req.params; // may consider parseInt
+    const { id } = req.params;
     const response = await service.getUserById(id);
     res.json(response);
   } catch (error) {
     res.status(500).send({ success: false, message: error.message });
   }
 };
-// function to add an user / sign up
+// function to add an user
 const addOneUser = async (req, res) => {
   const { body } = req;
-  // Get the associated Account email
-  const { email } = await models.Account.findOne({ where: { name: body.name } });
-  if (
-    !body.name ||
-    !body.surname ||
-    !body.address ||
-    !body.phone
-    //!body.city ||
-    //!body.department ||
-  ) {
-    return res.status(400).send('One of the fields is missing in the data');
+  // Validate fields on server-side
+  const errors = [];
+  if (!body.name) {
+    errors.push({ text: 'Please add a name' });
   }
-  try {
-    await service.addNewUser({
-      name: body.name,
-      surname: body.surname,
-      address: body.address,
-      email: email, // Set the email from the Account model
-      roleId: 1
-    });
-    res.json({ success: true, message: 'User added succesfully' });
-  } catch (error) {
-    console.log(error);
-    res.status(500).send({ success: false, message: error.message });
+  if (!body.surname) {
+    errors.push({ text: 'Please add a surname' });
+  }
+  if (!body.address) {
+    errors.push({ text: 'Please add address information' });
+  }
+  if (!body.phone) {
+    errors.push({ text: 'Please add a phone number' });
+  }
+  if (!body.city) {
+    errors.push({ text: 'Please add your city of residence' });
+  }
+  // Check for errors first
+  if (errors.length > 0) {
+    return res.status(400).json({succes: false, message: errors});
+  } else {
+    try {
+      // Get the associated account email
+      const account = await models.Account.findOne({
+        where: { name: body.name },
+        attributes: {
+          exclude: ['password'],
+        },
+      });
+      // Check the name provided is correct
+      if (!account) {
+        return res.status(404).json({success: false,
+           message: 'Provided name doesnt match with any registered account'});
+      }
+      // Add the new user information with its respectived account email
+      await service.addNewUser({
+        ...body,
+        email: account.email, // Set the email from the Account model
+        roleId: 1,
+      });
+      // Final response, if all steps correct
+      res.json({ success: true, message: 'User added succesfully' });
+    } catch (error) {
+      console.log(error);
+      res.status(500).send({ success: false, message: error.message });
+    }
   }
 };
+
 // function to update a particular user by id
 const updateOneUserById = async (req, res) => {
   try {
@@ -73,16 +96,15 @@ const deleteOneUserById = async (req, res) => {
     const response = await service.deleteUserById(id);
     res.json(response);
   } catch (error) {
+    console.log(error);
     res.status(500).send({ success: false, message: error.message });
   }
 };
-
 
 module.exports = {
   getAllUsers,
   getOneUserById,
   addOneUser,
   updateOneUserById,
-  deleteOneUserById
+  deleteOneUserById,
 };
-
