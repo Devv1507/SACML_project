@@ -48,33 +48,36 @@ const addOneUser = async (req, res) => {
   }
   // Check for errors first
   if (errors.length > 0) {
-    return res.status(400).json({succes: false, message: errors});
-  } else {
-    try {
-      // Get the associated account email
-      const account = await models.Account.findOne({
-        where: { name: body.name },
-        attributes: {
-          exclude: ['password'],
-        },
-      });
-      // Check the name provided is correct
-      if (!account) {
-        return res.status(404).json({success: false,
-           message: 'Provided name doesnt match with any registered account'});
-      }
-      // Add the new user information with its respectived account email
-      await service.addNewUser({
-        ...body,
-        email: account.email, // Set the email from the Account model
-        roleId: 1,
-      });
-      // Final response, if all steps correct
-      res.json({ success: true, message: 'User added succesfully' });
-    } catch (error) {
-      console.log(error);
-      res.status(500).send({ success: false, message: error.message });
+    return res.status(400).json({ succes: false, message: errors });
+  }
+  try {
+    // Get the associated account email
+    const account = await models.Account.findOne({
+      where: { name: body.name },
+      attributes: {
+        exclude: ['password'],
+      },
+    });
+    // Check the name provided is correct
+    if (!account) {
+      return res
+        .status(404)
+        .json({
+          success: false,
+          message: 'Provided name doesnt match with any registered account',
+        });
     }
+    // Add the new user information with its respectived account email
+    await service.addNewUser({
+      ...body,
+      email: account.email, // Set the email from the Account model
+      roleId: 1,
+    });
+    // Final response, if all steps correct
+    res.json({ success: true, message: 'User added succesfully' });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ success: false, message: error.message });
   }
 };
 

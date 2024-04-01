@@ -7,8 +7,8 @@ const authorize = require('../../middleware/authorize');
 router.post('/', authorize.validate, creditRequestController.addCreditRequest);
 router.get('/:id', authorize.validate, authorize.checkRole([1]), creditRequestController.getCreditRequestOfUser);
 router.get('/', authorize.validate, creditRequestController.getAllCreditRequests);
-router.put('/:id', authorize.validate, authorize.checkRole([1]), creditRequestController.updateOneUserById);   
-router.delete('/:id', authorize.validate, authorize.checkRole([1]), creditRequestController.deleteOneUserById);
+router.put('/:id', authorize.validate, authorize.checkRole([1]), creditRequestController.updateCreditRequestById);   
+router.delete('/:id', authorize.validate, authorize.checkRole([1]), creditRequestController.deleteCredetRequestById);
 
 
 module.exports = router;

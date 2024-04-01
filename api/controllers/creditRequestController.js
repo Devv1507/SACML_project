@@ -3,9 +3,9 @@ const models = require('../models');
 // function to get all credit request
 const getAllCreditRequests = async (req, res) => {
   try {
-    const response = await models.CreditRequest.findAll();
+    const allCreditRequests = await models.CreditRequest.findAll();
     if (response) {
-      res.json({ success: true, message: response });
+      res.json({ success: true, message: allCreditRequests });
     } else {
       res.status(400).json('Credit request not found');
     }
@@ -17,8 +17,8 @@ const getAllCreditRequests = async (req, res) => {
 const getCreditRequestOfUser = async (req, res) => {
   try {
     const { id } = req.params; 
-    const response = await models.CreditRequest.findOne({where: { userId : id}});
-    res.json(response);
+    const creditRequest = await models.CreditRequest.findOne({where: { userId : id}});
+    res.json(creditRequest);
   } catch (error) {
     res.status(500).send({ success: false, message: error.message });
   }
@@ -26,17 +26,24 @@ const getCreditRequestOfUser = async (req, res) => {
 // function to add a credit request
 const addCreditRequest = async (req, res) => {
   const { body } = req;
-  console.log(req.userData);
   const {email} = req.userData;
   const user = await models.User.findOne({ where: { email: email} });
   const userId = user.id;
   console.log(user);
-  if (
-    !body.amount ||
-    !body.description ||
-    !body.creditHistory 
-  ) {
-    return res.status(400).send('One of the fields is missing in the data');
+  // Validate fields on server-side
+  const errors = [];
+  if (!body.amount) {
+    errors.push({ text: 'Please add an amount' });
+  }
+  if (!body.description) {
+    errors.push({ text: 'Please add a description' });
+  }
+  if (!body.creditHistory) {
+    errors.push({ text: 'Please add some of your credit history' });
+  }
+  // Check for errors
+  if (errors.length > 0) {
+    return res.status(400).json({succes: false, message: errors});
   }
   try {
     await models.CreditRequest.create(
@@ -50,33 +57,25 @@ const addCreditRequest = async (req, res) => {
     res.status(500).send({ success: false, message: error.message });
   }
 };
-
-
-
-
-
-
-
-
-
-
 // function to update a particular user by id
-const updateOneUserById = async (req, res) => {
+const updateCreditRequestById = async (req, res) => {
   try {
-    const { id } = req.params; // may consider parseInt
+    const { id } = req.params;
     const { body } = req;
-    const response = await service.updateUserById(id, body);
-    res.json(response);
+    const targetCreditRequest = await models.CreditRequest.findByPk(id);
+    const updatedCreditRequest = await targetCreditRequest.update(body);
+    res.json(updatedCreditRequest);
   } catch (error) {
     res.status(500).send({ success: false, message: error.message });
   }
 };
 // function to delete a particular user by id
-const deleteOneUserById = async (req, res) => {
+const deleteCredetRequestById = async (req, res) => {
   try {
-    const { id } = req.params; // may consider parseInt
-    const response = await service.deleteUserById(id);
-    res.json(response);
+    const { id } = req.params;
+    const targetCreditRequest = await models.CreditRequest.findByPk(id);
+    await targetCreditRequest.destroy();
+    res.json({deleted : true});
   } catch (error) {
     console.log(error);
     res.status(500).send({ success: false, message: error.message });
@@ -88,9 +87,9 @@ module.exports = {
   getAllCreditRequests,
   getCreditRequestOfUser,
   addCreditRequest,
+  updateCreditRequestById,
+  deleteCredetRequestById
 
-
-  updateOneUserById,
-  deleteOneUserById
+  // need to create other conjuntion functions
 };
 
