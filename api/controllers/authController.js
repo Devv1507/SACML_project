@@ -7,50 +7,29 @@ const jwt = require('jsonwebtoken');
 
 const signUp = async (req, res) => {
   try {
-    // Check for existing email
-    const existingAccount = await models.Account.findOne({
-      where: { email: req.body.email },
-    });
-    if (existingAccount) {
-      return res.status(409).json({ message: 'Email already exists' });
-    }
-
-    // Hash password
-    const salt = await bcrypt.genSalt(10);
-    const hash = await bcrypt.hash(req.body.password, salt);
-
-    // Create user
     const { body } = req;
-
-    //Get account from database with same name if any
-    const validateAccountName = async (name) => {
-      const account = await models.Account.findOne({ name });
-      return account ? false : true;
-    };
-
-    // Validate the name
-    const nameNotTaken = await validateAccountName(body.name);
-    if (!nameNotTaken) {
-      return res.status(400).json({
-        message: `Account name is already taken.`,
-      });
+    // Validate email, check account from database with same email if any
+    const existingEmail = await models.Account.findOne({
+      where: { email: body.email },
+    });
+    if (existingEmail) {
+      return res.status(409).json({ message: 'Email is already registered' });
     }
-    //Get account from database with same email if any
-    const validateEmail = async (email) => {
-      const account = await models.Account.findOne({ email });
-      return account ? false : true;
-    };
-    // Validate the email
-    const emailNotRegistered = await validateEmail(body.email);
-    if (!emailNotRegistered) {
-      return res.status(400).json({
-        message: `Email is already registered.`,
-      });
+    // Validate name, check account from database with same name if any
+    const existingName = await models.Account.findOne({
+      where: { name: body.name },
+    });
+    if (existingName) {
+      return res.status(409).json({ message: 'Account name is already taken' });
     }
     // Not null constrain
     if (!body.name || !body.email || !body.password) {
       return res.status(400).send('One of the fields is missing in the request');
     }
+    // Hash password
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(req.body.password, salt);
+    // Create new account for user
     const newAccount = {
       name: body.name,
       email: body.email,
@@ -74,7 +53,7 @@ const logIn = async (req, res) => {
       return res
         .status(404)
         .json({
-          message: 'Account name is not found. Invalid login credentials',
+          message: 'Account email is not found. Invalid login credentials',
         });
     }
     // We will check the if the account is logging in via the correct route

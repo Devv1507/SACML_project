@@ -8,16 +8,17 @@ const models = require('../models');
  */
 const validate = async (req, res, next) => {
   try {
-    const id = req.params.id;
-/*     const user = await models.User.findByPk(id);
-    if (!user) {
-        return res.status(404).json('User not found')
-    } */
     const token = req.headers.authorization.split(' ')[1];
     const decodedToken = jwt.verify(token, process.env.TOKEN_SECRET);
     req.userData = decodedToken;
+    const id = req.userData.accountId;
+    const user = await models.User.findByPk(id);
+    if (!user) {
+      return res.status(404).json('User not found')
+    }
     next();
   } catch (error) {
+    console.log(error);
     return res.status(401).json({
       message: 'Invalid or expired token provided',
       error: error,

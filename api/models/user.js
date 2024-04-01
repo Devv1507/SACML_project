@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
 /*     email: DataTypes.STRING */
   }, {
     timestamps: true,
+    initialAutoIncrement: 1
   });
   User.associate = function(models) {
     // associations can be defined here

@@ -21,7 +21,7 @@ const v1CreditRequestRouter = require('./v1/routes/creditRequestRoutes.js');
 app.use('/api/v1/users', v1UserRouter);
 app.use('/api/v1/roles', v1RoleRouter);
 app.use('/api/v1/cities', v1CityRouter);
-app.use('/api/v1/home/creditRequest', v1CreditRequestRouter);
+app.use('/api/v1/home/credit-requests', v1CreditRequestRouter);
 
 //export default app;
 module.exports = app;

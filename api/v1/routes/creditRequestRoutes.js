@@ -3,8 +3,12 @@ const router = Router();
 const creditRequestController = require('../../controllers/creditRequestController.js');
 const authorize = require('../../middleware/authorize');
 
-router.post('/add', authorize.validate,  creditRequestController.addCreditRequest);
-router.get('/', authorize.validate, creditRequestController.getAllCreditRequests);  
+// routes for credit request schema (endpoint: /api/v1/home/credit-requests)
+router.post('/', authorize.validate, creditRequestController.addCreditRequest);
+router.get('/:id', authorize.validate, authorize.checkRole([1]), creditRequestController.getCreditRequestOfUser);
+router.get('/', authorize.validate, creditRequestController.getAllCreditRequests);
+router.put('/:id', authorize.validate, authorize.checkRole([1]), creditRequestController.updateOneUserById);   
+router.delete('/:id', authorize.validate, authorize.checkRole([1]), creditRequestController.deleteOneUserById);
 
 
 module.exports = router;

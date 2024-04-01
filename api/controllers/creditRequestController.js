@@ -7,7 +7,7 @@ const getAllCreditRequests = async (req, res) => {
     if (response) {
       res.json({ success: true, message: response });
     } else {
-      res.status(400).json('User not found');
+      res.status(400).json('Credit request not found');
     }
   } catch (error) {
     res.status(500).send({ success: false, message: error.message });
@@ -16,7 +16,7 @@ const getAllCreditRequests = async (req, res) => {
 // function to get a particular credit request by user id
 const getCreditRequestOfUser = async (req, res) => {
   try {
-    const { id } = req.params; // may consider parseInt
+    const { id } = req.params; 
     const response = await models.CreditRequest.findOne({where: { userId : id}});
     res.json(response);
   } catch (error) {

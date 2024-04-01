@@ -1,4 +1,4 @@
-// This file setS the configuration for database connection
+// This file sets the configuration for database connection
 const dotenv = require('dotenv'); // required module to use environment variables
 (dotenv.config()).parsed;
 
