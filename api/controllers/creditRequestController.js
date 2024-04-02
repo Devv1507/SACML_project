@@ -30,7 +30,7 @@ const addCreditRequest = async (req, res) => {
   const user = await models.User.findOne({ where: { email: email} });
   const userId = user.id;
   console.log(user);
-  // Validate fields on server-side
+  // Validate fields on server-side (i.e. nulls)
   const errors = [];
   if (!body.amount) {
     errors.push({ text: 'Please add an amount' });

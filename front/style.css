@@ -1,0 +1,199 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto Mono:wght@500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Merriweather:wght@400;900&display=swap");
+
+.welcome-page {
+  background-image: url('imgs/bgr.png');
+}
+
+header > .page {
+  background-color: #526ea0;
+  display: block;
+  width: 100%;
+  height: 100px;
+}
+
+p {
+  margin: 0;
+}
+
+footer{
+  background-color: #526ea0;
+  width: 100%;
+  height: 20px;
+  bottom: 1px;
+  color: white;
+  font-size: 10px;
+  font-family: Inter;
+  font-weight: 500;
+  position: absolute;
+  display: flex;
+  align-items: end;
+  justify-content: center;
+}
+
+#icon2 {
+  top: 10px;
+  right: 110px;
+  width: 90px;
+  height: auto;
+  position: absolute;
+}
+
+header>h1 {
+  top: 1%;
+  left: 40%;
+  color: rgba(255, 255, 255, 1);
+  font-size: 40px;
+  line-height: 150%;
+  font-family: Roboto Mono, monospace;
+  font-weight: 700;
+  letter-spacing: -2.21px;
+  word-wrap: break-word;
+  position: absolute;
+}
+
+main > h1 {
+  text-align: center;
+  color: rgba(255, 255, 255, 1);
+  font-size: 40px;
+  line-height: 150%;
+  font-family: Roboto Mono, monospace;
+  font-weight: 700;
+  letter-spacing: -2.21px;
+  word-wrap: break-word;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.timeSquare{
+  top:20%;
+}
+
+._-28 {
+  position: absolute;
+  top: 20px;
+  left: 64px;
+  color: rgba(255, 255, 255, 1);
+  font-size: 20px;
+  line-height: 150%;
+  font-family: Merriweather, serif;
+  font-weight: 900;
+  letter-spacing: -0.88px;
+}
+
+.feb {
+  position: absolute;
+  top: 45px;
+  left: 68px;
+  color: rgba(255, 255, 255, 1);
+  font-size: 12px;
+  line-height: 150%;
+  font-family: Merriweather, serif;
+  font-weight: 400;
+  letter-spacing: -0.46px;
+}
+
+.icons {
+  position: absolute;
+  top: 10px;
+  right: 40px;
+  width: 80px;
+  height: 78px;
+}
+
+#iconAtt {
+  position: absolute;
+  right: 0px;
+  width: 50%;
+}
+
+#iconMenu {
+  position: absolute;
+  right: 40px;
+  width: 50%;
+}
+
+.overlayIconAtt {
+  position: absolute;
+  top: 54%;
+  left: 75%;
+  transform: translate(-50%, -50%);
+  color: gray;
+  font-size: 8px;
+  text-align: center;
+  font-family: Merriweather, serif;
+}
+
+body>h1 {
+  left: 380px;
+  top: 400px;
+  position: absolute;
+  color: white;
+  font-size: 130px;
+  font-family: 'Liberation Mono Bold';
+  font-weight: 700;
+  line-height: 195px;
+  word-wrap: break-word;
+
+}
+
+h4 {
+  color: black;
+  font-family: Roboto Mono, monospace;
+}
+
+.bgr1 {
+  width: 100%;
+  height: auto;
+  display: flex;
+}
+
+.icon1 {
+  width: 500px;
+  height: auto;
+  left: 128px;
+  top: 578px;
+  position: absolute;
+}
+
+button, input, form, select{
+  color: black;
+  font-size: 20px;
+  font-family: Merriweather, serif;
+  font-weight: 500;
+}
+
+form {
+  text-align: center;
+  width: 100%;
+}
+
+.row {
+  overflow: hidden;
+  padding: 10px;
+}
+
+.column {
+  float: left;
+  width: 50%
+}
+
+.cell{
+  padding: 10px;
+}
+
+input{
+  width: 100%;
+}
+
+table{
+  margin-left: auto;
+  margin-right: auto;
+}
+
+tr>*{
+  border: 1px solid #526ea0;
+  padding: 10px;
+  text-align: center;
+}

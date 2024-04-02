@@ -22,9 +22,20 @@ const signUp = async (req, res) => {
     if (existingName) {
       return res.status(409).json({ message: 'Account name is already taken' });
     }
-    // Not null constrain
-    if (!body.name || !body.email || !body.password) {
-      return res.status(400).send('One of the fields is missing in the request');
+    // Validate the fields
+    const errors = [];
+    if (!body.name) {
+      errors.push({ text: 'Please add an account name' });
+    }
+    if (!body.email) {
+      errors.push({ text: 'Please add an email' });
+    }
+    if (!body.password) {
+      errors.push({ text: 'Please add a password' });
+    }
+    // Check for errors first
+    if (errors.length > 0) {
+      return res.status(400).json({ succes: false, message: errors });
     }
     // Hash password
     const salt = await bcrypt.genSalt(10);
