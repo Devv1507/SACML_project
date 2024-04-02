@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Website Wireframe</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #f0f0f0;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header h1 {
+      margin: 0;
+    }
+    header nav {
+      display: flex;
+    }
+    header nav li {
+      margin-left: 20px;
+    }
+    header nav a {
+      text-decoration: none;
+      color: #333;
+    }
+    main {
+      padding: 40px;
+    }
+    section {
+      margin-bottom: 40px;
+    }
+    section h2 {
+      margin-bottom: 10px;
+    }
+    .atencion p {
+      font-weight: bold;
+    }
+    .login form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .login input[type="text"],
+    .login input[type="password"] {
+      padding: 10px;
+      border: 1px solid #ccc;
+    }
+    .login button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      cursor: pointer;
+    }
+    .login button:hover {
+      background-color: #3e8e41;
+    }
+    .login a {
+      text-decoration: none;
+      color: #333;
+    }
+    footer {
+      background-color: #f0f0f0;
+      padding: 10px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Soluciones E-finance</h1>
+    <nav>
+      <ul>
+        <li><a href="#">Inicio</a></li>
+        <li><a href="#">¿Quienes Somos?</a></li>
+        <li><a href="#">Política</a></li>
+        <li><a href="#">Login</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <section class="atencion">
+      <h2>Atención</h2>
+      <p>**Placeholder text for an attention grabbing message**</p>
+    </section>
+    <section class="login">
+      <h2>Ingreso</h2>
+      <form action="/login" method="post">
+        <label for="username">Correo electrónico o usuario:</label>
+        <input type="text" id="username" name="username" placeholder="Introduce tu correo electrónico o usuario">
+        <label for="password">Contraseña:</label>
+        <input type="password" id="password" name="password" placeholder="Introduce tu contraseña">
+        <button type="submit">Iniciar Sesión</button>
+        <a href="#">¿Olvidaste tu contraseña?</a>
+      </form>
+      <p>¿Aún no tienes cuenta? <a href="#">Regístrate aquí</a></p>
+    </section>
+  </main>
+  <footer>
+    <p>FBAC-ML. Todos los derechos reservados.</p>
+  </footer>
+</body>
+</html>

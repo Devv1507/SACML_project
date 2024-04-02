@@ -1,15 +1,68 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto Mono:wght@500;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Merriweather:wght@400;900&display=swap");
 
+/********Styles of welcome page***************/
+
 .welcome-page {
   background-image: url('imgs/bgr.png');
+  background-size: 100% auto; /* Adjusts the width to match the viewport */
+  background-repeat: no-repeat; 
 }
 
-header > .page {
-  background-color: #526ea0;
-  display: block;
-  width: 100%;
-  height: 100px;
+header {
+  display: flex;
+  height: 20vh; /* Set container height to 100% viewport height */
+  justify-content: center; /* Centers content horizontally */
+  align-items: center; /* Centers content vertically */
+}
+
+.h1-main {
+  display: flex;
+  justify-content: center; /* Centers content horizontally */
+  align-items: flex-end; /* Centers content vertically */
+  height: 40vh; /* Set container height to 100% viewport height */
+  color: rgba(255, 255, 255, 1);
+  font-size: 25px;
+  font-family: Roboto Mono, monospace;
+  font-weight: 700;
+  letter-spacing: -2.21px;
+  word-wrap: break-word;
+}
+
+.h1-main h1{
+  margin: auto; /* Centers horizontally and vertically */
+  margin-top: auto; 
+}
+
+.inputs-welcome{
+  text-align: center;
+}
+
+
+input {
+  /* width: 100%; */
+  border: 2px solid #ccc; /* Adjust border color as needed */
+  border-radius: 8px; /* Creates blunt edges */
+}
+
+button{
+  border: 2px solid #ccc; /* Adjust border color as needed */
+  border-radius: 8px; /* Creates blunt edges */
+}
+
+.p-center{
+  color: rgb(88, 169, 236);
+  font-size: 15px;
+  font-family: Roboto Mono, monospace;
+  font-weight: 700;
+}
+
+.icon{
+  top: 250px;
+  left: 120px;
+  width: 250px;
+  height: auto;
+  position: absolute;
 }
 
 p {
@@ -50,20 +103,6 @@ header>h1 {
   letter-spacing: -2.21px;
   word-wrap: break-word;
   position: absolute;
-}
-
-main > h1 {
-  text-align: center;
-  color: rgba(255, 255, 255, 1);
-  font-size: 40px;
-  line-height: 150%;
-  font-family: Roboto Mono, monospace;
-  font-weight: 700;
-  letter-spacing: -2.21px;
-  word-wrap: break-word;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .timeSquare{
@@ -125,6 +164,14 @@ main > h1 {
   font-family: Merriweather, serif;
 }
 
+/********Styles of form page***************/
+.page {
+  background-color: #526ea0;
+  display: block;
+  width: 100%;
+  height: 100px;
+}
+
 body>h1 {
   left: 380px;
   top: 400px;
@@ -164,6 +211,11 @@ button, input, form, select{
   font-weight: 500;
 }
 
+.wide-square{
+  width: 600px; /* Adjust width as needed */
+  height: 40px;
+}
+
 form {
   text-align: center;
   width: 100%;
@@ -176,15 +228,21 @@ form {
 
 .column {
   float: left;
-  width: 50%
+  width: 47%;
 }
+
+button{
+  background-color: #526ea0; /* Set button background color */
+  color: white; /* Set button text color */
+  width: 150px;
+  height: 40px;
+}
+
+
+/********Styles of table page***************/
 
 .cell{
   padding: 10px;
-}
-
-input{
-  width: 100%;
 }
 
 table{
@@ -196,4 +254,32 @@ tr>*{
   border: 1px solid #526ea0;
   padding: 10px;
   text-align: center;
+}
+
+
+/********Styles of home page***************/
+
+.menu-item {
+  border-bottom: 1px solid #ddd;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+}
+
+.menu-item button {
+  border: none;
+  padding: 0.5rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.menu-item button:hover {
+  background-color: rgb(88, 169, 236);
+}
+
+.home-column {
+  flex: 1;
+  padding: 0 1rem;
 }

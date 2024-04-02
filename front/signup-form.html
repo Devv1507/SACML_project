@@ -4,12 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu</title>
+    <title>Registro</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <header>
+    <header class="page">
         <img src=imgs/icon.png id="icon2" />
         <h1>Registro</h1>
         <div class="timeSquare">
@@ -18,7 +18,7 @@
         </div>
         <div class="icons">
             <img src=imgs/iconAttention.png id="iconAtt" />
-            <a href="index.html"><img src=imgs/iconMenu.png id="iconMenu" /></a>
+            <a href="welcome.html"><img src=imgs/iconMenu.png id="iconMenu" /></a>
             <p class="overlayIconAtt">Atención</p>
         </div>
     </header>
@@ -28,20 +28,20 @@
             <div class="row">
                 <div class="column">
                     <div class="cell">
-                        <input id="userName" type="text" placeholder="Nombre" />
+                        <input id="userName" type="text" placeholder="Nombre" class="wide-square"/>
                     </div>
                     <div class="cell">
-                        <select id="IdType">
+                        <select id="IdType" class="wide-square">
                             <option value="CC">Cédula de Ciudadania</option>
                             <option value="CE">Cédula de Extranjería</option>
                             <option value="PE">Permiso de Extranjería</option>
                           </select>
                     </div>
                     <div class="cell">
-                        <input id="userAdress" type="text" placeholder="Dirección de domicilio" />
+                        <input id="userAdress" type="text" placeholder="Dirección de domicilio"  class="wide-square"/>
                     </div>
                     <div class="cell">
-                        <select id="userCity">
+                        <select id="userCity" class="wide-square">
                             <option value="Cali">Cali</option>
                             <option value="Medellin">Medellín</option>
                             <option value="Bogota">Bogotá</option>
@@ -49,22 +49,22 @@
                           </select>
                     </div>
                     <div class="cell">
-                        <input id="email" type="email" placeholder="Email"/>
+                        <input id="email" type="email" placeholder="Email" class="wide-square"/>
                     </div>
                 </div>
 
                 <div class="column">
                     <div class="cell">
-                        <input id="userLastName" type="text" placeholder="Apellido" />
+                        <input id="userLastName" type="text" placeholder="Apellido" class="wide-square" />
                     </div>
                     <div class="cell">
-                        <input id="userId" type="text" placeholder="Nº de Documento de Identidad" />
+                        <input id="userId" type="text" placeholder="Nº de Documento de Identidad" class="wide-square" />
                     </div>
                     <div class="cell">
-                        <input id="adressNeigh" type="text" placeholder="Barrio" />
+                        <input id="adressNeigh" type="text" placeholder="Barrio" class="wide-square" />
                     </div>
                     <div class="cell">
-                        <select id="department">
+                        <select id="department" class="wide-square">
                             <option value="Valle">Valle del Cauca</option>
                             <option value="Cundinamarca">Cundinamarca</option>
                             <option value="Cauca">Cauca</option>
@@ -72,7 +72,7 @@
                           </select>
                     </div>
                     <div class="cell">
-                        <input id="phone" type="text" placeholder="Nº de Teléfono"/>
+                        <input id="phone" type="text" placeholder="Nº de Teléfono" class="wide-square"/>
                     </div>
                 </div>
             </div>

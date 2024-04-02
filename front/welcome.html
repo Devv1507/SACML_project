@@ -11,7 +11,6 @@
 <body class="welcome-page">
   <!-- <img class="bgr1" id="bgr1" src=imgs/bgr.png /> -->
   <header>
-    <img src=imgs/icon.png id="icon2" />
     <div class="timeSquare">
       <p class="_-28">28</p>
       <p class="feb">Feb</p>
@@ -23,9 +22,20 @@
     </div>
   </header>
   <main>
-    <h1>Soluciones E-finance</h1>
+    
     <section>
-      <div class="OlvidMiContraseA">Olvidé mi contraseña</div>
+      <div class="h1-main">
+        <h1>Soluciones E-finance</h1>
+      </div>
+      <img src=imgs/icon.png class="icon" />
+      <div class="inputs-welcome">
+        <input type="text" id="username" name="username" placeholder="Correo electrónico o usuario">
+        <input type="password" id="password" name="password" placeholder="Contraseña">
+        <br>
+        <a href="#" class="p-center">Olvidé mi contraseña</a>
+        <br><br>
+        <button type="submit">Iniciar Sesión</button>
+        <p class="p-center">¿Aún no tienes cuenta? <a href="signup-form.html" class="p-center">Regístrate aquí</a></p>
       </div>
     </section>
   </main>
@@ -34,13 +44,5 @@
     <p>© Proyecto SACML. Todos los derechos reservados.</p>
   </footer>
 </body>
-<script>
-  /*  window.onresize = function() {
-      // Get the current width of the image's container
-      var containerWidth = document.getElementById('Bgr1').parentElement.clientWidth;
-      // Set the width of the image to match the container
-      document.getElementById('Bgr1').style.width = containerWidth + 'px';
-    }*/
-</script>
 
 </html>
