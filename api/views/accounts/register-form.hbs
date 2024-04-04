@@ -1,0 +1,23 @@
+<div class="col-md-4 mx-auto">
+    <div class="card text-center">
+        <div class="card-header">
+            <h4>Account Information</h4>
+        </div>
+        <div class="card-body">
+            <form action="/api/v1/home/sign-up" method="POST">
+                <div class="mb-3">
+                    <input type="text" name="name" class="form-control" placeholder="Account name" autofocus>
+                </div>
+                <div class="mb-3">
+                    <input type="text" name="email" class="form-control" placeholder="Account email">
+                </div>
+                <div class="mb-3">
+                    <input type="password" name="password" class="form-control" placeholder="Password">
+                </div>
+                <div class="d-flex gap-2">
+                    <button class="btn btn-primary w-100"> Save Account </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

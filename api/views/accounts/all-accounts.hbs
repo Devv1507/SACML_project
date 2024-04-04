@@ -1,0 +1,18 @@
+
+<div class="row">
+    {{#each accounts}}
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title d-flex justify-content-between align-items-center">
+                        {{name}}<i class="fa fa-pencil" aria-hidden="true"></i>
+                    </h4>
+                    <p>{{email}}</p>
+                    <form action="/home/delete/{{_id}}" method="POST">
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    {{/each}}
+</div>

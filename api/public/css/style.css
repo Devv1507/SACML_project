@@ -4,7 +4,7 @@
 /********Styles of welcome page***************/
 
 .welcome-page {
-  background-image: url('imgs/bgr.png');
+  background-image: url('../imgs/bgr.png');
   background-size: 100% auto; /* Adjusts the width to match the viewport */
   background-repeat: no-repeat; 
 }
@@ -141,10 +141,13 @@ header>h1 {
   height: 78px;
 }
 
-#iconAtt {
+/* #iconAtt {
   position: absolute;
   right: 0px;
   width: 50%;
+} */
+#iconAtt{
+  width: 40px;
 }
 
 #iconMenu {
@@ -283,3 +286,4 @@ tr>*{
   flex: 1;
   padding: 0 1rem;
 }
+

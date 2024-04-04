@@ -1,36 +1,40 @@
 const models = require('../models');
 
-// import bcryptjs to encryptation of information
-// import jsonwebtoken to token settings
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+// *** Modules
+const bcrypt = require('bcryptjs');   // import bcryptjs to encryptation of information
+const jwt = require('jsonwebtoken');  // import jsonwebtoken to token settings
+
+// *** Sign Up ***
+const renderNewRegisterForm = (req, res) => {
+  res.render('accounts/register-form');
+};
 
 const signUp = async (req, res) => {
   try {
-    const { body } = req;
+    const { name, email, password } = req.body;
     // Validate email, check account from database with same email if any
     const existingEmail = await models.Account.findOne({
-      where: { email: body.email },
+      where: { email },
     });
     if (existingEmail) {
       return res.status(409).json({ message: 'Email is already registered' });
     }
     // Validate name, check account from database with same name if any
     const existingName = await models.Account.findOne({
-      where: { name: body.name },
+      where: { name },
     });
     if (existingName) {
       return res.status(409).json({ message: 'Account name is already taken' });
     }
     // Validate the fields
     const errors = [];
-    if (!body.name) {
+    if (!name) {
       errors.push({ text: 'Please add an account name' });
     }
-    if (!body.email) {
+    if (!email) {
       errors.push({ text: 'Please add an email' });
     }
-    if (!body.password) {
+    if (!password) {
       errors.push({ text: 'Please add a password' });
     }
     // Check for errors first
@@ -39,11 +43,11 @@ const signUp = async (req, res) => {
     }
     // Hash password
     const salt = await bcrypt.genSalt(10);
-    const hash = await bcrypt.hash(req.body.password, salt);
+    const hash = await bcrypt.hash(password, salt);
     // Create new account for user
     const newAccount = {
-      name: body.name,
-      email: body.email,
+      name,
+      email,
       password: hash,
     };
     await models.Account.create(newAccount);
@@ -52,6 +56,11 @@ const signUp = async (req, res) => {
     console.error(error); // Log the error for debugging
     res.status(500).json({ message: 'Error creating user' }); // More user-friendly error message
   }
+};
+
+// *** Log In ***
+const renderLogInForm = (req, res) => {
+  res.render('accounts/login-form');
 };
 
 const logIn = async (req, res) => {
@@ -97,11 +106,16 @@ const logIn = async (req, res) => {
   }
 };
 
+
+
+
 const getAll = async (req, res) => {
   try {
-    const response = await models.Account.findAll();
-    if (response) {
-      res.json({ success: true, message: response });
+    const accounts = await models.Account.findAll();
+    if (accounts) {
+      //res.json({ success: true, message: accounts });
+      res.render('accounts/all-accounts', {accounts});
+
     } else {
       res.status(400).json('User not found');
     }
@@ -110,4 +124,7 @@ const getAll = async (req, res) => {
   }
 };
 
-module.exports = { signUp, logIn, getAll };
+
+
+
+module.exports = { signUp, logIn, getAll, renderNewRegisterForm, renderLogInForm };
