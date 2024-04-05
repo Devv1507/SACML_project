@@ -95,7 +95,7 @@ const updateOneUserById = async (req, res) => {
 // function to delete a particular user by id
 const deleteOneUserById = async (req, res) => {
   try {
-    const { id } = req.params; // may consider parseInt
+    const { id } = req.params;
     const response = await service.deleteUserById(id);
     res.json(response);
   } catch (error) {

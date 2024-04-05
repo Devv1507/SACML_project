@@ -5,6 +5,12 @@ const {engine} = require('express-handlebars');
 const path = require('path')
 const Handlebars = require('handlebars');
 const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access');
+const methodOver = require('method-override');
+const flash = require('connect-flash');
+const session = require('express-session');
+const dotenv = require('dotenv').config()
+const passport = require('./middleware/passport-jwt');
+
 
 // ************Settings********************
 // assigning the express function to use cors module and others
@@ -15,9 +21,6 @@ app.engine('.hbs', engine({
     partialsDir: path.join(app.get('views'), 'partials'),
     extname: '.hbs',
     handlebars: allowInsecurePrototypeAccess(Handlebars)
-},{
-    allowProtoMethodsByDefault: true,
-    allowProtoPropertiesByDefault: true
 }));
 app.set('view engine', '.hbs');
 
@@ -26,15 +29,30 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // ************ Middlewares **************
 app.use(cors());
-// Middleaware to using body parser functionality to read and parse JSON in req.body
+// Middleaware to use body parser functionality to read and parse JSON in req.body
 app.use(express.json());
 // Middleware to works with HTML forms data
 app.use(express.urlencoded({extended: false}));
+// Middleware to use DELETE and PUT methods in HTML forms
+app.use(methodOver('_method'));
+// Middleware to use flash messagges
+app.use(session({
+    secret: process.env.TOKEN_SECRET,
+    resave: true,
+    saveUninitialized: true
+}));
+app.use(passport.initialize());
+app.use(flash());
 
-// Import routes
+app.use((req,res,next) => {
+    res.locals.success_msg = req.flash('success_msg');
+    next();
+});
+
+// ************ Routes **************
 const v1AuthRouter = require('./v1/routes/accountRoutes.js');
 const v1UserRouter = require('./v1/routes/usersRoutes.js'); // import the users router version 1
-const v1RoleRouter = require('./v1/routes/rolesRoutes.js'); // improt the roles router version 1
+const v1RoleRouter = require('./v1/routes/rolesRoutes.js'); // import the roles router version 1
 const v1CityRouter = require('./v1/routes/citiesRoutes.js');
 const v1CreditRequestRouter = require('./v1/routes/creditRequestRoutes.js');
 

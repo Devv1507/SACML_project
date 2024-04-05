@@ -6,28 +6,30 @@ const jwt = require('jsonwebtoken');  // import jsonwebtoken to token settings
 
 // *** Sign Up ***
 const renderNewRegisterForm = (req, res) => {
-  res.render('accounts/register-form');
+  res.render('accounts/signup-form');
 };
 
 const signUp = async (req, res) => {
   try {
     const { name, email, password } = req.body;
+    const errors = [];
     // Validate email, check account from database with same email if any
     const existingEmail = await models.Account.findOne({
       where: { email },
     });
     if (existingEmail) {
-      return res.status(409).json({ message: 'Email is already registered' });
+      /* return res.status(409).json({ message: 'Email is already registered' }); */
+      errors.push({ text: 'Email is already registered' });
     }
     // Validate name, check account from database with same name if any
     const existingName = await models.Account.findOne({
       where: { name },
     });
     if (existingName) {
-      return res.status(409).json({ message: 'Account name is already taken' });
+      /* return res.status(409).json({ message: 'Account name is already taken' }); */
+      errors.push({ text: 'Account name is already taken' });
     }
-    // Validate the fields
-    const errors = [];
+    // Null, empty or undefined constrains
     if (!name) {
       errors.push({ text: 'Please add an account name' });
     }
@@ -39,7 +41,12 @@ const signUp = async (req, res) => {
     }
     // Check for errors first
     if (errors.length > 0) {
-      return res.status(400).json({ succes: false, message: errors });
+      /* return res.status(400).json({ succes: false, message: errors }); */
+      return res.render('accounts/signup-form', {
+        errors,
+        name,
+        email
+      });
     }
     // Hash password
     const salt = await bcrypt.genSalt(10);
@@ -51,7 +58,9 @@ const signUp = async (req, res) => {
       password: hash,
     };
     await models.Account.create(newAccount);
-    res.status(201).json({ message: 'Account created successfully' });
+    /* res.status(201).json({ message: 'Account created successfully' }); */
+    req.flash('success_msg', 'Account created successfully');
+    res.redirect('/api/v1/home/login');
   } catch (error) {
     console.error(error); // Log the error for debugging
     res.status(500).json({ message: 'Error creating user' }); // More user-friendly error message
@@ -85,11 +94,11 @@ const logIn = async (req, res) => {
     } */
 
     // Checking if the password match
-    const isPasswordValid = await bcrypt.compare(
+    const passwordMatch = await bcrypt.compare(
       req.body.password,
       account.password
     );
-    if (!isPasswordValid) {
+    if (!passwordMatch) {
       return res.status(401).json({ message: 'Password not valid' });
     }
     // If the password match, sign the token and give it to the employee
@@ -125,6 +134,35 @@ const getAll = async (req, res) => {
 };
 
 
+const deleteAccount = async (req,res) => {
+  try {
+    const {id} = req.params;
+    const target = await models.Account.findByPk(id);
+    await target.destroy();
+    res.redirect('/api/v1/home/');
+  } catch (error) {
+    res.status(500).send({ success: false, message: error.message });
+  }
+};
 
 
-module.exports = { signUp, logIn, getAll, renderNewRegisterForm, renderLogInForm };
+const renderUpdateForm = async (req, res) => {
+  const {id} = req.params;
+  const target = await models.Account.findByPk(id);
+  res.render('accounts/edit-account-form', {target});
+};
+const updateAccount = async (req,res) => {
+  try {
+    const {id} = req.params;
+    const target = await models.Account.findByPk(id);
+    const {body} = req;
+    await target.update(body);
+    res.redirect('/api/v1/home/');
+  } catch (error) {
+    res.status(500).send({ success: false, message: error.message });
+  }
+};
+
+
+module.exports = { signUp, logIn, getAll,
+   renderNewRegisterForm, renderLogInForm, deleteAccount, renderUpdateForm, updateAccount };
