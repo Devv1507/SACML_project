@@ -1,14 +1,14 @@
 // importing the modules and assigning them in constants
+const path = require('path')
 const express = require('express');
 const cors = require('cors');
 const {engine} = require('express-handlebars');
-const path = require('path')
 const Handlebars = require('handlebars');
 const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access');
 const methodOver = require('method-override');
 const flash = require('connect-flash');
 const session = require('express-session');
-const dotenv = require('dotenv').config()
+const dotenv = require('dotenv').config();
 const passport = require('./middleware/passport-jwt');
 
 
@@ -42,10 +42,14 @@ app.use(session({
     saveUninitialized: true
 }));
 app.use(passport.initialize());
+app.use(passport.session()); // persistent login sessions
+
 app.use(flash());
 
+// Global variables
 app.use((req,res,next) => {
     res.locals.success_msg = req.flash('success_msg');
+    res.locals.error = req.flash('error');
     next();
 });
 

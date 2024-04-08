@@ -8,6 +8,10 @@ const models = require('../models');
  */
 const validate = async (req, res, next) => {
   try {
+    // Check if authorization header exists
+    if (!req.headers.authorization) {
+      return res.status(401).json({ message: 'Authorization header is missing' });
+    }
     const token = req.headers.authorization.split(' ')[1];
     const decodedToken = jwt.verify(token, process.env.TOKEN_SECRET);
     req.userData = decodedToken;

@@ -79,11 +79,7 @@ const logIn = async (req, res) => {
       where: { email: req.body.email }
     });
     if (!account) {
-      return res
-        .status(404)
-        .json({
-          message: 'Account email is not found. Invalid login credentials',
-        });
+      return res.status(404).json({message: 'Account email is not found. Invalid login credentials',});
     }
     // We will check the if the account is logging in via the correct route
     /* if (account.role !== role) {
@@ -107,7 +103,11 @@ const logIn = async (req, res) => {
       process.env.TOKEN_SECRET,
       { expiresIn: '1800m' } //token expiration
     );
-    res.status(200).json({ message: 'Authentication successful', token });
+    // Save the token in a cookie
+    res.cookie('jwt', token, { httpOnly: true, maxAge: 1800000 }); // Cookie expires in 30 minutes
+    res.redirect('/api/v1/home/'); // Redirect to the homepage or any other desired page
+
+    //res.status(200).json({ message: 'Authentication successful', token });
     //res.cookie("token", token, { httpOnly: true, secure: true } ).status(200).send({token});
   } catch (error) {
     console.error(error); // Log the error for debugging
