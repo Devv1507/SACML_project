@@ -2,7 +2,7 @@
 const dotenv = require('dotenv'); // required module to use environment variables
 (dotenv.config()).parsed;
 
-const config = {
+/* const config = {
     "username": process.env.DB_USER,
     "host": process.env.DB_HOST,
     "database": process.env.DB_DATABASE,
@@ -15,6 +15,16 @@ const config = {
         rejectUnauthorized: false,
       }
     }
+}; */
+
+const config = {
+  "username":  'root',
+  "host": 'localhost',
+  "database": 'local_test_sacml',
+  "password": '',
+  "port": '3307',
+  "dialect": 'mysql'
 };
+
 
 module.exports = { development: config, test: config, production: config };

@@ -163,6 +163,13 @@ const updateAccount = async (req,res) => {
   }
 };
 
+const logOut = async (req, res, next) => {
+  await req.logout((err) => {
+    if (err) return next(err);
+    req.flash('success_msg', 'Logged out succesfully');
+    res.redirect('/api/v1/home/login');
+  });
+}
 
 module.exports = { signUp, logIn, getAll,
-   renderNewRegisterForm, renderLogInForm, deleteAccount, renderUpdateForm, updateAccount };
+   renderNewRegisterForm, renderLogInForm, deleteAccount, renderUpdateForm, updateAccount, logOut };

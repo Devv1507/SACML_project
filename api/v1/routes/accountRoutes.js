@@ -68,4 +68,6 @@ router.put('/update/:id', authController.updateAccount);
     res.send('You have accessed a protected route!');
 }); */
 
+router.get('/logout', authController.logOut);
+
 module.exports = router;
