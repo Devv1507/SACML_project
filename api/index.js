@@ -1,7 +1,6 @@
 //importing default app from './app.js';
 const app = require('./app.js');
 
-
 const PORT = process.env.PORT || 3000; // define the port to use
 
 // an asyncronic function to test for errors during connection
