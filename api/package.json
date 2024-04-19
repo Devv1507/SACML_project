@@ -1,7 +1,7 @@
 {
   "name": "api",
   "version": "1.0.0",
-  "description": "REST API with NodeJS and PostgreSQL",
+  "description": "NodeJS web application with PostgreSQL DB",
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js",
@@ -32,6 +32,7 @@
     "pg": "^8.11.3",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.37.1",
-    "sequelize-cli": "^6.6.2"
+    "sequelize-cli": "^6.6.2",
+    "serverless-http": "^3.2.0"
   }
 }

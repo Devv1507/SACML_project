@@ -1,4 +1,4 @@
-//importing default app from './app.js';
+//importing customized express-app from './app.js';
 const app = require('./app.js');
 
 const PORT = process.env.PORT || 3000; // define the port to use
@@ -11,7 +11,7 @@ async function main() {
       console.log(`Example app listening at http://localhost:${PORT}`);
     });
   } catch (error) {
-    console.log("Something happens");
+    console.log(error);
   }
 }
 

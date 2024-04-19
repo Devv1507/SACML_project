@@ -9,7 +9,7 @@ const methodOver = require('method-override');
 const flash = require('connect-flash');
 const session = require('express-session');
 const dotenv = require('dotenv').config();
-const passport = require('./middleware/passport-jwt');
+const passport = require('./middleware/passport-jwt.js');
 
 
 // ************Settings********************
@@ -43,7 +43,6 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
-
 app.use(flash());
 
 // Global variables
@@ -64,7 +63,7 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
- // using the routers created
+// using the routers created
 app.use('/api/v1/home', v1AuthRouter);
 app.use('/api/v1/home/users', v1UserRouter);
 app.use('/api/v1/roles', v1RoleRouter);
