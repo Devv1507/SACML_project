@@ -1,25 +1,27 @@
 <div class="col-md-4 mx-auto">
     <div class="card text-center">
         <div class="card-header">
-            <h4>Sign Up</h4>
+            <h4>Registrate</h4>
         </div>
         <div class="card-body">
             <form action="/api/v1/home/sign-up" method="POST">
                 <div class="mb-3">
-                    <input type="text" name="name" class="form-control" placeholder="Account name" value="{{name}}" autofocus>
+                    <input type="text" name="name" class="form-control" placeholder="Nombre" value="{{name}}" autofocus>
                 </div>
                 <div class="mb-3">
-                    <input type="text" name="email" class="form-control" placeholder="Account email" value="{{email}}">
+                    <input type="text" name="email" class="form-control" placeholder="Correo electrónico" value="{{email}}">
                 </div>
                 <div class="mb-3">
-                    <input type="password" name="password" class="form-control" placeholder="Password">
+                    <input type="password" name="password" class="form-control" placeholder="Contraseña">
                 </div>
                 <div class="d-flex gap-2">
-                    <button class="btn btn-primary w-100"> Save </button>
+                    <button class="btn btn-primary w-100"> Guardar </button>
                 </div>
             </form>
-
-            <p><a class="d-flex" href="/api/v1/home/login">Enter with your account</a></p>
+            <div class="p-4">
+                <p class="p-center">Ya estas registrado?  <a href="/" class="p-center">Ingresa</a></p>
+            </div>
+    </div>
         </div>
     </div>
 </div>

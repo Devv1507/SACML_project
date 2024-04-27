@@ -167,7 +167,7 @@ const logOut = async (req, res, next) => {
   await req.logout((err) => {
     if (err) return next(err);
     req.flash('success_msg', 'Logged out succesfully');
-    res.redirect('/api/v1/home/login');
+    res.redirect('/');
   });
 }
 

@@ -60,7 +60,8 @@ const v1CityRouter = require('./v1/routes/citiesRoutes.js');
 const v1CreditRequestRouter = require('./v1/routes/creditRequestRoutes.js');
 
 app.get('/', (req, res) => {
-  res.render('index');
+    const context = { isIndex: true };
+    res.render('index', context);
 });
 
 // using the routers created

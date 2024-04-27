@@ -26,7 +26,7 @@ router.post(
     '/login',
     passportLocal.authenticate('local', { 
         session: false,
-        failureRedirect: '/api/v1/home/login',
+        failureRedirect: '/',
         failureFlash: true
     }),
     authController.logIn

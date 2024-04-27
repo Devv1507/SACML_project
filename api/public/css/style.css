@@ -298,3 +298,9 @@ tr>*{
 .dropstart .dropdown-toggle::before {
   display: none; /* Hide the default arrow */
 }
+
+.alert {
+  position: fixed;
+  width: 76%;
+  z-index: 100;
+}
