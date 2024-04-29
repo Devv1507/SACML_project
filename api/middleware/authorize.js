@@ -39,12 +39,12 @@ const checkRole = (roles) => async (req, res, next) => {
   // retrive user id based on endpoint param
   const id = req.params.id;
   const userByParams = await models.User.findByPk(id);
-  const {email} = req.userData;
-  const userByAccount = await models.User.findOne({ where: {email}});
-  if (!userByParams && !userByAccount){
+  /*const {email} = req.userData;
+  const userByAccount = await models.User.findOne({ where: {email}}); */
+  if (!userByParams){
     return res.status(404).json('URL_id parameter does not match with any user in the database')
   }
-  else if (/* !roles.includes(userByParams.roleId) &&  */!roles.includes(userByAccount.roleId)){
+  else if (!roles.includes(userByParams.roleId)){
     return res.status(401).json('Sorry you do not have access to this route')
   }
   next();

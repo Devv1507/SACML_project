@@ -8,7 +8,7 @@ const cookieParser = require('cookie-parser');
 router.use(cookieParser());
 
 // routes for credit request schema (endpoint: /api/v1/home/credit-requests)
-router.get('/', authorize.redirectToLoginIfUnauthorized, authorize.checkRole([1]), creditRequestController.renderNewRequest);
+router.get('/', authorize.redirectToLoginIfUnauthorized, creditRequestController.renderNewRequest);
 router.post('/', authorize.redirectToLoginIfUnauthorized,  creditRequestController.addCreditRequest);
 
 router.get('/:id', authorize.validate, authorize.checkRole([1]), creditRequestController.getCreditRequestOfUser);
