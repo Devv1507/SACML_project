@@ -16,6 +16,7 @@ const passport = require('./middleware/passport-jwt.js');
 // assigning the express function to use cors module and others
 const app = express();
 app.set('views', path.join(__dirname, 'views'));
+// configuration of view engine
 app.engine('.hbs', engine({
     layoutsDir: path.join(app.get('views'), 'layouts'),
     partialsDir: path.join(app.get('views'), 'partials'),
@@ -64,7 +65,7 @@ app.get('/', (req, res) => {
     res.render('index', context);
 });
 
-// using the routers created
+// Using the routers created
 app.use('/api/v1/home', v1AuthRouter);
 app.use('/api/v1/home/users', v1UserRouter);
 app.use('/api/v1/roles', v1RoleRouter);

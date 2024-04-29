@@ -1,0 +1,23 @@
+<div class="col-md-4 mx-auto">
+    <div class="card text-center">
+        <div class="card-header">
+            <h4>Solicitud de Préstamo</h4>
+        </div>
+        <div class="card-body">
+            <form action="/api/v1/home/credit-requests" method="POST">
+                <div class="mb-3">
+                    <input type="text" name="amount" class="form-control" placeholder="Monto solicitado" autofocus>
+                </div>
+                <div class="mb-3">
+                    <textarea name="description" class="form-control">Descripción de la Solicitud</textarea>
+                </div>
+                <div class="mb-3">
+                    <input type="text" name="creditHistory" class="form-control" placeholder="Historial Crediticio">
+                </div>
+                <div class="d-flex gap-2">
+                    <button class="btn btn-primary w-100"> Radicar </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

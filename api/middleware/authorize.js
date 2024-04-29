@@ -1,3 +1,4 @@
+const passportJwt = require('./passport-jwt');
 const jwt = require('jsonwebtoken');
 const models = require('../models');
 
@@ -16,7 +17,7 @@ const validate = async (req, res, next) => {
     const decodedToken = jwt.verify(token, process.env.TOKEN_SECRET);
     req.userData = decodedToken;
     const {email} = req.userData;
-    const user = await models.User.findOne({ email});
+    const user = await models.User.findOne({email});
     if (!user) {
       return res.status(404).json('User not found in the database')
     }
@@ -37,14 +38,32 @@ const validate = async (req, res, next) => {
 const checkRole = (roles) => async (req, res, next) => {
   // retrive user id based on endpoint param
   const id = req.params.id;
-  const user = await models.User.findByPk(id);
-  if (!user){
+  const userByParams = await models.User.findByPk(id);
+  const {email} = req.userData;
+  const userByAccount = await models.User.findOne({ where: {email}});
+  if (!userByParams && !userByAccount){
     return res.status(404).json('URL_id parameter does not match with any user in the database')
   }
-  else if (!roles.includes(user.roleId)){
+  else if (/* !roles.includes(userByParams.roleId) &&  */!roles.includes(userByAccount.roleId)){
     return res.status(401).json('Sorry you do not have access to this route')
   }
   next();
 };
 
-module.exports = { validate, checkRole };
+
+// Define custom middleware function to handle unauthorized requests
+const redirectToLoginIfUnauthorized = (req, res, next) => {
+  passportJwt.authenticate('jwt', { session: false }, (err, account, info) => {
+    if (err || !account) {
+      // Redirect to login route if unauthorized
+      req.flash('error', 'No autorizado');
+      return res.redirect('/');
+    }
+    // Continue to the next middleware or route handler if authorized
+    req.userData = account;
+    next();
+  })(req, res, next);
+};
+
+
+module.exports = { validate, checkRole, redirectToLoginIfUnauthorized};
