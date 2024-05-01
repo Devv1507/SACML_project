@@ -2,7 +2,7 @@ const models = require('../models');
 
 // *** Credit Request Form ***
 const renderNewRequest = (req, res) => {
-  res.render('accounts/credit-request-form');
+  res.render('credit-requests/credit-request-form');
 };
 
 // function to add a credit request
@@ -42,6 +42,20 @@ const addCreditRequest = async (req, res) => {
     res.status(500).send({ success: false, message: error.message });
   }
 };
+
+// function to get a particular credit request by user id
+const getCreditRequestOfUser = async (req, res) => {
+  try {
+    /* const { id } = req.params;  */
+    const {email} = req.userData;
+    const user = await models.User.findOne({where: {email}});
+    const creditRequests = await models.CreditRequest.findAll({where: { userId : user.id}});
+    //res.json(creditRequest);
+    res.render('credit-requests/user-credit-requests', {creditRequests});
+  } catch (error) {
+    res.status(500).send({ success: false, message: error.message });
+  }
+};
 // function to get all credit request
 const getAllCreditRequests = async (req, res) => {
   try {
@@ -55,17 +69,6 @@ const getAllCreditRequests = async (req, res) => {
     res.status(500).send({ success: false, message: error.message });
   }
 };
-// function to get a particular credit request by user id
-const getCreditRequestOfUser = async (req, res) => {
-  try {
-    const { id } = req.params; 
-    const creditRequest = await models.CreditRequest.findOne({where: { userId : id}});
-    res.json(creditRequest);
-  } catch (error) {
-    res.status(500).send({ success: false, message: error.message });
-  }
-};
-
 // function to update a particular user by id
 const updateCreditRequestById = async (req, res) => {
   try {
@@ -100,6 +103,5 @@ module.exports = {
   deleteCredetRequestById,
 // need to create other conjuntion functions
   renderNewRequest
-  
 };
 

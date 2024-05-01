@@ -139,6 +139,7 @@ const deleteAccount = async (req,res) => {
     const {id} = req.params;
     const target = await models.Account.findByPk(id);
     await target.destroy();
+    req.flash("success_msg", "Account deleted successfully");
     res.redirect('/api/v1/home/');
   } catch (error) {
     res.status(500).send({ success: false, message: error.message });
@@ -157,6 +158,7 @@ const updateAccount = async (req,res) => {
     const target = await models.Account.findByPk(id);
     const {body} = req;
     await target.update(body);
+    req.flash("success_msg", "Account updated successfully");
     res.redirect('/api/v1/home/');
   } catch (error) {
     res.status(500).send({ success: false, message: error.message });
