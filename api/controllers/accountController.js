@@ -127,7 +127,7 @@ const getById = async (req, res) => {
     const account = await models.Account.findByPk(id);
     if (account) {
       //res.json({ success: true, message: accounts });
-      res.render('accounts/user-account', {account});
+      res.render('accounts/account-home', {account});
 
     } else {
       res.status(400).json('User not found');

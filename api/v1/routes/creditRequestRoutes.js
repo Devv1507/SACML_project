@@ -7,6 +7,7 @@ const {
     addCreditRequest,
     updateCreditRequestById,
     deleteCredetRequestById,
+    renderUpdateForm,
   } = require('../../controllers/creditRequestController.js');
 const {redirectToLoginIfUnauthorized, checkRole} = require('../../middleware/authorize');
 
@@ -22,7 +23,8 @@ router.get('/', redirectToLoginIfUnauthorized, checkRole([2,3]), getCreditReques
 router.get('/:id', redirectToLoginIfUnauthorized, checkRole([2,3]), getCreditRequestOfUser);
 
 /* router.put('/:id', authorize.validate, authorize.checkRole([1]), creditRequestController.updateCreditRequestById); */
-router.put('/:id', redirectToLoginIfUnauthorized, checkRole([2,3]), updateCreditRequestById); 
+router.get('/update/:id', redirectToLoginIfUnauthorized, checkRole([2,3]), renderUpdateForm);
+router.put('/update/:id', redirectToLoginIfUnauthorized, checkRole([2,3]), updateCreditRequestById); 
 
 /** Private Routes for Admin */
 router.get('/all', redirectToLoginIfUnauthorized, checkRole([3]),getAllCreditRequests);

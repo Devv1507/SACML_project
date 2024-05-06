@@ -5,18 +5,19 @@
                 <h4>Solicitud de Préstamo</h4>
             </div>
             <div class="card-body">
-                <form action="/api/v1/home/credit-requests/add" method="POST">
+                <form action="/api/v1/home/credit-requests/update/{{targetRequest.userId}}?_method=PUT" method="POST">
+                    <input type="hidden" name="_method" value="PUT">
                     <div class="mb-3">
-                        <input type="text" name="amount" class="form-control" placeholder="Monto solicitado" autofocus>
+                        <input type="text" name="amount" class="form-control" placeholder="Monto solicitado" value="{{targetRequest.amount}}">
                     </div>
                     <div class="mb-3">
-                        <textarea name="description" class="form-control">Descripción de la Solicitud</textarea>
+                        <textarea name="description" class="form-control">{{targetRequest.description}}</textarea>
                     </div>
                     <div class="mb-3">
-                        <input type="text" name="creditHistory" class="form-control" placeholder="Historial Crediticio">
+                        <input type="text" name="creditHistory" class="form-control" placeholder="Historial Crediticio" value="{{targetRequest.creditHistory}}">
                     </div>
                     <div class="d-flex gap-2">
-                        <button class="btn btn-primary w-100"> Radicar </button>
+                        <button class="btn btn-primary w-100"> Editar </button>
                     </div>
                 </form>
             </div>

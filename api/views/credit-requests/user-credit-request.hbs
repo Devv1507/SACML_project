@@ -1,0 +1,39 @@
+<div class="container p-4">
+    {{#each creditRequests}}
+    <div class="col-md-6 mx-auto">
+        <div class="card">
+            <div class="card-header text-center">
+                <h4>Solicitud de Crédito Actual</h4>
+            </div>
+            <div class="card-body">
+                
+                <div class="card card-body mb-2">
+                    <p> <u>Descripción: </u> {{description}}</p>
+                </div>
+                <div class="card card-body mb-2">
+                    <p><u>Historial Crediticio:</u> {{creditHistory}}</p>
+                </div>
+                
+                {{#if adminRole}}
+                <form action="/api/v1/home/credit-requests/{{userId}}?_method=DELETE" method="POST">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                </form>
+                {{/if}}
+
+                <div class="container mb-2 d-flex justify-content-between">
+                    <h5 class="text-primary">
+                        Monto ideal: {{amount}}
+                    </h5>
+                    <a href="/api/v1/home/credit-requests/update/{{userId}}">
+                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{/each}}
+    <div class="position-absolute bottom-10 start-50 translate-middle-x">
+        <a href="/api/v1/home/" class="btn btn-primary" role="button">Regresar</a>
+    </div>
+</div>
