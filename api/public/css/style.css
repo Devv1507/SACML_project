@@ -20,6 +20,12 @@ nav {
   background-color: #526ea0;
 }
 
+main {
+  font-size: 15px;
+  font-family: Roboto Mono, monospace;
+  font-weight: 700;
+}
+
 .h1-main {
   display: flex;
   justify-content: center; /* Centers content horizontally */
@@ -88,12 +94,12 @@ footer{
   justify-content: center;
 }
 
-#icon2 {
+.icon-nav {
   top: 10px;
   right: 110px;
-  width: 90px;
+  width: 80px;
   height: auto;
-  position: absolute;
+  /* position: absolute; */
 }
 
 header>h1 {
@@ -303,4 +309,24 @@ tr>*{
   position: fixed;
   width: 76%;
   z-index: 100;
+  left: 50%;
+  top: 20%;
+  transform: translate(-50%, -50%);
+}
+
+.btn-block {
+  height: auto;
+  width: 50%;
+}
+
+.vh-80 {
+  height: 80vh;
+}
+
+.button-container {
+  margin-top: auto; /* Pushes the container to the bottom */
+}
+
+.bottom-10 {
+  bottom: 10%;
 }

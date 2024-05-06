@@ -10,20 +10,20 @@ passport.use(
     { usernameField: 'email' },
     async (email, password, done) => {
       try {
-        const user = await models.Account.findOne({ where: { email } });
-        if (!user) {
+        const account = await models.Account.findOne({ where: { email } });
+        if (!account) {
           return done(null, false, { message: 'Incorrect email.' });
         }
-        const passwordMatch = await bcrypt.compare(password, user.password);
+        const passwordMatch = await bcrypt.compare(password, account.password);
         if (!passwordMatch) {
           return done(null, false, { message: 'Incorrect password.' });
         }
         const token = jwt.sign(
-          { email: user.email, accountId: user.id },
+          { email: account.email, accountId: account.id },
           process.env.TOKEN_SECRET,
           { expiresIn: '1800m' }
         );
-        return done(null, user, { token });
+        return done(null, account, { token });
       } catch (error) {
         return done(error);
       }

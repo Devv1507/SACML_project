@@ -59,12 +59,14 @@ const addOneUser = async (req, res) => {
   try {
     // Get the associated account by email in JWT_token
     const {email} = req.userData;
-    const user = await models.User.findOne({
+    // Update the disabled column of user account
+    const account = await models.Account.findOne({
       where: { email },
       attributes: {
         exclude: ['password'],
-      },
-    });
+      }});
+    await account.update({disabled: false});
+    const user = await models.User.findOne({where: { email }});
 
     // Check the name provided is correct
     /* if (!account) {

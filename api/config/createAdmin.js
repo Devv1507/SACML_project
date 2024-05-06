@@ -9,6 +9,7 @@ const createAdminUser = async (req, res) => {
     const newAdminAccount = {
         name: process.env.ADMIN_NAME,
         email: process.env.ADMIN_EMAIL,
+        disabled: false
       };
     newAdminAccount.password = await models.Account.encryptPassword(process.env.ADMIN_PASSWORD);
     const adminAccount = await models.Account.create(newAdminAccount);

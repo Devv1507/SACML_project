@@ -18,6 +18,10 @@ module.exports = {
         unique: true,
         type: Sequelize.STRING(60)
       },
+      disabled: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: true
+      },
       password: {
         allowNull: false,
         type: Sequelize.STRING

@@ -190,7 +190,6 @@ const updateAccount = async (req,res) => {
 };
 
 const logOut = async (req, res, next) => {
-  console.log(req.user);
   await req.logout((err) => {
     if (err) return next(err);
     req.flash('success_msg', 'Logged out succesfully');

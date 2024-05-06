@@ -21,7 +21,10 @@ passport.use(
   new JwtStrategy(opts, async (jwt_payload, done) => {
     try {
       const account = await models.Account.findOne({
-        where: { email: jwt_payload.email }
+        where: { email: jwt_payload.email },
+        attributes: {
+          exclude: ['password'],
+        }
       });
       if (account) return done(null, account);
       return done(null, false, {message: 'Not account found'});

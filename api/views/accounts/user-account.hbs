@@ -1,18 +1,60 @@
-
 <div class="row">
-        <div class="col-md-3">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title d-flex justify-content-between align-items-center">
-                        {{account.name}} 
-                        <a href="/api/v1/home/update/{{account.id}}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                    </h4>
-                    <p>{{account.email}}</p>
-                    <form action="/api/v1/home/{{id}}?_method=DELETE" method="POST">
-                        <input type="hidden" name="_method" value="DELETE">
-                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                    </form>
+    <!-- Left column -->
+    <div class="col-md-6 d-flex justify-content-center">
+        <!-- Buttons for credit request and user registration -->
+        <div class="card">
+            <div class="card-body">
+                {{#if account.disabled}}
+                <div class="mb-3 text-center">
+                    <button type="button" class="btn btn-primary btn-block" disabled><p>Realizar <br>Petición de Crédito</p></button>
+                </div>
+                <div class="mb-3">
+                    <p class="p-center">La opción de arriba aparece deshabilitada?</p>
+                    <a href="/api/v1/home/users/add" class="p-center">Completar registro de usuario</a>
+                </div>
+                {{else}}
+                <div class="mb-3 text-center">
+                    <a class="btn btn-primary" href="/api/v1/home/credit-requests/add" role="button"><p>Realizar <br>Petición de Crédito</p></a>
+                </div>
+                <div class="mb-3 text-center">
+                    <a class="btn btn-primary" href="/api/v1/home/credit-requests/" role="button"><p>Peticiones realizadas</p></a>
+                </div>
+                {{/if}}
+            </div>
+        </div>
+    </div>
+
+<!-- Right column -->
+<div class="col-md-6 justify-content-end">
+    <!-- Button for dropdown -->
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Información de la Cuenta</h5>
+            <button class="btn btn-secondary btn-block" type="button" data-bs-toggle="collapse" data-bs-target="#accountDetails" aria-expanded="false" aria-controls="accountDetails">
+                Mostar
+            </button>
+            <!-- Dropdown content -->
+            <div class="collapse" id="accountDetails">
+                <div class="card card-body">
+                    <h5>Detalles de la Cuenta</h5>
+                    <p>Nombre: {{account.name}}</p>
+                    <p>Email: {{account.email}}</p>
+                    {{#if account.disabled}}
+                    <p>Tipo de Cuenta: Invitado </p>
+                    {{else}}
+                    <p>Tipo de Cuenta: Usuario </p>
+                    {{/if}}
+                    <!-- Add more account details here -->
                 </div>
             </div>
         </div>
+    </div>
+    <!-- Clock -->
+    <div class="card mt-3">
+        <div class="card-body">
+            <h5 class="card-title">Clock</h5>
+            <!-- Add clock here -->
+        </div>
+    </div>
 </div>
+

@@ -9,6 +9,9 @@
   </ul>
 
   <ul class="navbar-nav mr-auto align-items-center">
+    {{#if userData}}
+    <img src="/imgs/icon.png" class="icon-nav">
+    {{/if}}
     <li class="nav-item dropstart">
       <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
         aria-expanded="false">
@@ -17,9 +20,13 @@
       <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
         <li><a class="dropdown-item" href="/api/v1/home/login">About us</a></li>
         {{#if userData}}
+        <li><a class="dropdown-item" href="/api/v1/home/">Home</a></li>
         <li><a class="dropdown-item" href="/api/v1/home/logout">Logout</a></li>
         {{else}}
         <li><a class="dropdown-item" href="/api/v1/home/sign-up">Sign Up</a></li>
+        {{/if}}
+        {{#if adminRole}}
+        <li><a class="dropdown-item" href="/api/v1/home/all">All user accounts</a></li>
         {{/if}}
       </ul>
     </li>

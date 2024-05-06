@@ -81,9 +81,11 @@ const updateCreditRequestById = async (req, res) => {
 const deleteCredetRequestById = async (req, res) => {
   try {
     const { id } = req.params;
-    const targetCreditRequest = await models.CreditRequest.findByPk(id);
+    const targetCreditRequest = await models.CreditRequest.findOne({where: {userId: id}});
     await targetCreditRequest.destroy();
-    res.json({deleted : true});
+    req.flash("success_msg", "Solicitud de crédito eliminada"); //********************** */
+    res.redirect('/api/v1/home/');
+    /* res.json({deleted : true}); */
   } catch (error) {
     console.log(error);
     res.status(500).send({ success: false, message: error.message });

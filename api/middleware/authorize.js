@@ -49,6 +49,9 @@ const checkRole = (roles) => async (req, res, next) => {
   else if (!roles.includes(user.roleId)){
     return res.status(401).json(`Sorry you don't have access to this route`)
   }
+  if (user.roleId === 3) {
+    res.locals.adminRole = true;
+  }
   next();
 };
 

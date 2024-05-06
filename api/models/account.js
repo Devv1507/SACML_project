@@ -4,6 +4,7 @@ module.exports = (sequelize, DataTypes) => {
   const Account = sequelize.define('Account', {
     name: DataTypes.STRING,
     email: DataTypes.STRING,
+    disabled: DataTypes.BOOLEAN,
     password: DataTypes.STRING
   }, {
     timestamps: true,
