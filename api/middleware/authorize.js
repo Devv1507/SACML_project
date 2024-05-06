@@ -37,15 +37,17 @@ const validate = async (req, res, next) => {
  */
 const checkRole = (roles) => async (req, res, next) => {
   // retrive user id based on endpoint param
-  const id = req.params.id;
-  const userByParams = await models.User.findByPk(id);
+  /* const id = req.params.id; */
+  const {id} = req.userData;
+  const user = await models.User.findByPk(id);
+  /* const userByParams = await models.User.findByPk(id); */
   /*const {email} = req.userData;
   const userByAccount = await models.User.findOne({ where: {email}}); */
-  if (!userByParams){
-    return res.status(404).json('URL_id parameter does not match with any user in the database')
+  if (!user){
+    return res.status(404).json(`Provided id doesn't match with any user in database`)
   }
-  else if (!roles.includes(userByParams.roleId)){
-    return res.status(401).json('Sorry you do not have access to this route')
+  else if (!roles.includes(user.roleId)){
+    return res.status(401).json(`Sorry you don't have access to this route`)
   }
   next();
 };
@@ -60,6 +62,7 @@ const redirectToLoginIfUnauthorized = (req, res, next) => {
       return res.redirect('/');
     }
     // Continue to the next middleware or route handler if authorized
+    res.locals.userData = account;
     req.userData = account;
     next();
   })(req, res, next);

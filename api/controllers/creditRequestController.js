@@ -8,10 +8,7 @@ const renderNewRequest = (req, res) => {
 // function to add a credit request
 const addCreditRequest = async (req, res) => {
   const { body } = req;
-  console.log(req.userData.dataValues.id)
-  const {email} = req.userData;
-  const user = await models.User.findOne({ where: { email}});
-  const userId = user.id;
+  const {id} = req.userData;
   //console.log(user);
   // Validate fields on server-side (i.e. nulls)
   const errors = [];
@@ -32,7 +29,7 @@ const addCreditRequest = async (req, res) => {
     await models.CreditRequest.create(
         {
             ...body,
-            userId: userId
+            userId: id
         });
     req.flash('success_msg', 'Solicitud radicada satisfactoriamente');
     res.redirect('/api/v1/home/');
@@ -47,9 +44,8 @@ const addCreditRequest = async (req, res) => {
 const getCreditRequestOfUser = async (req, res) => {
   try {
     /* const { id } = req.params;  */
-    const {email} = req.userData;
-    const user = await models.User.findOne({where: {email}});
-    const creditRequests = await models.CreditRequest.findAll({where: { userId : user.id}});
+    const {id} = req.userData;
+    const creditRequests = await models.CreditRequest.findAll({where: { userId : id}});
     //res.json(creditRequest);
     res.render('credit-requests/user-credit-requests', {creditRequests});
   } catch (error) {

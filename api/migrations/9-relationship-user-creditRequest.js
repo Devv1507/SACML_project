@@ -6,7 +6,7 @@ module.exports = {
       'CreditRequests', // name of source model
       'userId',
       {
-        type: Sequelize.INTEGER, // allowNull = false, probably necessary for logic
+        type: Sequelize.UUID, // allowNull = false, probably necessary for logic
         references: {
           model: 'Users',
           key: 'id'

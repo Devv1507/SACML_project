@@ -16,7 +16,11 @@
       </a>
       <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
         <li><a class="dropdown-item" href="/api/v1/home/login">About us</a></li>
+        {{#if userData}}
         <li><a class="dropdown-item" href="/api/v1/home/logout">Logout</a></li>
+        {{else}}
+        <li><a class="dropdown-item" href="/api/v1/home/sign-up">Sign Up</a></li>
+        {{/if}}
       </ul>
     </li>
 

@@ -1,10 +1,10 @@
-<form name="registerForm" method="POST" action="/sign-up">
+<form name="registerForm" method="POST" action="/api/v1/home/users/add">
     <!-- needs security check method="POST" action="url/to/your/server/here" -->
     <h4>Información de la Cuenta</h4>
     <div class="row">
         <div class="column">
             <div class="cell">
-                <input name="userName" type="text" placeholder="Nombre" class="wide-square" autofocus />
+                <input name="name" type="text" placeholder="Nombre" class="wide-square" autofocus />
             </div>
             <div class="cell">
                 <select name="IdType" class="wide-square">
@@ -14,10 +14,10 @@
                 </select>
             </div>
             <div class="cell">
-                <input name="userAdress" type="text" placeholder="Dirección de domicilio" class="wide-square" />
+                <input name="address" type="text" placeholder="Dirección de domicilio" class="wide-square" />
             </div>
             <div class="cell">
-                <select name="userCity" class="wide-square">
+                <select name="city" class="wide-square">
                     <option value="Cali">Cali</option>
                     <option value="Medellin">Medellín</option>
                     <option value="Bogota">Bogotá</option>
@@ -25,13 +25,13 @@
                 </select>
             </div>
             <div class="cell">
-                <input name="email" type="email" placeholder="Email" class="wide-square" />
+                <input name="userEmail" type="email" placeholder="Email" class="wide-square" />
             </div>
         </div>
 
         <div class="column">
             <div class="cell">
-                <input name="userLastName" type="text" placeholder="Apellido" class="wide-square" />
+                <input name="surname" type="text" placeholder="Apellido" class="wide-square" />
             </div>
             <div class="cell">
                 <input name="userId" type="text" placeholder="Nº de Documento de Identidad" class="wide-square" />
@@ -48,7 +48,7 @@
                 </select>
             </div>
             <div class="cell">
-                <input name="phone" type="text" placeholder="Nº de Teléfono" class="wide-square" />
+                <input name="phone" type="text" placeholder="Númerp de Celular" class="wide-square" />
             </div>
         </div>
     </div>

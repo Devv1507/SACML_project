@@ -9,8 +9,7 @@ const methodOver = require('method-override');
 const flash = require('connect-flash');
 const session = require('express-session');
 const dotenv = require('dotenv').config();
-const passport = require('./middleware/passport-jwt.js');
-
+const passport = require('passport');
 
 // ************Settings********************
 // assigning the express function to use cors module and others

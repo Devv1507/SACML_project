@@ -5,11 +5,14 @@ const authorize = require('../../middleware/authorize');
 // assignning the instance of Router class
 const router = Router();
 // our routes for user schema (this is adding to root route /api/v1/users)
-router.get('/', authorize.validate, userController.getAllUsers);                // get all users stored from database
+router.get('/add', authorize.redirectToLoginIfUnauthorized, authorize.checkRole([1]), userController.renderNewUserForm);
+router.post('/add', authorize.redirectToLoginIfUnauthorized, authorize.checkRole([1]), userController.addOneUser);   
+
+router.get('/all', authorize.redirectToLoginIfUnauthorized, authorize.checkRole([3]), userController.getAllUsers);                // get all users stored from database
 router.get('/:id', authorize.validate, authorize.checkRole([1]),  userController.getOneUserById);          // get user by id
-router.post('/',  userController.addOneUser);                // add user to database
-router.put('/:id', authorize.validate, authorize.checkRole([1]), userController.updateOneUserById);       // update user information by id
-router.delete('/:id', authorize.validate, authorize.checkRole([1]), userController.deleteOneUserById);    // delete user by id
+/* router.post('/',  userController.addOneUser);     */            // add user to database
+router.put('/:id', authorize.validate, authorize.checkRole([2]), userController.updateOneUserById);       // update user information by id
+router.delete('/:id', authorize.validate, authorize.checkRole([2]), userController.deleteOneUserById);    // delete user by id
 
 // exporting the router instance with the user routes
 module.exports = router;

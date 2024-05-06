@@ -26,6 +26,12 @@ const getOneUserById = async (req, res) => {
     res.status(500).send({ success: false, message: error.message });
   }
 };
+
+const renderNewUserForm = (req, res) => {
+  res.render('users/user-form');
+};
+
+
 // function to add an user
 const addOneUser = async (req, res) => {
   const { body } = req;
@@ -51,30 +57,35 @@ const addOneUser = async (req, res) => {
     return res.status(400).json({ succes: false, message: errors });
   }
   try {
-    // Get the associated account email
-    const account = await models.Account.findOne({
-      where: { name: body.name },
+    // Get the associated account by email in JWT_token
+    const {email} = req.userData;
+    const user = await models.User.findOne({
+      where: { email },
       attributes: {
         exclude: ['password'],
       },
     });
+
     // Check the name provided is correct
-    if (!account) {
+    /* if (!account) {
       return res
         .status(404)
         .json({
           success: false,
           message: 'Provided name doesnt match with any registered account',
         });
-    }
+    } */
+
     // Add the new user information with its respectived account email
-    await service.addNewUser({
-      ...body,
-      email: account.email, // Set the email from the Account model
-      roleId: 1,
+    const {name, ...newUser} = body;
+    await user.update({
+      ...newUser,
+      roleId: 2,
     });
     // Final response, if all steps correct
-    res.json({ success: true, message: 'User added succesfully' });
+    //res.json({ success: true, message: 'User added succesfully' });
+    req.flash('success_msg', 'User created successfully');
+    res.redirect('/api/v1/home');
   } catch (error) {
     console.log(error);
     res.status(500).send({ success: false, message: error.message });
@@ -110,4 +121,6 @@ module.exports = {
   addOneUser,
   updateOneUserById,
   deleteOneUserById,
+
+  renderNewUserForm
 };

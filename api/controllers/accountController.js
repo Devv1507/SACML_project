@@ -57,10 +57,16 @@ const signUp = async (req, res) => {
       email,
       password: hash,
     };
-    await models.Account.create(newAccount);
+    const account = await models.Account.create(newAccount);
+    await models.User.create({
+      id: account.id,
+      name,
+      email,
+      roleId: 1
+    });
     /* res.status(201).json({ message: 'Account created successfully' }); */
     req.flash('success_msg', 'Account created successfully');
-    res.redirect('/api/v1/home/login');
+    res.redirect('/');
   } catch (error) {
     console.error(error); // Log the error for debugging
     res.status(500).json({ message: 'Error creating user' }); // More user-friendly error message
@@ -115,7 +121,21 @@ const logIn = async (req, res) => {
   }
 };
 
+const getById = async (req, res) => {
+  try {
+    const {id} = req.userData;
+    const account = await models.Account.findByPk(id);
+    if (account) {
+      //res.json({ success: true, message: accounts });
+      res.render('accounts/user-account', {account});
 
+    } else {
+      res.status(400).json('User not found');
+    }
+  } catch (error) {
+    res.status(500).send({ success: false, message: error.message });
+  }
+};
 
 
 const getAll = async (req, res) => {
@@ -139,7 +159,7 @@ const deleteAccount = async (req,res) => {
     const {id} = req.params;
     const target = await models.Account.findByPk(id);
     await target.destroy();
-    req.flash("success_msg", "Account deleted successfully");
+    req.flash("success_msg", "Account deleted successfully"); //********************** */
     res.redirect('/api/v1/home/');
   } catch (error) {
     res.status(500).send({ success: false, message: error.message });
@@ -149,6 +169,10 @@ const deleteAccount = async (req,res) => {
 
 const renderUpdateForm = async (req, res) => {
   const {id} = req.params;
+  if (id != req.userData.dataValues.id) {
+    req.flash("error", "No autorizado");
+    return res.redirect('/api/v1/home/');
+  }
   const target = await models.Account.findByPk(id);
   res.render('accounts/edit-account-form', {target});
 };
@@ -166,12 +190,14 @@ const updateAccount = async (req,res) => {
 };
 
 const logOut = async (req, res, next) => {
+  console.log(req.user);
   await req.logout((err) => {
     if (err) return next(err);
     req.flash('success_msg', 'Logged out succesfully');
+    res.clearCookie('jwt');
     res.redirect('/');
   });
 }
 
-module.exports = { signUp, logIn, getAll,
+module.exports = { signUp, logIn, getAll, getById,
    renderNewRegisterForm, renderLogInForm, deleteAccount, renderUpdateForm, updateAccount, logOut };
