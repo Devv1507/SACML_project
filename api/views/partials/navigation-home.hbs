@@ -21,12 +21,13 @@
         <li><a class="dropdown-item" href="/api/v1/home/login">About us</a></li>
         {{#if userData}}
         <li><a class="dropdown-item" href="/api/v1/home/">Home</a></li>
+        {{#if adminRole}}
+        <li><a class="dropdown-item" href="/api/v1/home/all">All user accounts</a></li>
+        <li><a class="dropdown-item" href="/api/v1/home/credit-requests/all/">All user <br>credit requests</a></li>
+        {{/if}}
         <li><a class="dropdown-item" href="/api/v1/home/logout">Logout</a></li>
         {{else}}
         <li><a class="dropdown-item" href="/api/v1/home/sign-up">Sign Up</a></li>
-        {{/if}}
-        {{#if adminRole}}
-        <li><a class="dropdown-item" href="/api/v1/home/all">All user accounts</a></li>
         {{/if}}
       </ul>
     </li>

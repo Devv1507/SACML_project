@@ -330,3 +330,13 @@ tr>*{
 .bottom-10 {
   bottom: 10%;
 }
+
+
+.table td {
+  align-items: center;
+  }
+
+.disabled-link {
+    pointer-events: none;
+    opacity: 0.5;
+}

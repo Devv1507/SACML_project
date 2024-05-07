@@ -7,8 +7,7 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     surname: DataTypes.STRING,
     address: DataTypes.STRING,
-    phone: DataTypes.STRING,
-    requestInProgress: DataTypes.BOOLEAN
+    phone: DataTypes.STRING
 /*     email: DataTypes.STRING */
   }, {
     timestamps: true,

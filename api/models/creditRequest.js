@@ -3,7 +3,9 @@ module.exports = (sequelize, DataTypes) => {
   const CreditRequest = sequelize.define('CreditRequest', {
     amount: DataTypes.FLOAT,
     description: DataTypes.STRING,
-    creditHistory: DataTypes.STRING
+    creditHistory: DataTypes.STRING,
+    completed: DataTypes.BOOLEAN,
+    status: DataTypes.STRING
   }, {
     timestamps: true,
   });

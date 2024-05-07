@@ -19,6 +19,14 @@ module.exports = {
       creditHistory: {
         type: Sequelize.STRING
       },
+      completed: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
+      },
+      status: {
+        type: Sequelize.STRING,
+        defaultValue: 'Pendiente'
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
