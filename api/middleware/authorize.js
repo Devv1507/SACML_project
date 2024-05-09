@@ -36,18 +36,15 @@ const validate = async (req, res, next) => {
  * To restricting access to certain routes to only users with specific roles.
  */
 const checkRole = (roles) => async (req, res, next) => {
-  // retrive user id based on endpoint param
-  /* const id = req.params.id; */
+  // retrive user id based on session variable
   const {id} = req.userData;
   const user = await models.User.findByPk(id);
-  /* const userByParams = await models.User.findByPk(id); */
-  /*const {email} = req.userData;
-  const userByAccount = await models.User.findOne({ where: {email}}); */
   if (!user){
     return res.status(404).json(`Provided id doesn't match with any user in database`)
   }
   else if (!roles.includes(user.roleId)){
-    return res.status(401).json(`Sorry you don't have access to this route`)
+    req.flash('error', 'No tienes acceso a esta ruta');
+    return res.redirect('/api/v1/home')/* res.status(401).json(`Sorry, you don't have access to this route`) */
   }
   if (user.roleId === 3) {
     res.locals.adminRole = true;
