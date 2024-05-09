@@ -19,9 +19,12 @@ const getAllUsers = async (req, res) => {
 // function to get a particular user by id
 const getOneUserById = async (req, res) => {
   try {
-    const { id } = req.params;
-    const response = await service.getUserById(id);
-    res.json(response);
+    const { id } = req.userData;
+    const user = await service.getUserById(id);
+    if (!user){
+      res.status(400).json('User not found');
+    }
+    res.render('users/user-info', {user});
   } catch (error) {
     res.status(500).send({ success: false, message: error.message });
   }

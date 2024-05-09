@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header class="page">
+        <img src=imgs/icon.png id="icon2" />
+        <h1>Registro</h1>
+        <div class="timeSquare">
+            <p class="_-28">28</p>
+            <p class="feb">Feb</p>
+        </div>
+        <div class="icons">
+            <img src=imgs/iconAttention.png id="iconAtt" />
+            <a href="welcome.html"><img src=imgs/iconMenu.png id="iconMenu" /></a>
+            <p class="overlayIconAtt">Atención</p>
+        </div>
+    </header>
+    <main>
+        <form id="registerForm"> <!-- needs security check method="POST" action="url/to/your/server/here" -->
+            <h4>Información de la Cuenta</h4>
+            <div class="row">
+                <div class="column">
+                    <div class="cell">
+                        <input id="userName" type="text" placeholder="Nombre" class="wide-square"/>
+                    </div>
+                    <div class="cell">
+                        <select id="IdType" class="wide-square">
+                            <option value="CC">Cédula de Ciudadania</option>
+                            <option value="CE">Cédula de Extranjería</option>
+                            <option value="PE">Permiso de Extranjería</option>
+                          </select>
+                    </div>
+                    <div class="cell">
+                        <input id="userAdress" type="text" placeholder="Dirección de domicilio"  class="wide-square"/>
+                    </div>
+                    <div class="cell">
+                        <select id="userCity" class="wide-square">
+                            <option value="Cali">Cali</option>
+                            <option value="Medellin">Medellín</option>
+                            <option value="Bogota">Bogotá</option>
+                            <option value="Buga">Buga</option>
+                          </select>
+                    </div>
+                    <div class="cell">
+                        <input id="email" type="email" placeholder="Email" class="wide-square"/>
+                    </div>
+                </div>
+
+                <div class="column">
+                    <div class="cell">
+                        <input id="userLastName" type="text" placeholder="Apellido" class="wide-square" />
+                    </div>
+                    <div class="cell">
+                        <input id="userId" type="text" placeholder="Nº de Documento de Identidad" class="wide-square" />
+                    </div>
+                    <div class="cell">
+                        <input id="adressNeigh" type="text" placeholder="Barrio" class="wide-square" />
+                    </div>
+                    <div class="cell">
+                        <select id="department" class="wide-square">
+                            <option value="Valle">Valle del Cauca</option>
+                            <option value="Cundinamarca">Cundinamarca</option>
+                            <option value="Cauca">Cauca</option>
+                            <option value="Santander">Santander</option>
+                          </select>
+                    </div>
+                    <div class="cell">
+                        <input id="phone" type="text" placeholder="Nº de Teléfono" class="wide-square"/>
+                    </div>
+                </div>
+            </div>
+            <button id="btnForm" type="submit">Registrar</button>             <!-- submit button-->
+        </form>
+    </main>
+    <footer>
+        <p>© Proyecto SACML. Todos los derechos reservados.</p>
+    </footer>
+
+    <script src="js/getUserDataForm.js"></script>
+</body>
+
+</html>

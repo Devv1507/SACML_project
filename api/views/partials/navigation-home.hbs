@@ -2,8 +2,8 @@
   <ul class="navbar-nav ms-auto">
     <li class="nav-item">
       <div class="timeSquare">
-        <p class="_-28">28</p>
-        <p class="feb">Mar</p>
+        <p class="_-28">{{date.day}}</p>
+        <p class="feb">{{date.month}}</p>
       </div>
     </li>
   </ul>
@@ -21,11 +21,7 @@
         <li><a class="dropdown-item" href="/api/v1/home/login">About us</a></li>
         {{#if userData}}
         <li><a class="dropdown-item" href="/api/v1/home/">Home</a></li>
-        {{#if adminRole}}
-        <li><a class="dropdown-item" href="/api/v1/home/all">All user accounts</a></li>
-        <li><a class="dropdown-item" href="/api/v1/home/credit-requests/all/">All user <br>credit requests</a></li>
-        {{/if}}
-        <li><a class="dropdown-item" href="/api/v1/home/logout">Logout</a></li>
+        <li><a class="dropdown-item" href="/api/v1/logout">Logout</a></li>
         {{else}}
         <li><a class="dropdown-item" href="/api/v1/home/sign-up">Sign Up</a></li>
         {{/if}}

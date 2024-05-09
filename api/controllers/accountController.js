@@ -11,33 +11,32 @@ const renderNewRegisterForm = (req, res) => {
 
 const signUp = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, rePassword } = req.body;
     const errors = [];
     // Validate email, check account from database with same email if any
-    const existingEmail = await models.Account.findOne({
-      where: { email },
-    });
+    const existingEmail = await models.Account.findOne({where: { email } });
     if (existingEmail) {
       /* return res.status(409).json({ message: 'Email is already registered' }); */
-      errors.push({ text: 'Email is already registered' });
+      errors.push({ text: 'El correo ingresado ya se encuentra registrado' });
     }
     // Validate name, check account from database with same name if any
-    const existingName = await models.Account.findOne({
-      where: { name },
-    });
+    const existingName = await models.Account.findOne({where: { name } });
     if (existingName) {
       /* return res.status(409).json({ message: 'Account name is already taken' }); */
-      errors.push({ text: 'Account name is already taken' });
+      errors.push({ text: 'El nombre de la cuenta ingresado ya se encuentra registrado' });
     }
     // Null, empty or undefined constrains
     if (!name) {
-      errors.push({ text: 'Please add an account name' });
+      errors.push({ text: 'Por favor añada un nombre para la cuenta' });
     }
     if (!email) {
-      errors.push({ text: 'Please add an email' });
+      errors.push({ text: 'Por favor añada un email' });
     }
     if (!password) {
-      errors.push({ text: 'Please add a password' });
+      errors.push({ text: 'Por favor añada una contraseña' });
+    }
+    if (password != rePassword) {
+      errors.push({ text: `Las contraseñas no coinciden, intente de nuevo` });
     }
     // Check for errors first
     if (errors.length > 0) {
@@ -60,7 +59,6 @@ const signUp = async (req, res) => {
     const account = await models.Account.create(newAccount);
     await models.User.create({
       id: account.id,
-      name,
       email,
       roleId: 1
     });
@@ -80,10 +78,9 @@ const renderLogInForm = (req, res) => {
 
 const logIn = async (req, res) => {
   try {
+    const {body} = req;
     // Validate the name
-    const account = await models.Account.findOne({
-      where: { email: req.body.email }
-    });
+    const account = await models.Account.findOne({where: { email: body.email }});
     if (!account) {
       return res.status(404).json({message: 'Account email is not found. Invalid login credentials',});
     }
@@ -97,7 +94,7 @@ const logIn = async (req, res) => {
 
     // Checking if the password match
     const passwordMatch = await bcrypt.compare(
-      req.body.password,
+      body.password,
       account.password
     );
     if (!passwordMatch) {
@@ -117,7 +114,7 @@ const logIn = async (req, res) => {
     //res.cookie("token", token, { httpOnly: true, secure: true } ).status(200).send({token});
   } catch (error) {
     console.error(error); // Log the error for debugging
-    res.status(500).json({ message: 'Something went wrong' });
+    res.status(500).json({ message: `Something's wrong with login` });
   }
 };
 
@@ -125,9 +122,15 @@ const getById = async (req, res) => {
   try {
     const {id} = req.userData;
     const account = await models.Account.findByPk(id);
+    const user = await models.User.findByPk(id);
+    const haveRequest = await models.CreditRequest.findAll({where: {userId: id}});
+    let boolStatus = false;
+    if (haveRequest.length !== 0){
+      boolStatus = true;
+    }
     if (account) {
       //res.json({ success: true, message: accounts });
-      res.render('accounts/account-home', {account});
+      res.render('accounts/account-home', {account, user, boolStatus});
 
     } else {
       res.status(400).json('User not found');
@@ -159,7 +162,7 @@ const deleteAccount = async (req,res) => {
     const {id} = req.params;
     const target = await models.Account.findByPk(id);
     await target.destroy();
-    req.flash("success_msg", "Account deleted successfully"); //********************** */
+    req.flash("warning_msg", "La cuenta ha sido eliminada"); //********************** */
     res.redirect('/api/v1/home/');
   } catch (error) {
     res.status(500).send({ success: false, message: error.message });

@@ -1,0 +1,29 @@
+<div class="container p-4">
+    <div class="col-md-4 mx-auto">
+        <div class="card text-center">
+            <div class="card-header">
+                <h4>Solicitud de Préstamo</h4>
+            </div>
+            <div class="card-body">
+                <form action="/api/v1/home/credit-requests/update/{{targetRequest.userId}}?_method=PUT" method="POST">
+                    <input type="hidden" name="_method" value="PUT">
+                    <div class="mb-3">
+                        <input type="text" name="amount" class="form-control" placeholder="Monto solicitado" value="{{targetRequest.amount}}">
+                    </div>
+                    <div class="mb-3">
+                        <textarea name="description" class="form-control">{{targetRequest.description}}</textarea>
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" name="creditHistory" class="form-control" placeholder="Historial Crediticio" value="{{targetRequest.creditHistory}}">
+                    </div>
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-primary w-100"> Editar </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="p-3 text-center align-items-baseline">
+            <a href="/api/v1/home/" class="btn btn-primary" role="button">Regresar</a>
+        </div>
+    </div>
+</div>

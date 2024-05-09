@@ -1,68 +1,352 @@
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+/********************************        Customized styles.css      ****************************************/ 
+@import url("https://fonts.googleapis.com/css2?family=Roboto Mono:wght@500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Merriweather:wght@400;900&display=swap");
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/********Styles of welcome page***************/
+
+.welcome-page {
+  background-image: url('../imgs/bgr.png');
+  background-size: 100% auto; /* Adjusts the width to match the viewport */
+  background-repeat: no-repeat; 
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-body {
-  margin: 0;
+header {
   display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  height: 20vh; /* Set container height to 100% viewport height */
+  justify-content: center; /* Centers content horizontally */
+  align-items: center; /* Centers content vertically */
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+nav {
+  background-color: #526ea0;
+}
+/* 
+main {
+  font-size: 15px;
+  font-family: Roboto Mono, monospace;
+  font-weight: 700;
+}
+ */
+.h1-main {
+  display: flex;
+  justify-content: center; /* Centers content horizontally */
+  align-items: flex-end; /* Centers content vertically */
+  height: 40vh; /* Set container height to 100% viewport height */
+  color: rgba(255, 255, 255, 1);
+  font-size: 25px;
+  font-family: Roboto Mono, monospace;
+  font-weight: 700;
+  letter-spacing: -2.21px;
+  word-wrap: break-word;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
+.h1-main h1{
+  margin: auto; /* Centers horizontally and vertically */
+  margin-top: auto; 
+}
+
+.inputs-welcome{
+  text-align: center;
+}
+
+
+input {
+  /* width: 100%; */
+  border: 2px solid #ccc; /* Adjust border color as needed */
+  border-radius: 8px; /* Creates blunt edges */
+}
+
+button{
+  border: 2px solid #ccc; /* Adjust border color as needed */
+  border-radius: 8px; /* Creates blunt edges */
+}
+
+.p-center{
+  color: rgb(88, 169, 236);
+  font-size: 15px;
+  font-family: Roboto Mono, monospace;
+  font-weight: 700;
+}
+
+.icon{
+  top: 250px;
+  left: 120px;
+  width: 250px;
+  height: auto;
+  position: absolute;
+}
+
+p {
+  margin: 0;
+}
+
+footer{
+  background-color: #526ea0;
+  width: 100%;
+  height: 20px;
+  bottom: 1px;
+  color: white;
+  font-size: 10px;
+  font-family: Inter;
   font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  position: absolute;
+  display: flex;
+  align-items: end;
+  justify-content: center;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
+.icon-nav {
+  top: 10px;
+  right: 110px;
+  width: 80px;
+  height: auto;
+  /* position: absolute; */
+}
+
+header>h1 {
+  top: 1%;
+  left: 40%;
+  color: rgba(255, 255, 255, 1);
+  font-size: 40px;
+  line-height: 150%;
+  font-family: Roboto Mono, monospace;
+  font-weight: 700;
+  letter-spacing: -2.21px;
+  word-wrap: break-word;
+  position: absolute;
+}
+
+.timeSquare{
+  top:20%;
+}
+
+._-28 {
+  position: absolute;
+  top: 20px;
+  left: 64px;
+  color: rgba(255, 255, 255, 1);
+  font-size: 20px;
+  line-height: 150%;
+  font-family: Merriweather, serif;
+  font-weight: 900;
+  letter-spacing: -0.88px;
+}
+
+.feb {
+  position: absolute;
+  top: 45px;
+  left: 68px;
+  color: rgba(255, 255, 255, 1);
+  font-size: 12px;
+  line-height: 150%;
+  font-family: Merriweather, serif;
+  font-weight: 400;
+  letter-spacing: -0.46px;
+}
+
+.icons {
+  position: absolute;
+  top: 10px;
+  right: 40px;
+  width: 80px;
+  height: 78px;
+}
+
+/* #iconAtt {
+  position: absolute;
+  right: 0px;
+  width: 50%;
+} */
+#iconAtt{
+  width: 40px;
+}
+
+#iconMenu {
+  position: absolute;
+  right: 40px;
+  width: 50%;
+}
+
+.overlayIconAtt {
+  position: absolute;
+  top: 54%;
+  left: 75%;
+  transform: translate(-50%, -50%);
+  color: gray;
+  font-size: 8px;
+  text-align: center;
+  font-family: Merriweather, serif;
+}
+
+/********Styles of form page***************/
+.page {
+  background-color: #526ea0;
+  display: block;
+  width: 100%;
+  height: 100px;
+}
+
+body>h1 {
+  left: 380px;
+  top: 400px;
+  position: absolute;
+  color: white;
+  font-size: 130px;
+  font-family: 'Liberation Mono Bold';
+  font-weight: 700;
+  line-height: 195px;
+  word-wrap: break-word;
+
+}
+
+h4 {
+  color: black;
+  font-family: Roboto Mono, monospace;
+}
+
+.bgr1 {
+  width: 100%;
+  height: auto;
+  display: flex;
+}
+
+.icon1 {
+  width: 500px;
+  height: auto;
+  left: 128px;
+  top: 578px;
+  position: absolute;
+}
+
+button, input, form, select{
+  color: black;
+  font-size: 20px;
+  font-family: Merriweather, serif;
+  font-weight: 500;
+}
+
+.wide-square{
+  width: 600px; /* Adjust width as needed */
+  height: 40px;
+}
+
+form {
+  text-align: center;
+  width: 100%;
+}
+
+.row {
+  overflow: hidden;
+  padding: 10px;
+}
+
+.column {
+  float: left;
+  width: 47%;
+}
+
+button{
+  background-color: #526ea0; /* Set button background color */
+  color: white; /* Set button text color */
+  width: 150px;
+  height: 40px;
+}
+
+
+/********Styles of table page***************/
+
+.cell{
+  padding: 10px;
+}
+
+table{
+  margin-left: auto;
+  margin-right: auto;
+}
+
+tr>*{
+  border: 1px solid #526ea0;
+  padding: 10px;
+  text-align: center;
+}
+
+
+/********Styles of home page***************/
+
+.menu-item {
+  border-bottom: 1px solid #ddd;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+}
+
+.menu-item button {
+  border: none;
+  padding: 0.5rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.menu-item button:hover {
+  background-color: rgb(88, 169, 236);
+}
+
+.home-column {
+  flex: 1;
+  padding: 0 1rem;
+}
+
+.fa-bars{
+  color: rgba(255, 255, 255, 1);
+}
+
+.dropstart .dropdown-toggle::before {
+  display: none; /* Hide the default arrow */
+}
+
+.alert {
+  position: fixed;
+  width: 76%;
+  z-index: 100;
+  left: 50%;
+  top: 20%;
+  transform: translate(-50%, -50%);
+}
+
+.btn-block {
+  height: auto;
+  width: 50%;
+}
+
+.vh-80 {
+  height: 80vh;
+}
+
+.button-container {
+  margin-top: auto; /* Pushes the container to the bottom */
+}
+
+.bottom-10 {
+  bottom: 10%;
+}
+
+
+.table td {
+  align-items: center;
   }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+
+.disabled-link {
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+.text-alert {
+  color: rgb(165, 10, 10);
+  font-size: 12px;
+  font-family: Merriweather, serif;
+  font-weight: 400;
+  text-align: start;
 }

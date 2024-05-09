@@ -12,11 +12,11 @@ passport.use(
       try {
         const account = await models.Account.findOne({ where: { email } });
         if (!account) {
-          return done(null, false, { message: 'Incorrect email.' });
+          return done(null, false, { message: 'El correo ingresado no se encuentra registrado.' });
         }
         const passwordMatch = await bcrypt.compare(password, account.password);
         if (!passwordMatch) {
-          return done(null, false, { message: 'Incorrect password.' });
+          return done(null, false, { message: 'Contraseña incorrecta.' });
         }
         const token = jwt.sign(
           { email: account.email, accountId: account.id },

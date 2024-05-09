@@ -28,7 +28,9 @@ app.set('view engine', '.hbs');
 app.use(express.static(path.join(__dirname, 'public')));
 
 // ************ Middlewares **************
-app.use(cors());
+app.use(cors(
+    {origin: 'http://localhost:5173'}
+));
 // Middleaware to use body parser functionality to read and parse JSON in req.body
 app.use(express.json());
 // Middleware to works with HTML forms data
@@ -45,28 +47,44 @@ app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash());
 
+
+function getDate() {
+    const date = new Date();
+    const day = date.getDate();
+    const month = date.toLocaleString('default', { month: 'short' });
+    return { day, month };
+}
+
+
 // Global variables
 app.use((req,res,next) => {
+    const date = getDate();
+    res.locals.date = date;
     res.locals.success_msg = req.flash('success_msg');
     res.locals.info_msg = req.flash('info_msg');
+    res.locals.warning_msg = req.flash('warning_msg');
     res.locals.error = req.flash('error');
     next();
 });
 
 // ************ Routes **************
-const v1AuthRouter = require('./v1/routes/accountRoutes.js');
+const v1AuthRouter = require('./v1/routes/authRoutes.js');
+const v1AccountRouter = require('./v1/routes/accountRoutes.js');
 const v1UserRouter = require('./v1/routes/usersRoutes.js'); // import the users router version 1
 const v1RoleRouter = require('./v1/routes/rolesRoutes.js'); // import the roles router version 1
 const v1CityRouter = require('./v1/routes/citiesRoutes.js');
 const v1CreditRequestRouter = require('./v1/routes/creditRequestRoutes.js');
 
 app.get('/', (req, res) => {
-    const context = { isIndex: true };
+    const context = { 
+        isIndex: true
+     };
     res.render('index', context);
 });
 
 // Using the routers created
-app.use('/api/v1/home', v1AuthRouter);
+app.use('/api/v1', v1AuthRouter);
+app.use('/api/v1/home', v1AccountRouter);
 app.use('/api/v1/home/users', v1UserRouter);
 app.use('/api/v1/roles', v1RoleRouter);
 app.use('/api/v1/cities', v1CityRouter);

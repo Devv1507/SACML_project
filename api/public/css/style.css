@@ -39,6 +39,14 @@ main {
   word-wrap: break-word;
 }
 
+.h1-body {
+  display: flex;
+  color: black;
+  font-size: 25px;
+  font-family: Roboto Mono, monospace;
+  font-weight: 400;
+}
+
 .h1-main h1{
   margin: auto; /* Centers horizontally and vertically */
   margin-top: auto; 

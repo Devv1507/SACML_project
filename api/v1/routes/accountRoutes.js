@@ -7,28 +7,15 @@ router.use(cookieParser());
 
 
 // *** Controller & Middleware
-const accountController = require('../../controllers/accountController');
-const authorize = require('../../middleware/authorize');
-//const passportJwt = require('../../middleware/passport-jwt');
-const passportLocal = require('../../middleware/passport-local');
+const {
+    getAll,
+    getById,
+    deleteAccount,
+    updateAccount,
+    renderUpdateForm
+} = require('../../controllers/accountController');
+const {redirectToLoginIfUnauthorized, checkRole} = require('../../middleware/authorize');
 
-// *** Public Routes
-// Sign Up 
-router.get('/sign-up', accountController.renderNewRegisterForm); // to get the HTML form
-router.post('/sign-up', accountController.signUp);               // to send the input data to db
-
-// Log In
-//router.get('/login', authController.renderLogInForm);
-
-router.post(
-    '/login',
-    passportLocal.authenticate('local', { 
-        session: false,
-        failureRedirect: '/',
-        failureFlash: true
-    }),
-    accountController.logIn
-  );
 
 // ** Private Routes
 // Authentication to get all user account information
@@ -36,9 +23,9 @@ router.post(
 //router.get('/', /* authorize.validate, passport.authenticate('jwt', { session: false }), */ authController.getAll);
 
 
-router.get('/all', authorize.redirectToLoginIfUnauthorized, authorize.checkRole([3]), accountController.getAll);
+router.get('/all', redirectToLoginIfUnauthorized, checkRole([3]), getAll);
 
-router.get('/', authorize.redirectToLoginIfUnauthorized, authorize.checkRole([1,2,3]), accountController.getById);
+router.get('/', redirectToLoginIfUnauthorized, checkRole([1,2,3]), getById);
 // Private route
 /* router.get('/', passportJwt.authenticate('jwt', { session: false }), (req, res) => {
     // Log the token extracted from the request
@@ -46,19 +33,13 @@ router.get('/', authorize.redirectToLoginIfUnauthorized, authorize.checkRole([1,
     res.send('Authenticated successfully!');
 }); */
 
-router.delete('/:id', authorize.redirectToLoginIfUnauthorized, authorize.checkRole([3]), accountController.deleteAccount);
+router.delete('/:id', redirectToLoginIfUnauthorized, checkRole([3]), deleteAccount);
 
-router.get(
-    '/update/:id', 
-    authorize.redirectToLoginIfUnauthorized, 
-    authorize.checkRole([1,2,3]), 
-    accountController.renderUpdateForm);
-router.put('/update/:id', authorize.redirectToLoginIfUnauthorized, authorize.checkRole([1,2,3]), accountController.updateAccount);
+router.get('/update/:id', redirectToLoginIfUnauthorized, checkRole([1,2,3]), renderUpdateForm);
+router.put('/update/:id', redirectToLoginIfUnauthorized, checkRole([1,2,3]), updateAccount);
 
 /* router.get('/test', authorize.validate, passport.authenticate('jwt', { session: false }), (req, res) => {
     res.send('You have accessed a protected route!');
 }); */
-
-router.get('/logout', authorize.redirectToLoginIfUnauthorized, accountController.logOut);
 
 module.exports = router;
