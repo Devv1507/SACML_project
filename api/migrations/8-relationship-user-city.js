@@ -10,7 +10,9 @@ module.exports = {
         references: {
           model: 'Cities',
           key: 'name'
-        }
+        },
+        onDelete: 'CASCADE',
+        onUptade: 'CASCADE',
       }
     )
   },

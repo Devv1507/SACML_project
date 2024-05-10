@@ -17,7 +17,6 @@ module.exports = {
         },
       },
       name: {
-        allowNull: false,
         type: Sequelize.STRING(20),
       },
       surname: {

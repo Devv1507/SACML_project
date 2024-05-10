@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     // associations can be defined here
     City.belongsTo(models.Department, {
       foreignKey: "departmentId",
-      targetKey: "id"
+      targetKey: "id",
     });
   };
   return City;

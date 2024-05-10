@@ -122,15 +122,14 @@ const getById = async (req, res) => {
   try {
     const {id} = req.userData;
     const account = await models.Account.findByPk(id);
-    const user = await models.User.findByPk(id);
-    const haveRequest = await models.CreditRequest.findAll({where: {userId: id}});
+    const haveRequest = await models.CreditRequest.findOne({where: {userId: id}});
     let boolStatus = false;
-    if (haveRequest.length !== 0){
+    if (haveRequest){
       boolStatus = true;
     }
     if (account) {
       //res.json({ success: true, message: accounts });
-      res.render('accounts/account-home', {account, user, boolStatus});
+      res.render('accounts/account-home', {account, haveRequest, boolStatus});
 
     } else {
       res.status(400).json('User not found');
@@ -195,7 +194,7 @@ const updateAccount = async (req,res) => {
 const logOut = async (req, res, next) => {
   await req.logout((err) => {
     if (err) return next(err);
-    req.flash('success_msg', 'Logged out succesfully');
+    req.flash('success_msg', 'Ha cerrado sesión satisfactoriamente.');
     res.clearCookie('jwt');
     res.redirect('/');
   });

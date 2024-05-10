@@ -6,12 +6,11 @@ const models = require('../models');
 // function to get all users
 const getAllUsers = async (req, res) => {
   try {
-    const response = await service.getAllUsers();
-    if (response) {
-      res.json({ success: true, message: response });
-    } else {
-      res.status(400).json('User not found');
-    }
+    const users = await service.getAllUsers();
+    if (!users) {
+      return res.status(400).json('User not found');
+    } 
+    res.render('users/all-users', {users});
   } catch (error) {
     res.status(500).send({ success: false, message: error.message });
   }
@@ -19,7 +18,7 @@ const getAllUsers = async (req, res) => {
 // function to get a particular user by id
 const getOneUserById = async (req, res) => {
   try {
-    const { id } = req.userData;
+    const { id } = req.params;
     const user = await service.getUserById(id);
     if (!user){
       res.status(400).json('User not found');
@@ -70,7 +69,6 @@ const addOneUser = async (req, res) => {
       }});
     await account.update({disabled: false});
     const user = await models.User.findOne({where: { email }});
-
     // Check the name provided is correct
     /* if (!account) {
       return res
@@ -82,9 +80,9 @@ const addOneUser = async (req, res) => {
     } */
 
     // Add the new user information with its respectived account email
-    const {name, ...newUser} = body;
+    console.log(body);
     await user.update({
-      ...newUser,
+      ...body,
       roleId: 2,
     });
     // Final response, if all steps correct

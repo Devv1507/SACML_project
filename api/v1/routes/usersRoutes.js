@@ -11,8 +11,8 @@ router.post('/add', redirectToLoginIfUnauthorized, checkRole([1]), userControlle
 router.get('/all', redirectToLoginIfUnauthorized, checkRole([3]), userController.getAllUsers);                // get all users stored from database
 router.get('/:id', redirectToLoginIfUnauthorized, checkRole([2,3]),  userController.getOneUserById);          // get user by id
 /* router.post('/',  userController.addOneUser);     */            // add user to database
-router.put('/:id', redirectToLoginIfUnauthorized, checkRole([2]), userController.updateOneUserById);       // update user information by id
-router.delete('/:id', redirectToLoginIfUnauthorized, checkRole([2]), userController.deleteOneUserById);    // delete user by id
+router.put('/update/:id', redirectToLoginIfUnauthorized, checkRole([2,3]), userController.updateOneUserById);       // update user information by id
+router.delete('/:id', redirectToLoginIfUnauthorized, checkRole([3]), userController.deleteOneUserById);    // delete user by id
 
 // exporting the router instance with the user routes
 module.exports = router;

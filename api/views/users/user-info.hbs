@@ -1,18 +1,40 @@
-<div class="row mx-auto">
-        <div class="col-md-3 ">
-            <div class="card">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Información de la Cuenta</h5>
-                    <a href="/api/v1/home/update/{{id}}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                    <p> Nombre: {{user.name}}</p>
-                    <p> Email: {{user.email}}</p>
-                    <p> Dirección: {{user.address}}</p>
-                    <p> Número: {{user.address}}</p>
-                    <form action="/api/v1/home/{{id}}?_method=DELETE" method="POST">
-                        <input type="hidden" name="_method" value="DELETE">
-                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                    </form>
+<div class="row mx-auto h-auto w-100 justify-content-center">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body text-start">
+                <h5 class="card-title text-center">Información de la Cuenta</h5>
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <p>Nombre: {{user.name}}</p>
+                        <br>
+                        <p>Apellido: {{user.surname}}</p>
+                        <br>
+                        <p>Ciudad: {{user.city}}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p>Email: {{user.email}}</p>
+                        <br>
+                        <p>Dirección: {{user.address}}</p>
+                        <br>
+                        <p>Número: {{user.phone}}</p>
+                    </div>
                 </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <form action="/api/v1/home/{{users.id}}?_method=DELETE" method="POST">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            <a href="/api/v1/home/users/update/{{users.id}}"><i class="fa fa-pencil text-end" aria-hidden="true"></i></a>
+                        </form>
+                    </div>
+                </div>
+                
             </div>
         </div>
+    </div>  
+</div>
+<div class="position-absolute bottom-10 start-50 translate-middle-x">
+        <a href="/api/v1/home/" class="btn btn-primary" role="button">Regresar</a>
 </div>

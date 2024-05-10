@@ -15,15 +15,15 @@
         <div class="card">
             <div class="card-body">
                 {{#if boolStatus}}
-                {{#unless user.completed}}
-                <div class="mb-3">
-                    <p class="p-center">Estado de la Solicitud: Pendiente</p>
-                </div>
-                {{else}}
+                {{#if haveRequest.completed}}
                 <div class="mb-3">
                     <p class="p-center">Estado de la Solicitud: Rechazado</p>
                 </div>
-                {{/unless}}
+                {{else}}
+                <div class="mb-3">
+                    <p class="p-center">Estado de la Solicitud: Pendiente</p>
+                </div>
+                {{/if}}
                 {{/if}}
                 {{#if adminRole}}
                 <div class="mb-3 text-center">
@@ -34,6 +34,11 @@
                 <div class="mb-3 text-center">
                     <a class="btn btn-primary" href="/api/v1/home/all" role="button">
                         <p>Gestionar Cuentas</p>
+                    </a>
+                </div>
+                <div class="mb-3 text-center">
+                    <a class="btn btn-primary" href="/api/v1/home/users/all" role="button">
+                        <p>Gestionar Usuarios</p>
                     </a>
                 </div>
                 {{else}}
