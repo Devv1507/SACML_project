@@ -5,15 +5,7 @@ const ExtractJwt = require('passport-jwt').ExtractJwt;
 const models = require('../models');
 
 const opts = {
-  jwtFromRequest: ExtractJwt.fromExtractors([
-    (req) => {
-      let token = null;
-      if (req && req.cookies) {
-        token = req.cookies['jwt'];
-      }
-      return token;
-    }
-  ]),
+  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
   secretOrKey: process.env.TOKEN_SECRET,
 };
 
@@ -35,3 +27,19 @@ passport.use(
 );
 
 module.exports = passport;
+
+
+/* 
+const opts = {
+  jwtFromRequest: ExtractJwt.fromExtractors([
+    (req) => {
+      let token = null;
+      if (req && req.cookies) {
+        token = req.cookies['jwt'];
+      }
+      return token;
+    }
+  ]),
+  secretOrKey: process.env.TOKEN_SECRET,
+};
+ */

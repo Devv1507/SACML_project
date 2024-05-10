@@ -2,19 +2,26 @@
 const path = require('path')
 const express = require('express');
 const cors = require('cors');
+/* 
 const {engine} = require('express-handlebars');
 const Handlebars = require('handlebars');
 const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access');
 const methodOver = require('method-override');
 const flash = require('connect-flash');
 const session = require('express-session');
-const dotenv = require('dotenv').config();
-const passport = require('passport');
+ */
+require('dotenv').config();
+const passport = require('./middleware/passport-jwt'); /*(passport)*/
+const cookieParser = require('cookie-parser');
+
+
 
 // ************Settings********************
 // assigning the express function to use cors module and others
 const app = express();
 app.set('views', path.join(__dirname, 'views'));
+
+/* 
 // configuration of view engine
 app.engine('.hbs', engine({
     layoutsDir: path.join(app.get('views'), 'layouts'),
@@ -23,6 +30,8 @@ app.engine('.hbs', engine({
     handlebars: allowInsecurePrototypeAccess(Handlebars)
 }));
 app.set('view engine', '.hbs');
+ */
+
 
 // Static files
 app.use(express.static(path.join(__dirname, 'public')));
@@ -35,6 +44,8 @@ app.use(cors(
 app.use(express.json());
 // Middleware to works with HTML forms data
 app.use(express.urlencoded({extended: false}));
+
+/* 
 // Middleware to use DELETE and PUT methods in HTML forms
 app.use(methodOver('_method'));
 // Middleware to use flash messagges
@@ -43,20 +54,25 @@ app.use(session({
     resave: true,
     saveUninitialized: true
 }));
+ */
 app.use(passport.initialize());
-app.use(passport.session()); // persistent login sessions
-app.use(flash());
+//app.use(passport.session()); // persistent login sessions
+//app.use(flash());
+
+// cookie-parser middleware
+app.use(cookieParser());
 
 // Global variables
-app.use((req,res,next) => {
+/* app.use((req,res,next) => {
     res.locals.success_msg = req.flash('success_msg');
     res.locals.info_msg = req.flash('info_msg');
     res.locals.error = req.flash('error');
     next();
-});
+}); */
 
 // ************ Routes **************
-const v1AuthRouter = require('./v1/routes/accountRoutes.js');
+const v1AuthRouter = require('./v1/routes/authRoutes.js');
+const v1AccountRouter = require('./v1/routes/accountRoutes.js');
 const v1UserRouter = require('./v1/routes/usersRoutes.js'); // import the users router version 1
 const v1RoleRouter = require('./v1/routes/rolesRoutes.js'); // import the roles router version 1
 const v1CityRouter = require('./v1/routes/citiesRoutes.js');
@@ -68,7 +84,8 @@ app.get('/', (req, res) => {
 });
 
 // Using the routers created
-app.use('/api/v1/home', v1AuthRouter);
+app.use('/api/v1', v1AuthRouter);
+app.use('/api/v1/home', v1AccountRouter);
 app.use('/api/v1/home/users', v1UserRouter);
 app.use('/api/v1/roles', v1RoleRouter);
 app.use('/api/v1/cities', v1CityRouter);

@@ -2,7 +2,8 @@ const models = require('../models');
 
 // *** Modules
 const bcrypt = require('bcryptjs');   // import bcryptjs to encryptation of information
-const jwt = require('jsonwebtoken');  // import jsonwebtoken to token settings
+/* const jwt = require('jsonwebtoken'); */  // import jsonwebtoken to token settings
+const {issueJWT} = require('../libs/createToken')
 
 // *** Sign Up ***
 const renderNewRegisterForm = (req, res) => {
@@ -11,7 +12,7 @@ const renderNewRegisterForm = (req, res) => {
 
 const signUp = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, rePassword } = req.body;
     const errors = [];
     // Validate email, check account from database with same email if any
     const existingEmail = await models.Account.findOne({
@@ -19,37 +20,41 @@ const signUp = async (req, res) => {
     });
     if (existingEmail) {
       /* return res.status(409).json({ message: 'Email is already registered' }); */
-      errors.push({ text: 'Email is already registered' });
+      errors.push({ text: 'El correo ingresado ya se encuentra registrado' });
     }
+
     // Validate name, check account from database with same name if any
-    const existingName = await models.Account.findOne({
+    /* const existingName = await models.Account.findOne({
       where: { name },
     });
     if (existingName) {
-      /* return res.status(409).json({ message: 'Account name is already taken' }); */
-      errors.push({ text: 'Account name is already taken' });
-    }
+      errors.push({ text: 'El nombre de la cuenta ingresado ya se encuentra registrado' });
+    } */
+
     // Null, empty or undefined constrains
     if (!name) {
-      errors.push({ text: 'Please add an account name' });
+      errors.push({ text: 'Por favor añada un nombre para la cuenta' });
     }
     if (!email) {
-      errors.push({ text: 'Please add an email' });
+      errors.push({ text: 'Por favor añada un email' });
     }
     if (!password) {
-      errors.push({ text: 'Please add a password' });
+      errors.push({ text: 'Por favor añada una contraseña' });
+    }
+    if (password != rePassword) {
+      errors.push({ text: `Las contraseñas no coinciden, intente de nuevo` });
     }
     // Check for errors first
     if (errors.length > 0) {
-      /* return res.status(400).json({ succes: false, message: errors }); */
-      return res.render('accounts/signup-form', {
+      return res.status(400).json({ succes: false, message: errors });
+      /* return res.render('accounts/signup-form', {
         errors,
         name,
         email
-      });
+      }); */
     }
     // Hash password
-    const salt = await bcrypt.genSalt(10);
+    const salt = await bcrypt.genSalt(10);        //************+++++********** */
     const hash = await bcrypt.hash(password, salt);
     // Create new account for user
     const newAccount = {
@@ -64,9 +69,23 @@ const signUp = async (req, res) => {
       email,
       roleId: 1
     });
-    /* res.status(201).json({ message: 'Account created successfully' }); */
+
+
+    const tokenObject = await issueJWT(account);
+    
+    res.status(201).json({
+      id: account.id,
+      name: account.name,
+      email: account.email,
+      token: tokenObject.token,
+      message: 'Account created successfully'
+     });
+
+/* 
     req.flash('success_msg', 'Su cuenta ha sido creada satisfactoriamente');
     res.redirect('/');
+ */
+
   } catch (error) {
     console.error(error); // Log the error for debugging
     res.status(500).json({ message: 'Error creating user' }); // More user-friendly error message
@@ -80,10 +99,9 @@ const renderLogInForm = (req, res) => {
 
 const logIn = async (req, res) => {
   try {
+    const {email, password} = req.body;
     // Validate the name
-    const account = await models.Account.findOne({
-      where: { email: req.body.email }
-    });
+    const account = await models.Account.findOne({ where: { email }});
     if (!account) {
       return res.status(404).json({message: 'Account email is not found. Invalid login credentials',});
     }
@@ -96,24 +114,22 @@ const logIn = async (req, res) => {
     } */
 
     // Checking if the password match
-    const passwordMatch = await bcrypt.compare(
-      req.body.password,
-      account.password
-    );
+    const passwordMatch = await bcrypt.compare(password,account.password);
     if (!passwordMatch) {
       return res.status(401).json({ message: 'Password not valid' });
     }
     // If the password match, sign the token and give it to the employee
-    const token = await jwt.sign(
-      { email: account.email, accountId: account.id },
-      process.env.TOKEN_SECRET,
-      { expiresIn: '1800m' } //token expiration
-    );
+    const tokenObject = await issueJWT(account);
+    /* 
     // Save the token in a cookie
     res.cookie('jwt', token, { httpOnly: true, maxAge: 1800000 }); // Cookie expires in 30 minutes
     res.redirect('/api/v1/home/'); // Redirect to the homepage or any other desired page
-
-    //res.status(200).json({ message: 'Authentication successful', token });
+ */
+    res.status(200).json({
+       message: 'Authentication successful',
+       token: tokenObject.token,
+       /* expiresIn: tokenObject.expires, */
+      });
     //res.cookie("token", token, { httpOnly: true, secure: true } ).status(200).send({token});
   } catch (error) {
     console.error(error); // Log the error for debugging
@@ -126,8 +142,8 @@ const getById = async (req, res) => {
     const {id} = req.userData;
     const account = await models.Account.findByPk(id);
     if (account) {
-      //res.json({ success: true, message: accounts });
-      res.render('accounts/account-home', {account});
+      res.json({ success: true, message: account });
+      //res.render('accounts/account-home', {account});
 
     } else {
       res.status(400).json('User not found');
