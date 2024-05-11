@@ -20,7 +20,7 @@ const signUp = async (req, res) => {
     });
     if (existingEmail) {
       /* return res.status(409).json({ message: 'Email is already registered' }); */
-      errors.push({ text: 'El correo ingresado ya se encuentra registrado' });
+      errors.push('El correo ingresado ya se encuentra registrado');
     }
 
     // Validate name, check account from database with same name if any
@@ -33,20 +33,20 @@ const signUp = async (req, res) => {
 
     // Null, empty or undefined constrains
     if (!name) {
-      errors.push({ text: 'Por favor añada un nombre para la cuenta' });
+      errors.push('Por favor añada un nombre para la cuenta');
     }
     if (!email) {
-      errors.push({ text: 'Por favor añada un email' });
+      errors.push('Por favor añada un email');
     }
     if (!password) {
-      errors.push({ text: 'Por favor añada una contraseña' });
+      errors.push('Por favor añada una contraseña');
     }
     if (password != rePassword) {
-      errors.push({ text: `Las contraseñas no coinciden, intente de nuevo` });
+      errors.push('Las contraseñas no coinciden, intente de nuevo');
     }
     // Check for errors first
     if (errors.length > 0) {
-      return res.status(400).json({ succes: false, message: errors });
+      return res.status(400).json(errors);
       /* return res.render('accounts/signup-form', {
         errors,
         name,
@@ -88,7 +88,7 @@ const signUp = async (req, res) => {
 
   } catch (error) {
     console.error(error); // Log the error for debugging
-    res.status(500).json({ message: 'Error creating user' }); // More user-friendly error message
+    res.status(500).json(['Error creating user']); // More user-friendly error message
   }
 };
 
@@ -103,7 +103,7 @@ const logIn = async (req, res) => {
     // Validate the name
     const account = await models.Account.findOne({ where: { email }});
     if (!account) {
-      return res.status(404).json({message: 'Account email is not found. Invalid login credentials',});
+      return res.status(404).json(['Account email is not found. Invalid login credentials']);
     }
     // We will check the if the account is logging in via the correct route
     /* if (account.role !== role) {

@@ -8,7 +8,12 @@
 .welcome-page {
   background-image: url('../imgs/bgr.png');
   background-size: 100% auto; /* Adjusts the width to match the viewport */
-  background-repeat: no-repeat; 
+  background-repeat: no-repeat;
+  height: 82vh;
+}
+
+.top-70{
+  top: 70%;
 }
 
 header {
@@ -349,4 +354,28 @@ tr>*{
   font-family: Merriweather, serif;
   font-weight: 400;
   text-align: start;
+}
+
+.text-alert-white {
+  color: white;
+  font-size: 12px;
+  font-family: Merriweather, serif;
+  font-weight: 400;
+  text-align: center;
+}
+
+.dropdown-button {
+  background-color: #526ea0;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+.dropdown-button:hover,
+ .dropdown-button:focus,
+  .dropdown-button:active {
+  background-color: #385381;
+  --bs-btn-active-bg: none;
+  --bs-btn-hover-bg: none;
+  --bs-btn-bg: none;
+  color: white;
 }
