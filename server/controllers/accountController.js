@@ -67,7 +67,8 @@ const signUp = async (req, res) => {
       id: account.id,
       name,
       email,
-      roleId: 1
+      roleId: 1,
+      city: 'NA'
     });
 
 

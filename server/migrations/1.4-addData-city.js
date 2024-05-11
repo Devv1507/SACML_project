@@ -24,7 +24,7 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        name: 'Privado',
+        name: 'NA',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
