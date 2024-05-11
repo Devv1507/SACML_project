@@ -25,7 +25,9 @@ module.exports = (sequelize, DataTypes) => {
     });
     User.belongsTo(models.City, {
       foreignKey: "city",
-      targetKey: "name"
+      targetKey: "name",
+      onDelete: 'cascade',
+      onUpdate: 'cascade'
     });
     User.hasMany(models.CreditRequest, {
       foreignKey: "userId",

@@ -5,7 +5,8 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     email: DataTypes.STRING,
     disabled: DataTypes.BOOLEAN,
-    password: DataTypes.STRING
+    password: DataTypes.STRING,
+    refreshToken: DataTypes.STRING
   }, {
     timestamps: true,
   });

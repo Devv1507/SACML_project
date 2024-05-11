@@ -2,41 +2,18 @@
 const path = require('path')
 const express = require('express');
 const cors = require('cors');
-/* 
-const {engine} = require('express-handlebars');
-const Handlebars = require('handlebars');
-const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access');
-const methodOver = require('method-override');
-const flash = require('connect-flash');
-const session = require('express-session');
- */
-require('dotenv').config();
-const passport = require('./middleware/passport-jwt'); /*(passport)*/
 const cookieParser = require('cookie-parser');
+const passport = require('./middleware/passport-jwt'); /*(passport)*/
+require('dotenv').config();
 
-
-
-// ************Settings********************
+// ************************ Settings ************************
 // assigning the express function to use cors module and others
 const app = express();
-app.set('views', path.join(__dirname, 'views'));
-
-/* 
-// configuration of view engine
-app.engine('.hbs', engine({
-    layoutsDir: path.join(app.get('views'), 'layouts'),
-    partialsDir: path.join(app.get('views'), 'partials'),
-    extname: '.hbs',
-    handlebars: allowInsecurePrototypeAccess(Handlebars)
-}));
-app.set('view engine', '.hbs');
- */
-
-
 // Static files
 app.use(express.static(path.join(__dirname, 'public')));
 
-// ************ Middlewares **************
+// ************************ Middlewares ************************
+// to allow cross-domain communication, between frontend and backend
 app.use(cors(
     {origin: 'http://localhost:5173'}
 ));
@@ -44,21 +21,8 @@ app.use(cors(
 app.use(express.json());
 // Middleware to works with HTML forms data
 app.use(express.urlencoded({extended: false}));
-
-/* 
-// Middleware to use DELETE and PUT methods in HTML forms
-app.use(methodOver('_method'));
-// Middleware to use flash messagges
-app.use(session({
-    secret: process.env.TOKEN_SECRET,
-    resave: true,
-    saveUninitialized: true
-}));
- */
+// To initialize passport
 app.use(passport.initialize());
-//app.use(passport.session()); // persistent login sessions
-//app.use(flash());
-
 // cookie-parser middleware
 app.use(cookieParser());
 
@@ -77,11 +41,6 @@ const v1UserRouter = require('./v1/routes/usersRoutes.js'); // import the users 
 const v1RoleRouter = require('./v1/routes/rolesRoutes.js'); // import the roles router version 1
 const v1CityRouter = require('./v1/routes/citiesRoutes.js');
 const v1CreditRequestRouter = require('./v1/routes/creditRequestRoutes.js');
-
-app.get('/', (req, res) => {
-    const context = { isIndex: true };
-    res.render('index', context);
-});
 
 // Using the routers created
 app.use('/api/v1', v1AuthRouter);

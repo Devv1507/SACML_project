@@ -58,8 +58,7 @@ const redirectToLoginIfUnauthorized = (req, res, next) => {
   passportJwt.authenticate('jwt', { session: false }, (err, account, info) => {
     if (err || !account) {
       // Redirect to login route if unauthorized
-      req.flash('error', 'No autorizado');
-      return res.redirect('/');
+      return res.status(404).json('No autorizado')
     }
     // Continue to the next middleware or route handler if authorized
     res.locals.userData = account;

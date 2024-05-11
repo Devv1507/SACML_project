@@ -38,6 +38,24 @@ module.exports = {
           key: 'email'
         }
       },
+      roleId: {
+        allowNull: false,
+        type: Sequelize.INTEGER, // allowNull = false, probably necessary for logic ******************
+        references: {
+          model: 'Roles',
+          key: 'id'
+        }
+      },
+      city: {
+        allowNull: false,
+        type: Sequelize.STRING,
+        references: {
+          model: 'Cities',
+          key: 'name'
+        },
+        onUptade: 'CASCADE',
+        onDelete: 'CASCADE',
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

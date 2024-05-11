@@ -1,6 +1,7 @@
+import { useEffect } from "react";
 import { useForm } from 'react-hook-form';
 import { useAuth } from '../context/authContext';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function AccessPage() {
   const {
@@ -9,10 +10,15 @@ function AccessPage() {
     formState: { errors },
   } = useForm();
   const { logIn, isAuthenticated, errors: loginErrors } = useAuth();
+  const navigate = useNavigate();
 
-  const onSubmit = handleSubmit(async (values) => {
-    logIn(values);
-  });
+  const onSubmit = handleSubmit(async (values) => {logIn(values);});
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("api/v1/home");
+    }
+  }, [isAuthenticated]);
 
   return (
     <div className='welcome-page'>

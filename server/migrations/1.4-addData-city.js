@@ -23,6 +23,11 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date(),
       },
+      {
+        name: 'Privado',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
     ]);
   },
   down: function (queryInterface, Sequelize) {

@@ -16,20 +16,24 @@ import AllAccountsPage from './pages/AllAccountsPage';
 import Footer from './components/Footer';
 import Navbar from './components/Navbar';
 
+import { ProtectedRoute } from './routes';
+
 function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
-      < Navbar />
+        <Navbar />
         <Routes>
           <Route path='/' element={<AccessPage />}></Route>
           <Route path='/api/v1/sign-up' element={<RegisterPage />}></Route>
-          <Route path='/api/v1/home' element={<HomePage />}></Route>
-          <Route path='/api/v1/home' element={<ProfilePage />}></Route>
-          <Route path='/api/v1/home/all' element={<AllAccountsPage />}></Route>
+          <Route element={<ProtectedRoute />}>
+            <Route path='/api/v1/home' element={<HomePage />}></Route>
+            <Route path='/api/v1/home' element={<ProfilePage />}></Route>
+            <Route path='/api/v1/home/all' element={<AllAccountsPage />}></Route>
+          </Route>
         </Routes>
       </BrowserRouter>
-      < Footer />
+      <Footer />
     </AuthProvider>
   );
 }

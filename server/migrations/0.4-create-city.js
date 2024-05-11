@@ -2,30 +2,24 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('CreditRequests', {
+    await queryInterface.createTable('Cities', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      amount: {
+      name: {
         allowNull: false,
-        type: Sequelize.FLOAT
+        unique : true,
+        type: Sequelize.STRING(20)
       },
-      description: {
-        type: Sequelize.STRING
-      },
-      creditHistory: {
-        type: Sequelize.STRING
-      },
-      completed: {
-        type: Sequelize.BOOLEAN,
-        defaultValue: false
-      },
-      status: {
-        type: Sequelize.STRING,
-        defaultValue: 'Pendiente'
+      deparment: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Departments',
+          key: 'id'
+        }
       },
       createdAt: {
         allowNull: false,
@@ -38,6 +32,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('CreditRequests');
+    await queryInterface.dropTable('Cities');
   }
 };

@@ -20,27 +20,33 @@ export const AuthProvider = ({ children }) => {
       console.log(res);
       setUser(res.data);
       setIsAuthenticated(true);
-
     } catch (error) {
       console.log(error.response.data);
       setErrors(error.response.data);
     }
   };
-
   const logIn = async (account) => {
     try {
       const res = await loginRequest(account);
-    console.log(res);
-    setUser(res.data);
-    setIsAuthenticated(true);
+      console.log(res);
+      const accessToken = res.data.token;
+      setUser(res.data);
+      if (accessToken) {
+        setIsAuthenticated(true);
+      }
     } catch (error) {
+      console.log(error);
       if (Array.isArray(error.response.data)) {
         return setErrors(error.response.data);
       }
       setErrors([error.response.data.message]);
     }
-  }
-
+  };
+  const logOut = () => {
+    /* Cookies.remove("token"); */
+    setUser(null);
+    setIsAuthenticated(false);
+  };
   // clear errors after 5 seconds
   useEffect(() => {
     if (errors.length > 0) {
@@ -56,6 +62,7 @@ export const AuthProvider = ({ children }) => {
       value={{
         signUp,
         logIn,
+        logOut,
         user,
         isAuthenticated,
         errors,
