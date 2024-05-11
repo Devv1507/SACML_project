@@ -26,15 +26,10 @@ app.use(passport.initialize());
 // cookie-parser middleware
 app.use(cookieParser());
 
-// Global variables
-/* app.use((req,res,next) => {
-    res.locals.success_msg = req.flash('success_msg');
-    res.locals.info_msg = req.flash('info_msg');
-    res.locals.error = req.flash('error');
-    next();
-}); */
+// ************************ Global variables ************************
 
-// ************ Routes **************
+
+// ************************ Routes ************************
 const v1AuthRouter = require('./v1/routes/authRoutes.js');
 const v1AccountRouter = require('./v1/routes/accountRoutes.js');
 const v1UserRouter = require('./v1/routes/usersRoutes.js'); // import the users router version 1

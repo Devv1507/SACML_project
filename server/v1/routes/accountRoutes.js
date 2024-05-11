@@ -12,7 +12,6 @@ const {
     getById,
     deleteAccount,
     updateAccount,
-    renderUpdateForm
 } = require('../../controllers/accountController');
 const {redirectToLoginIfUnauthorized, checkRole} = require('../../middleware/authorize');
 
@@ -34,8 +33,6 @@ router.get('/', redirectToLoginIfUnauthorized, checkRole([1,2,3]), getById);
 }); */
 
 router.delete('/:id', redirectToLoginIfUnauthorized, checkRole([3]), deleteAccount);
-
-router.get('/update/:id', redirectToLoginIfUnauthorized, checkRole([1,2,3]), renderUpdateForm);
 router.put('/update/:id', redirectToLoginIfUnauthorized, checkRole([1,2,3]), updateAccount);
 
 /* router.get('/test', authorize.validate, passport.authenticate('jwt', { session: false }), (req, res) => {

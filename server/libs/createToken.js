@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 /**
  * @param {*} account - The user object.  We need this to set the JWT `sub` payload property to the DB user ID
  */
-issueJWT = async (account) => {
+issueJWT = async (account, secret, time) => {
 
     const payload = {
       sub: account.id,
@@ -13,14 +13,12 @@ issueJWT = async (account) => {
   
     const signedToken = await jwt.sign(
         payload, 
-        process.env.TOKEN_SECRET, 
-        {expiresIn: process.env.JWT_EXPIRATION}
+        secret, 
+        {expiresIn: time}
     );
-  
-    return {
-      token: "Bearer " + signedToken,
-      /* expires: signedToken.expiresIn, */
-    };
+
+    const token = "Bearer " + signedToken;
+    return signedToken;
   }
 
 module.exports = {issueJWT}
