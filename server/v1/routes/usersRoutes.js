@@ -1,4 +1,6 @@
 const {Router} = require('express');
+const router = Router(); // assignning the instance of Router class
+// ************************ Controllers & Middlewares ************************
 const {
     addOneUser,
     getAllUsers,
@@ -9,48 +11,21 @@ const {
 const {redirectToLoginIfUnauthorized, checkRole} = require('../../middleware/authorize');
 const {validate} = require('../../middleware/validator');
 
-/*** Validators (Schemas) */
+// ************************ Validators (Schemas) ************************
 const {userSchema} = require('../../validators.schemas/user.schema')
 
-// assignning the instance of Router class
-const router = Router();
-
+// ************************ Private Routes ************************
 // our routes for users (this is adding to root route /api/v1/users)
+// Add user information (personal information) to complete registration
 router.post('/add', validate(userSchema), redirectToLoginIfUnauthorized, checkRole([1]), addOneUser);   
-
-router.get('/all', redirectToLoginIfUnauthorized, checkRole([3]), getAllUsers);                // get all users stored from database
-router.get('/:id', validate, checkRole([1]),  getOneUserById);          // get user by id
-/* router.post('/',  userController.addOneUser);     */            // add user to database
-router.put('/:id', validate, checkRole([2]), updateOneUserById);       // update user information by id
-router.delete('/:id', validate, checkRole([2]), deleteOneUserById);    // delete user by id
+// Get all users - admin
+router.get('/all', redirectToLoginIfUnauthorized, checkRole([3]), getAllUsers);
+// Get user by id 
+router.get('/:id', validate, checkRole([2,3]),  getOneUserById);
+// update user information by id
+router.put('/:id', validate, checkRole([2,3]), updateOneUserById);
+// delete user by id
+router.delete('/:id', validate, checkRole([3]), deleteOneUserById);    
 
 // exporting the router instance with the user routes
 module.exports = router;
-
-/*
-
-router.get('/', async (req, res) => {
-    const users = await getUsersDatafromDB();
-    res.send(users);
-});
-
-// API post route, to sent request to the server
-router.post('/register', (req, res) => {
-    console.log(req.body);
-    const userData = req.body;
-    saveUserDatainDB(
-        userData.userName,
-        userData.userLastName,
-        userData.userId,
-        userData.userAdress, 
-        userData.email);
-    res.send('Hello World!');
-});
-
-// API get route, to get table of users
-router.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../../front/table.html'));
-});
-
-
-*/

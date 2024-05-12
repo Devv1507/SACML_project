@@ -1,7 +1,14 @@
-
+import { useEffect } from "react";
+import { useAccounts } from "../context/accountContext";
 
 
 function HomePage() {
+  const {accounts, getAccount} = useAccounts();
+
+  useEffect(() => {
+    getAccount()
+  }, [])
+  
   return (
     <div>
       <h1 class='h1-body'>Home: Administrador</h1>

@@ -1,6 +1,6 @@
 const {Router} = require('express');
 const router = Router();
-// ************************ Controller & Middleware ************************
+// ************************ Controllers & Middlewares ************************
 const {signUp, logIn, logOut, handleRefreshToken} = require('../../controllers/authController');
 const authorize = require('../../middleware/authorize');
 const {validate} = require('../../middleware/validator');

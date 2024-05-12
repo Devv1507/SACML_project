@@ -11,12 +11,12 @@ import { AuthProvider } from './context/authContext';
 import RegisterPage from './pages/RegisterPage';
 import AccessPage from './pages/AccessPage';
 import HomePage from './pages/HomePage';
-import ProfilePage from './pages/UserFormPage';
 import AllAccountsPage from './pages/AllAccountsPage';
 import Footer from './components/Footer';
 import Navbar from './components/Navbar';
 
 import { ProtectedRoute } from './routes';
+import { AccountProvider } from './context/accountContext';
 
 function App() {
   return (
@@ -27,8 +27,10 @@ function App() {
           <Route path='/' element={<AccessPage />}></Route>
           <Route path='/api/v1/sign-up' element={<RegisterPage />}></Route>
           <Route element={<ProtectedRoute />}>
-            <Route path='/api/v1/home' element={<HomePage />}></Route>
-            <Route path='/api/v1/home/all' element={<AllAccountsPage />}></Route>
+            <AccountProvider>
+              <Route path='/api/v1/home' element={<HomePage />}></Route>
+              <Route path='/api/v1/home/all' element={<AllAccountsPage />}></Route>
+            </AccountProvider>
           </Route>
         </Routes>
       </BrowserRouter>
