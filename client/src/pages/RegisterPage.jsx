@@ -21,7 +21,7 @@ function RegisterPage() {
   }, [isAuthenticated]);
 
   return (
-    <div className='container p-5'>
+    <div className='container p-3'>
       <div className='col-md-4 mx-auto'>
         <div className='card text-center'>
           <div className='card-header'>

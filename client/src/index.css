@@ -6,7 +6,7 @@
 /********Styles of welcome page***************/
 
 .welcome-page {
-  background-image: url('../imgs/bgr.png');
+  background-image: url('/imgs/bgr.png');
   background-size: 100% auto; /* Adjusts the width to match the viewport */
   background-repeat: no-repeat;
   height: 82vh;

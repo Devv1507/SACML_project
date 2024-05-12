@@ -11,7 +11,7 @@ import { AuthProvider } from './context/authContext';
 import RegisterPage from './pages/RegisterPage';
 import AccessPage from './pages/AccessPage';
 import HomePage from './pages/HomePage';
-import ProfilePage from './pages/ProfilePage';
+import ProfilePage from './pages/UserFormPage';
 import AllAccountsPage from './pages/AllAccountsPage';
 import Footer from './components/Footer';
 import Navbar from './components/Navbar';
@@ -28,7 +28,6 @@ function App() {
           <Route path='/api/v1/sign-up' element={<RegisterPage />}></Route>
           <Route element={<ProtectedRoute />}>
             <Route path='/api/v1/home' element={<HomePage />}></Route>
-            <Route path='/api/v1/home' element={<ProfilePage />}></Route>
             <Route path='/api/v1/home/all' element={<AllAccountsPage />}></Route>
           </Route>
         </Routes>

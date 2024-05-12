@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useForm } from 'react-hook-form';
 import { useAuth } from '../context/authContext';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 function AccessPage() {
   const {
@@ -10,7 +10,11 @@ function AccessPage() {
     formState: { errors },
   } = useForm();
   const { logIn, isAuthenticated, errors: loginErrors } = useAuth();
+
+
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
   const onSubmit = handleSubmit(async (values) => {logIn(values);});
 
@@ -21,16 +25,16 @@ function AccessPage() {
   }, [isAuthenticated]);
 
   return (
-    <div className='welcome-page'>
+    <main className='welcome-page'>
+      <div className='h1-main'>
+        <h1>Soluciones E-finance</h1>
+      </div>
+      <div className='d-flex position-absolute top-70 start-50 translate-middle'>
       {loginErrors.map((error, i) => (
         <div className='bg-danger text-alert-white mt-2' key={i}>
           {error}
         </div>
       ))}
-      <div className='h1-main'>
-        <h1>Soluciones E-finance</h1>
-      </div>
-      <div className='d-flex position-absolute top-70 start-50 translate-middle'>
         <form onSubmit={onSubmit}>
           <div className='d-flex justify-content-end'>
             <a href='#' className='p-center'>
@@ -70,7 +74,7 @@ function AccessPage() {
           </div>
         </form>
       </div>
-    </div>
+    </main>
   );
 }
 

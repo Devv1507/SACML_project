@@ -1,8 +1,11 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
 import Dropdown from 'react-bootstrap/Dropdown';
+import { useAuth } from "../context/authContext";
 
 function Navbar() {
+  const { isAuthenticated, logOut, user } = useAuth();
+
   return (
     <nav className='navbar navbar-expand-lg navbar-light '>
       <ul className='navbar-nav ms-auto'>
@@ -29,7 +32,7 @@ function Navbar() {
           <Dropdown.Menu>
             <Dropdown.Item href='#/action-1'>Sobre nosotros</Dropdown.Item>
             <Dropdown.Item href='#/action-2'>Registrarse</Dropdown.Item>
-            <Dropdown.Item href='#/action-3'>Cerrar sesión</Dropdown.Item>
+            <Dropdown.Item to="/" onClick={() => logOut()}>Cerrar sesión</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
 

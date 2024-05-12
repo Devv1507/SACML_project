@@ -2,7 +2,7 @@ import React from 'react';
 
 function Footer() {
   return (
-    <footer>
+    <footer className='position-relative text-align-center'>
       <p>© Proyecto SACML. Todos los derechos reservados.</p>
     </footer>
   );

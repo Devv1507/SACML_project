@@ -92,14 +92,17 @@ const logIn = async (req, res) => {
     await account.update({refreshToken});
     // Save the token in a cookie
     res.cookie('refreshToken', refreshToken, {
-      httpOnly: true,
+      /* httpOnly: true, */
       secure: true,
       sameSite: 'None',
-      maxAge: 24 * 60 * 60 * 1000,
-    }); // Cookie expires in 1 day (hours * minutes * seconds * ms)
+      maxAge: 1 * 20 * 60 * 1000,
+    }); // Cookie expires in (hours * minutes * seconds * ms)
 
     // Response
     res.status(200).json({
+      id: account.id,
+      name: account.name,
+      email: account.email,
       message: 'Authentication successful',
       accessToken,
       /* expiresIn: tokenObject.expires, */

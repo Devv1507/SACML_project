@@ -1,5 +1,10 @@
 import { createContext, useState, useContext, useEffect } from 'react';
-import { registerRequest, loginRequest } from '../api/auth';
+import {
+  registerRequest,
+  loginRequest,
+  verifyTokenRequest,
+} from '../api/auth';
+import Cookie from "js-cookie";
 
 export const AuthContext = createContext();
 
@@ -11,9 +16,10 @@ export const useAuth = () => {
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [errors, setErrors] = useState([]);
-
+  // ************************ functions to make request/response communication with backend ************************
   const signUp = async (user) => {
     try {
       const res = await registerRequest(user);
@@ -21,32 +27,68 @@ export const AuthProvider = ({ children }) => {
       setUser(res.data);
       setIsAuthenticated(true);
     } catch (error) {
-      console.log(error.response.data);
-      setErrors(error.response.data);
+      console.log(error);
+      if (!error.response.data) {
+        return setErrors(['No Server Response']);
+      } else if (Array.isArray(error.response.data)) {
+        return setErrors(error.response.data);
+      }
+      setErrors([error.response.data.message]);
     }
   };
   const logIn = async (account) => {
     try {
       const res = await loginRequest(account);
       console.log(res);
-      const accessToken = res.data.token;
-      setUser(res.data);
+      const accessToken = res.data.accessToken;
       if (accessToken) {
+        const cookies = Cookie.get();
+        console.log(cookies);
+        setUser(res.data);
         setIsAuthenticated(true);
       }
     } catch (error) {
       console.log(error);
-      if (Array.isArray(error.response.data)) {
+      if (!error.response.data) {
+        return setErrors(['No Server Response']);
+      } else if (Array.isArray(error.response.data)) {
         return setErrors(error.response.data);
       }
       setErrors([error.response.data.message]);
     }
   };
   const logOut = () => {
-    /* Cookies.remove("token"); */
+    Cookie.remove("refreshToken");
     setUser(null);
     setIsAuthenticated(false);
   };
+  // ************************ functions running at starting of any page ************************
+  // Refresh token validation to stay on session
+  useEffect(() => {
+    const getCookie = async () => {
+      const cookies = Cookie.get();
+      //console.log(cookies);
+
+      if (!cookies.refreshToken) {
+        setIsAuthenticated(false);
+        setLoading(false);
+        return;
+      }
+      try {
+        const res = await verifyTokenRequest(cookies.token);
+        console.log(res);
+        if (!res.data) return setIsAuthenticated(false);
+        setIsAuthenticated(true);
+        setUser(res.data);
+        setLoading(false);
+      } catch (error) {
+        setIsAuthenticated(false);
+        setLoading(false);
+      }
+    }
+    getCookie();
+  }, []);
+
   // clear errors after 5 seconds
   useEffect(() => {
     if (errors.length > 0) {
@@ -63,6 +105,7 @@ export const AuthProvider = ({ children }) => {
         signUp,
         logIn,
         logOut,
+        loading,
         user,
         isAuthenticated,
         errors,
