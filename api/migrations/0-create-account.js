@@ -10,7 +10,6 @@ module.exports = {
         defaultValue: Sequelize.literal('uuid_generate_v4()')
       },
       name: {
-        allowNull: false,
         type: Sequelize.STRING(20)
       },
       email: {

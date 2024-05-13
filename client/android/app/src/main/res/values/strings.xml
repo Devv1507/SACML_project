@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">SACML</string>
+    <string name="title_activity_main">SACML</string>
+    <string name="package_name">com.sacml.app</string>
+    <string name="custom_url_scheme">com.sacml.app</string>
+</resources>

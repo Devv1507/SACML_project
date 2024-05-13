@@ -60,7 +60,8 @@ const signUp = async (req, res) => {
     await models.User.create({
       id: account.id,
       email,
-      roleId: 1
+      roleId: 1,
+      city: 'NA'
     });
     /* res.status(201).json({ message: 'Account created successfully' }); */
     req.flash('success_msg', 'Su cuenta ha sido creada satisfactoriamente');

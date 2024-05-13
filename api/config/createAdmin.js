@@ -22,7 +22,8 @@ const createAdminUser = async (req, res) => {
         id: createdAccount.id,
         name: createdAccount.name,
         email: createdAccount.email,
-        roleId: 3
+        roleId: 3,
+        city: 'NA'
     };
     const adminUser = await models.User.create(newAdminUser);
     /* console.log("User:", adminUser); */

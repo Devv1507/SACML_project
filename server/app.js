@@ -15,7 +15,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // ************************ Middlewares ************************
 // to allow cross-domain communication, between frontend and backend
 app.use(cors({ 
-    origin: 'http://localhost:5173', 
+    origin: ['http://localhost:5173', 'http://10.0.2.2:5173'], 
     credentials: true
  }));
 // Middleaware to use body parser functionality to read and parse JSON in req.body

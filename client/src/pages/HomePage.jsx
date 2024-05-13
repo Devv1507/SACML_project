@@ -53,18 +53,21 @@ function HomePage() {
 
   return (
     <div>
-      {adminRole && (
+      {adminRole ? (
         <>
           <h1 className='h1-body'>Home: Administrador</h1>
         </>
-      )}
-      {completedRegister ? (
-        <>
-          <h1 className='h1-body'>Home: Invitado</h1>
-        </>
       ) : (
         <>
-          <h1 className='h1-body'>Home: Usuario</h1>
+          {completedRegister ? (
+            <>
+              <h1 className='h1-body'>Home: Invitado</h1>
+            </>
+          ) : (
+            <>
+              <h1 className='h1-body'>Home: Usuario</h1>
+            </>
+          )}
         </>
       )}
 
@@ -76,12 +79,18 @@ function HomePage() {
               {adminRole ? (
                 <>
                   <div className='mb-3 w-100 text-center'>
-                    <button className='btn-primay w-100' onClick={() => handleClick('api/v1/home/all')} >
+                    <button
+                      className='btn-primay w-100'
+                      onClick={() => handleClick('api/v1/home/all')}
+                    >
                       Gestionar Cuentas
                     </button>
                   </div>
                   <div className='mb-3 text-center'>
-                    <button className='btn-primay w-100' onClick={() => handleClick('api/v1/home/users/all')} >
+                    <button
+                      className='btn-primay w-100'
+                      onClick={() => handleClick('api/v1/home/users/all')}
+                    >
                       Gestionar Usuarios
                     </button>
                   </div>
@@ -90,14 +99,22 @@ function HomePage() {
                 <>
                   {completedRegister ? (
                     <div className='mb-3 text-center'>
-                      <button type='button' className='btn-primary w-100 btn-block' disabled >
+                      <button
+                        type='button'
+                        className='btn-primary w-100 btn-block'
+                        disabled
+                      >
                         Realizar Petición de Crédito
                       </button>
                     </div>
                   ) : (
                     <>
                       <div className='mb-3 text-center'>
-                        <button type='button'className='btn-primary w-100 btn-block disabled-link' disabled >
+                        <button
+                          type='button'
+                          className='btn-primary w-100 btn-block disabled-link'
+                          disabled
+                        >
                           Realizar Petición de Crédito
                         </button>
                       </div>
@@ -146,8 +163,12 @@ function HomePage() {
               <h5 className='card-title'>Información Personal</h5>
 
               <div className='mb-3 text-center'>
-                <button className='btn-primay w-100'
-                  onClick={() => handleClick(`api/v1/home/users/${accountInfo.id}`) } >
+                <button
+                  className='btn-primay w-100'
+                  onClick={() =>
+                    handleClick(`api/v1/home/users/${accountInfo.id}`)
+                  }
+                >
                   Ver
                 </button>
               </div>
