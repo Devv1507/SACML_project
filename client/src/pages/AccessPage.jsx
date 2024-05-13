@@ -12,8 +12,8 @@ function AccessPage() {
   const { logIn, isAuthenticated, errors: loginErrors } = useAuth();
 
 
-  /* const navigate = useNavigate();
-  const location = useLocation();
+  const navigate = useNavigate();
+  /* const location = useLocation();
   const from = location.state?.from?.pathname || "/"; */
 
   const onSubmit = handleSubmit(async (values) => {logIn(values);});

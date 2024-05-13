@@ -26,13 +26,15 @@ function App() {
         <Routes>
           <Route path='/' element={<AccessPage />}></Route>
           <Route path='/api/v1/sign-up' element={<RegisterPage />}></Route>
-          <Route element={<ProtectedRoute />}>
-            <AccountProvider>
-              <Route path='/api/v1/home' element={<HomePage />}></Route>
-              <Route path='/api/v1/home/all' element={<AllAccountsPage />}></Route>
-            </AccountProvider>
-          </Route>
         </Routes>
+        <AccountProvider>
+          <Routes>
+            <Route element={<ProtectedRoute />}>
+              <Route path='/api/v1/home' element={<HomePage />}></Route>
+              <Route path='/api/v1/home/all' element={<AllAccountsPage />} ></Route>
+            </Route>
+          </Routes>
+        </AccountProvider>
       </BrowserRouter>
       <Footer />
     </AuthProvider>

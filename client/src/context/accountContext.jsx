@@ -15,13 +15,32 @@ export const useAccounts = () => {
   return context;
 };
 
-export function AccountProvider() {
+export function AccountProvider({children}) {
   const [accounts, setAccounts] = useState([]);
+  const [accountInfo, setAccount] = useState({});
+  const [adminRole, setAdminRole] = useState(false);
 
   const getAllAccounts = async () => {
-    const res = await getAllAccountsRequest();
-    setAccounts(res.data);
+    try {
+      const res = await getAllAccountsRequest();
+      setAccounts(res.data.message);
+    } catch (error) {
+      console.error(error);
+    }
   };
+    // Consider to change to use id param
+    const getAccount = async () => {
+        try {
+          const res = await getAccountRequest();
+          setAccount(res.data.message);
+          if (res.data.admin === true) {
+            return setAdminRole(true);
+          }
+          setAdminRole(false);
+        } catch (error) {
+          console.error(error);
+        }
+      };
 
   const deleteAccount = async (id) => {
     try {
@@ -30,15 +49,6 @@ export function AccountProvider() {
         setAccounts(accounts.filter((account) => account.id !== id)); //?????
     } catch (error) {
       console.log(error);
-    }
-  };
-  // Consider to change to use id param
-  const getAccount = async (account) => {
-    try {
-      const res = await getAccountRequest(account);
-      return res.data;
-    } catch (error) {
-      console.error(error);
     }
   };
 
@@ -54,6 +64,8 @@ export function AccountProvider() {
     <AccountContext.Provider
       value={{
         accounts,
+        accountInfo,
+        adminRole,
         getAccount,
         getAllAccounts,
         updateAccount,

@@ -4,8 +4,20 @@ const ExtractJwt = require('passport-jwt').ExtractJwt;
 
 const models = require('../models');
 
-const opts = {
+/* const opts = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+  secretOrKey: process.env.ACCESS_TOKEN_SECRET,
+}; */
+const opts = {
+  jwtFromRequest: ExtractJwt.fromExtractors([
+    (req) => {
+      let token = null;
+      if (req && req.cookies) {
+        token = req.cookies['refreshToken'];
+      }
+      return token;
+    }
+  ]),
   secretOrKey: process.env.ACCESS_TOKEN_SECRET,
 };
 

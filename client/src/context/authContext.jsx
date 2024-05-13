@@ -19,6 +19,8 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [errors, setErrors] = useState([]);
+  const [accessToken, setAccessToken] = useState({});
+
   // ************************ functions to make request/response communication with backend ************************
   const signUp = async (user) => {
     try {
@@ -45,6 +47,7 @@ export const AuthProvider = ({ children }) => {
         const cookies = Cookie.get();
         console.log(cookies);
         setUser(res.data);
+        setAccessToken(accessToken);
         setIsAuthenticated(true);
       }
     } catch (error) {
@@ -107,6 +110,8 @@ export const AuthProvider = ({ children }) => {
         logOut,
         loading,
         user,
+        accessToken,
+        setAccessToken,
         isAuthenticated,
         errors,
       }}
