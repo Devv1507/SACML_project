@@ -32,7 +32,6 @@ function HomePage() {
           setCompletedRegister(true);
         }
         setLoading(false);
-        setCompletedRegister(false);
       } catch (error) {
         console.error('Error fetching account data:', error);
       }
@@ -72,45 +71,46 @@ function HomePage() {
       <div className='row justify-content-center align-items-center w-100 h-auto'>
         <div className='col-md-4 justify-content-center'>
           <div className='card'>
-            <div className='card-body'>
+            <div className='card-body justify-content-center align-items-center'>
+              <h5 className='card-title'>Panel de opciones</h5>
               {adminRole ? (
                 <>
                   <div className='mb-3 w-100 text-center'>
-                    <button
-                      className='btn-primay w-100'
-                      onClick={() => handleClick('api/v1/home/all')}
-                    >
+                    <button className='btn-primay w-100' onClick={() => handleClick('api/v1/home/all')} >
                       Gestionar Cuentas
                     </button>
                   </div>
                   <div className='mb-3 text-center'>
-                    <button
-                      className='btn-primay w-100'
-                      onClick={() => handleClick('api/v1/home/users/all')}
-                    >
+                    <button className='btn-primay w-100' onClick={() => handleClick('api/v1/home/users/all')} >
                       Gestionar Usuarios
                     </button>
                   </div>
                 </>
               ) : (
                 <>
-                  <div className='mb-3 text-center'>
-                    <button
-                      type='button'
-                      className='btn-primary w-100 btn-block disabled-link'
-                      disabled
-                    >
-                      Realizar Petición de Crédito
-                    </button>
-                  </div>
-                  <div className='mb-3'>
-                    <p className='p-center'>
-                      La opción de arriba aparece deshabilitada?
-                    </p>
-                    <a href='/api/v1/home/users/add' className='p-center'>
-                      Completar registro de usuario
-                    </a>
-                  </div>
+                  {completedRegister ? (
+                    <div className='mb-3 text-center'>
+                      <button type='button' className='btn-primary w-100 btn-block' disabled >
+                        Realizar Petición de Crédito
+                      </button>
+                    </div>
+                  ) : (
+                    <>
+                      <div className='mb-3 text-center'>
+                        <button type='button'className='btn-primary w-100 btn-block disabled-link' disabled >
+                          Realizar Petición de Crédito
+                        </button>
+                      </div>
+                      <div className='mb-3'>
+                        <p className='p-center'>
+                          La opción de arriba aparece deshabilitada?
+                        </p>
+                        <a href='/api/v1/home/users/add' className='p-center'>
+                          Completar registro de usuario
+                        </a>
+                      </div>
+                    </>
+                  )}
                 </>
               )}
             </div>
@@ -134,7 +134,7 @@ function HomePage() {
                     <p>Nombre: {accountInfo.name}</p>
                     <p>Email: {accountInfo.email}</p>
                     <p>
-                      Tipo de Cuenta: 
+                      Tipo de Cuenta:
                       {adminRole && ' Administrador'}
                       {completedRegister ? ' Invitado' : ' Usuario'}
                     </p>
@@ -146,12 +146,8 @@ function HomePage() {
               <h5 className='card-title'>Información Personal</h5>
 
               <div className='mb-3 text-center'>
-                <button
-                  className='btn-primay w-100'
-                  onClick={() =>
-                    handleClick(`api/v1/home/users/${accountInfo.id}`)
-                  }
-                >
+                <button className='btn-primay w-100'
+                  onClick={() => handleClick(`api/v1/home/users/${accountInfo.id}`) } >
                   Ver
                 </button>
               </div>

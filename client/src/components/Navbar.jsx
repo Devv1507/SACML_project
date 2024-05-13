@@ -32,7 +32,9 @@ function Navbar() {
           <Dropdown.Menu>
             <Dropdown.Item href='#/action-1'>Sobre nosotros</Dropdown.Item>
             <Dropdown.Item href='#/action-2'>Registrarse</Dropdown.Item>
-            <Dropdown.Item to="/" onClick={() => logOut()}>Cerrar sesión</Dropdown.Item>
+            {isAuthenticated && (
+              <Dropdown.Item to="/" onClick={() => logOut()}>Cerrar sesión</Dropdown.Item>
+            )}
           </Dropdown.Menu>
         </Dropdown>
 
