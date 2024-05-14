@@ -76,14 +76,12 @@ const logIn = async (req, res) => {
     // Validate the name
     const account = await models.Account.findOne({ where: { email } });
     if (!account) {
-      return res
-        .status(404)
-        .json(['Account email is not found. Invalid login credentials']);
+      return res.status(400).json(['Account email is not found. Invalid login credentials']);
     }
     // Checking if the password matchs
     const passwordMatch = await bcrypt.compare(password, account.password);
     if (!passwordMatch) {
-      return res.status(401).json({ message: 'Password not valid' });
+      return res.status(400).json({ message: 'Password not valid' });
     }
     // If the password matchs, sign the token and give it to the employee
     const accessToken = await issueJWT(account, process.env.ACCESS_TOKEN_SECRET, process.env.ACCESS_TOKEN_EXPIRATION);

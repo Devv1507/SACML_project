@@ -8,7 +8,7 @@ const redirectToLoginIfUnauthorized = (req, res, next) => {
     if (err || !account) {
       // Redirect to login route if unauthorized
       
-      return res.status(404).json('No autorizado')
+      return res.status(401).json('No autorizado') //***** should be change to 404 for security */
     }
     // Continue to the next middleware or route handler if authorized
     res.locals.userData = account;
@@ -31,7 +31,7 @@ const checkRole = (roles) => async (req, res, next) => {
   else if (!roles.includes(user.roleId)){
     console.log('No autorizado');
     /* req.flash('error', 'No tienes acceso a esta ruta');
-    return res.redirect('/api/v1/home')/ */ return res.status(401).json(`Sorry, you don't have access to this route`)
+    return res.redirect('/api/v1/home')/ */ return res.status(403).json(`Sorry, you don't have access to this route`)
   }
   if (user.roleId === 3) {
     res.locals.adminRole = true;
