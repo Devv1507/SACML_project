@@ -30,7 +30,7 @@ function RegisterPage() {
 
           <div className='card-body'>
             {registerErrors.map((error, i) => (
-              <div className='bg-danger text-alert-white mt-2' key={i}>
+              <div className='text-alert-white mt-2' key={i}>
                 {error}
               </div>
             ))}

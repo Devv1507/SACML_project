@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 function AllAccountsPage() {
-  const { accounts, getAllAccounts } = useAccounts();
+  const { allAccounts, getAllAccounts } = useAccounts();
   
   useEffect(() => {
     getAllAccounts();
@@ -13,8 +13,8 @@ function AllAccountsPage() {
   return (
     <section className='page-section'>
       <div className='row'>
-        {accounts.length > 0 ? (
-          accounts.map((account) => (
+        {allAccounts.length > 0 ? (
+          allAccounts.map((account) => (
             <div key={account.id} className='col-md-3'>
               <div className='card mb-3'>
                 <div className='card-body '>

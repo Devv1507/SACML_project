@@ -16,9 +16,10 @@ export const useAccounts = () => {
 };
 
 export function AccountProvider({children}) {
-  const [accounts, setAccounts] = useState([]);
-  const [accountInfo, setAccount] = useState({});
+  const [allAccounts, setAccounts] = useState([]);
+  const [account, setAccount] = useState({});
   const [adminRole, setAdminRole] = useState(false);
+  const [userCompleted, setUserCompleted] = useState(false);
 
   const getAllAccounts = async () => {
     try {
@@ -36,6 +37,9 @@ export function AccountProvider({children}) {
           if (res.data.admin === true) {
             return setAdminRole(true);
           }
+          if (res.data.message.disabled === false){
+            setUserCompleted(true);
+          }
           setAdminRole(false);
         } catch (error) {
           console.error(error);
@@ -46,7 +50,7 @@ export function AccountProvider({children}) {
     try {
       const res = await deleteAccountRequest(id);
       if (res.status === 204)
-        setAccounts(accounts.filter((account) => account.id !== id)); //?????
+        setAccounts(allAccounts.filter((account) => account.id !== id)); //?????
     } catch (error) {
       console.log(error);
     }
@@ -63,9 +67,10 @@ export function AccountProvider({children}) {
   return (
     <AccountContext.Provider
       value={{
-        accounts,
-        accountInfo,
+        allAccounts,
+        account,
         adminRole,
+        userCompleted,
         getAccount,
         getAllAccounts,
         updateAccount,

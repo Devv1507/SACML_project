@@ -8,10 +8,9 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
 function HomePage() {
-  const { accountInfo, adminRole, getAccount } = useAccounts();
+  const { account, adminRole, getAccount, userCompleted } = useAccounts();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [completedRegister, setCompletedRegister] = useState(false);
   const navigate = useNavigate();
   const { setValue } = useForm();
 
@@ -19,18 +18,10 @@ function HomePage() {
     const fetchData = async () => {
       try {
         await getAccount();
-        setValue('title', accountInfo.title);
-        setValue('description', accountInfo.description);
-        setValue(
-          'date',
-          accountInfo.date
-            ? dayjs(accountInfo.date).utc().format('YYYY-MM-DD')
-            : ''
-        );
-        setValue('completed', accountInfo.completed);
-        if (accountInfo.disabled === false) {
-          setCompletedRegister(true);
-        }
+        setValue('title', account.title);
+        setValue('description', account.description);
+        setValue('date',account.date ? dayjs(account.date).utc().format('YYYY-MM-DD'): '');
+        setValue('completed', account.completed);
         setLoading(false);
       } catch (error) {
         console.error('Error fetching account data:', error);
@@ -59,13 +50,13 @@ function HomePage() {
         </>
       ) : (
         <>
-          {completedRegister ? (
+          {userCompleted ? (
             <>
-              <h1 className='h1-body'>Home: Invitado</h1>
+              <h1 className='h1-body'>Home: Usuario</h1>
             </>
           ) : (
             <>
-              <h1 className='h1-body'>Home: Usuario</h1>
+              <h1 className='h1-body'>Home: Invitado</h1>
             </>
           )}
         </>
@@ -97,7 +88,7 @@ function HomePage() {
                 </>
               ) : (
                 <>
-                  {completedRegister ? (
+                  {userCompleted ? (
                     <div className='mb-3 text-center'>
                       <button
                         type='button'
@@ -148,12 +139,11 @@ function HomePage() {
                 <Collapse in={open}>
                   <div className='card card-body'>
                     <h5>Detalles de la Cuenta</h5>
-                    <p>Nombre: {accountInfo.name}</p>
-                    <p>Email: {accountInfo.email}</p>
+                    <p>Nombre: {account.name}</p>
+                    <p>Email: {account.email}</p>
                     <p>
                       Tipo de Cuenta:
-                      {adminRole && ' Administrador'}
-                      {completedRegister ? ' Invitado' : ' Usuario'}
+                      {adminRole ? ' Administrador' : (userCompleted ? 'Usuario' : ' Invitado')}
                     </p>
                   </div>
                 </Collapse>
@@ -166,7 +156,7 @@ function HomePage() {
                 <button
                   className='btn-primay w-100'
                   onClick={() =>
-                    handleClick(`api/v1/home/users/${accountInfo.id}`)
+                    handleClick(`api/v1/home/users/${account.id}`)
                   }
                 >
                   Ver
@@ -178,6 +168,7 @@ function HomePage() {
           <div className='card mt-3'>
             <div className='card-body'>
               <h5 className='card-title'>Schedule</h5>
+              <p>{/* date */}</p>
               <div id='calendar'></div>
             </div>
           </div>

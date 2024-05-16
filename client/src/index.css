@@ -123,7 +123,7 @@ header>h1 {
   top:20%;
 }
 
-._-28 {
+.day {
   position: absolute;
   top: 20px;
   left: 64px;
@@ -135,7 +135,7 @@ header>h1 {
   letter-spacing: -0.88px;
 }
 
-.feb {
+.month {
   position: absolute;
   top: 45px;
   left: 68px;
@@ -393,11 +393,16 @@ tr>*{
 }
 
 .text-alert-white {
-  color: white;
+  color: #dc3545;
   font-size: 12px;
   font-family: Merriweather, serif;
   font-weight: 400;
   text-align: center;
+  background-color: #fac9ce;
+  border-color: #dc3545;
+  border-radius: 25px;
+  border: 2px;
+  height: 20px;
 }
 
 .dropdown-button {

@@ -2,17 +2,27 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { useAuth } from "../context/authContext";
+import { useEffect, useState } from 'react';
 
 function Navbar() {
   const { isAuthenticated, logOut, user } = useAuth();
+  const [day, setDay] = useState('');
+  const [month, setMonth] = useState('');
+
+  useEffect(() => {
+    const date = new Date();
+    const currentMonth = date.toLocaleString('default', { month: 'short' });
+    setDay(date.getDate());
+    setMonth(currentMonth);
+  }, []);
 
   return (
     <nav className='navbar navbar-expand-lg navbar-light '>
       <ul className='navbar-nav ms-auto'>
         <li className='nav-item'>
           <div className='timeSquare'>
-            <p className='_-28'>28</p>
-            <p className='feb'>Mar</p>
+            <p className='day'>{day}</p>
+            <p className='month'>{month}</p>
           </div>
         </li>
       </ul>
@@ -31,7 +41,7 @@ function Navbar() {
 
           <Dropdown.Menu>
             <Dropdown.Item href='#/action-1'>Sobre nosotros</Dropdown.Item>
-            <Dropdown.Item href='#/action-2'>Registrarse</Dropdown.Item>
+            <Dropdown.Item href='/api/v1/sign-up'>Registrarse</Dropdown.Item>
             {isAuthenticated && (
               <Dropdown.Item to="/" onClick={() => logOut()}>Cerrar sesión</Dropdown.Item>
             )}

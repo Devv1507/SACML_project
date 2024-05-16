@@ -29,9 +29,9 @@ function AccessPage() {
       <div className='h1-main'>
         <h1>Soluciones E-finance</h1>
       </div>
-      <div className='d-flex position-absolute top-70 start-50 translate-middle'>
+      <div className='card-body position-absolute top-70 start-50 translate-middle justify-content-center'>
       {loginErrors.map((error, i) => (
-        <div className='bg-danger text-alert-white mt-2' key={i}>
+        <div className='text-alert-white mt-2' key={i}>
           {error}
         </div>
       ))}
