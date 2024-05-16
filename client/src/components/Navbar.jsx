@@ -41,9 +41,10 @@ function Navbar() {
 
           <Dropdown.Menu>
             <Dropdown.Item href='#/action-1'>Sobre nosotros</Dropdown.Item>
-            <Dropdown.Item href='/api/v1/sign-up'>Registrarse</Dropdown.Item>
-            {isAuthenticated && (
+            {isAuthenticated ? (
               <Dropdown.Item to="/" onClick={() => logOut()}>Cerrar sesión</Dropdown.Item>
+            ): (
+              <Dropdown.Item href='/api/v1/sign-up'>Registrarse</Dropdown.Item>
             )}
           </Dropdown.Menu>
         </Dropdown>

@@ -5,6 +5,7 @@ import {
   deleteAccountRequest,
   updateAccountRequest,
 } from '../api/account';
+import { addUserRequest } from '../api/users';
 
 const AccountContext = createContext();
 
@@ -20,6 +21,10 @@ export function AccountProvider({children}) {
   const [account, setAccount] = useState({});
   const [adminRole, setAdminRole] = useState(false);
   const [userCompleted, setUserCompleted] = useState(false);
+  const [userInfo, setUserInfo] = useState({});
+  
+  const [errors, setErrors] = useState([]);
+  
 
   const getAllAccounts = async () => {
     try {
@@ -34,13 +39,17 @@ export function AccountProvider({children}) {
         try {
           const res = await getAccountRequest();
           setAccount(res.data.message);
+          console.log(res.data.message);
           if (res.data.admin === true) {
-            return setAdminRole(true);
+            setAdminRole(true);
+          } else {
+            setAdminRole(false);
           }
-          if (res.data.message.disabled === false){
+          if (res.data.message.disabled === false) {
             setUserCompleted(true);
+          } else {
+            setUserCompleted(false);
           }
-          setAdminRole(false);
         } catch (error) {
           console.error(error);
         }
@@ -64,6 +73,33 @@ export function AccountProvider({children}) {
     }
   };
 
+  const addUser = async (user) => {
+    try {
+      const res = await addUserRequest(user);
+      setUserInfo(res.data);
+      console.log(res.data);
+    } catch (error) {
+      console.error(error);
+      console.log(error);
+      if (!error.response.data) {
+        return setErrors(['No Server Response']);
+      } else if (Array.isArray(error.response.data)) {
+        return setErrors(error.response.data);
+      }
+      setErrors([error.response.data.message]);
+    }
+  };
+
+  // clear errors after 5 seconds
+  useEffect(() => {
+    if (errors.length > 0) {
+      const timer = setTimeout(() => {
+        setErrors([]);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [errors]);
+
   return (
     <AccountContext.Provider
       value={{
@@ -75,6 +111,11 @@ export function AccountProvider({children}) {
         getAllAccounts,
         updateAccount,
         deleteAccount,
+
+        userInfo,
+        addUser,
+        errors,
+
       }}
     >
       {children}

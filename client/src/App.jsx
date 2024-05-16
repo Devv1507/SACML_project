@@ -12,6 +12,7 @@ import RegisterPage from './pages/RegisterPage';
 import AccessPage from './pages/AccessPage';
 import HomePage from './pages/HomePage';
 import AllAccountsPage from './pages/AllAccountsPage';
+import UserFormPage from './pages/UserFormPage';
 import Footer from './components/Footer';
 import Navbar from './components/Navbar';
 
@@ -32,6 +33,7 @@ function App() {
             <Route element={<ProtectedRoute />}>
               <Route path='/api/v1/home' element={<HomePage />}></Route>
               <Route path='/api/v1/home/all' element={<AllAccountsPage />} ></Route>
+              <Route path='/api/v1/home/users/add' element={<UserFormPage />} ></Route>
             </Route>
           </Routes>
         </AccountProvider>

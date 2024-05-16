@@ -31,7 +31,7 @@ const checkRole = (roles) => async (req, res, next) => {
   else if (!roles.includes(user.roleId)){
     console.log('No autorizado');
     /* req.flash('error', 'No tienes acceso a esta ruta');
-    return res.redirect('/api/v1/home')/ */ return res.status(403).json(`Sorry, you don't have access to this route`)
+    return res.redirect('/api/v1/home')/ */ return res.status(403).json({message: `Sorry, you don't have access to this route`})
   }
   if (user.roleId === 3) {
     res.locals.adminRole = true;

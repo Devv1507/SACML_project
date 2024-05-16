@@ -6,8 +6,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 function AllAccountsPage() {
   const { allAccounts, getAllAccounts } = useAccounts();
   
-  useEffect(() => {
-    getAllAccounts();
+  useEffect( () => {
+    const fetchData = async () => {
+      try {
+        await getAllAccounts();
+      } catch (error) {
+        console.error('Error fetching account data:', error);
+      }
+    };
+    fetchData();
   }, []);
 
   return (

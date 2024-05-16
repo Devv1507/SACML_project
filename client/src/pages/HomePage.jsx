@@ -5,14 +5,14 @@ import Collapse from 'react-bootstrap/Collapse';
 
 import { useAccounts } from '../context/accountContext';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 function HomePage() {
   const { account, adminRole, getAccount, userCompleted } = useAccounts();
   const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const { setValue } = useForm();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,17 +30,18 @@ function HomePage() {
     fetchData();
   }, []);
 
-  if (loading) {
-    return <h1>Loading...</h1>;
-  }
-
   const handleClick = (route) => {
-    navigate(route);
+    navigate(`/${route}`);
   };
 
   const handleClickCollapse = () => {
     setOpen(!open);
   };
+
+  console.log('This is loading:', loading);
+  if (loading) {
+    return <h1>Loading...</h1>;
+  }
 
   return (
     <div>
@@ -113,9 +114,9 @@ function HomePage() {
                         <p className='p-center'>
                           La opción de arriba aparece deshabilitada?
                         </p>
-                        <a href='/api/v1/home/users/add' className='p-center'>
+                        <Link to='/api/v1/home/users/add' className='p-center'>
                           Completar registro de usuario
-                        </a>
+                        </Link>
                       </div>
                     </>
                   )}
@@ -142,7 +143,7 @@ function HomePage() {
                     <p>Nombre: {account.name}</p>
                     <p>Email: {account.email}</p>
                     <p>
-                      Tipo de Cuenta:
+                      Tipo de Cuenta: {' '}
                       {adminRole ? ' Administrador' : (userCompleted ? 'Usuario' : ' Invitado')}
                     </p>
                   </div>

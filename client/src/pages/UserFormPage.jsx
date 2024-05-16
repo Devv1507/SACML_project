@@ -1,45 +1,43 @@
 import { useForm } from 'react-hook-form';
-import { useAuth } from '../context/authContext';
 import { useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { useAuth } from '../context/authContext';
+import {useAccounts} from '../context/accountContext';
 
-function ProfilePage() {
+function UserFormPage() {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const { signUp, isAuthenticated, errors: registerErrors } = useAuth();
+  const {addUser, errors: registerErrors} = useAccounts();
+  const navigate = useNavigate();
 
   const onSubmit = handleSubmit(async (values) => {
+    await addUser(values);
+    console.log(values);
   });
-/* 
-  useEffect(() => {
-    if (isAuthenticated) navigate('/api/v1/home');
-  }, [isAuthenticated]); */
 
   return (
     <div className='container-p-2'>
-      <form name='registerForm' onSubmit={onSubmit} >
+      <form name='registerForm' onSubmit={onSubmit}>
         <h4>Información de la Cuenta</h4>
         <div className='row'>
-            {registerErrors.map((error, i) => (
-              <div className='bg-danger text-alert-white mt-2' key={i}>
-                {error}
-              </div>
-            ))}
+          {registerErrors.map((error, i) => (
+            <div className='text-alert-white mt-2' key={i}>
+              {error}
+            </div>
+          ))}
           <div className='col md-6'>
             <div className='cell'>
               <input
                 type='text'
-                {...register('name', { required: true})}
+                {...register('name', { required: true })}
                 placeholder='Nombre'
                 className='wide-square'
                 autoFocus
               />
-              {errors.name && (
-                  <p className='text-alert'> Nombre requerido </p>
-                )}
+              {errors.name && <p className='text-alert'> Nombre requerido </p>}
             </div>
             <div className='cell'>
               <select name='IdType' className='wide-square'>
@@ -50,17 +48,20 @@ function ProfilePage() {
             </div>
             <div className='cell'>
               <input
-                {...register('address', { required: true})}
+                {...register('address', { required: true })}
                 type='text'
                 placeholder='Dirección de domicilio'
                 className='wide-square'
               />
               {errors.address && (
-                  <p className='text-alert'> La dirección es requerida </p>
-                )}
+                <p className='text-alert'> La dirección es requerida </p>
+              )}
             </div>
             <div className='cell'>
-              <select {...register('city', { required: true})} className='wide-square'>
+              <select
+                {...register('city', { required: true })}
+                className='wide-square'
+              >
                 <option value='Cali'>Cali</option>
                 <option value='Medellín'>Medellín</option>
                 <option value='Bogotá'>Bogotá</option>
@@ -69,7 +70,7 @@ function ProfilePage() {
             </div>
             <div className='cell'>
               <input
-                {...register('email', { required: true})}
+                {...register('email', { required: true })}
                 type='email'
                 placeholder='Correo de respaldo'
                 className='wide-square'
@@ -80,18 +81,18 @@ function ProfilePage() {
           <div className='col md-6'>
             <div className='cell'>
               <input
-                {...register('surname', { required: true})}
+                {...register('surname', { required: true })}
                 type='text'
                 placeholder='Apellido'
                 className='wide-square'
               />
               {errors.surname && (
-                  <p className='text-alert'> Apellido requerido </p>
-                )}
+                <p className='text-alert'> Apellido requerido </p>
+              )}
             </div>
             <div className='cell'>
               <input
-                {...register('userId', { required: true})}
+                {...register('userId', { required: true })}
                 type='text'
                 placeholder='Nº de Documento de Identidad'
                 className='wide-square'
@@ -99,14 +100,17 @@ function ProfilePage() {
             </div>
             <div className='cell'>
               <input
-                {...register('neighboor', { required: true})}
+                {...register('neighboor', { required: true })}
                 type='text'
                 placeholder='Barrio'
                 className='wide-square'
               />
             </div>
             <div className='cell'>
-              <select {...register('department', { required: true})} className='wide-square'>
+              <select
+                {...register('department', { required: true })}
+                className='wide-square'
+              >
                 <option value='Valle'>Valle del Cauca</option>
                 <option value='Cundinamarca'>Cundinamarca</option>
                 <option value='Cauca'>Cauca</option>
@@ -115,23 +119,28 @@ function ProfilePage() {
             </div>
             <div className='cell'>
               <input
-                {...register('phone', { required: true})}
+                {...register('phone', { required: true })}
                 type='text'
                 placeholder='Número de Celular'
                 className='wide-square'
               />
               {errors.phone && (
-                  <p className='text-alert'> El número de celular es requerido </p>
-                )}
+                <p className='text-alert'>
+                  {' '}
+                  El número de celular es requerido{' '}
+                </p>
+              )}
             </div>
           </div>
+          <div className='w-10'>
+            <button type='submit' name='btn' id='btnForm' >
+              Registrar
+            </button>
+          </div>
         </div>
-        <button name='btn' id='btnForm' type='submit'>
-          Registrar
-        </button>
       </form>
     </div>
   );
 }
 
-export default ProfilePage;
+export default UserFormPage;

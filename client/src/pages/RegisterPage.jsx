@@ -12,7 +12,7 @@ function RegisterPage() {
   const { signUp, isAuthenticated, errors: registerErrors } = useAuth();
 
   const onSubmit = handleSubmit(async (values) => {
-    signUp(values);
+    await signUp(values);
   });
   const navigate = useNavigate();
 

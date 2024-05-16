@@ -85,9 +85,7 @@ const addOneUser = async (req, res) => {
       roleId: 2,
     });
     // Final response, if all steps correct
-    //res.json({ success: true, message: 'User added succesfully' });
-    req.flash('success_msg', 'User created successfully');
-    res.redirect('/api/v1/home');
+    res.status(201).json({ success: true, message: 'User added succesfully' });
   } catch (error) {
     console.log(error);
     res.status(500).send({ success: false, message: error.message });
