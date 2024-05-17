@@ -62,9 +62,9 @@ const signUp = async (req, res) => {
       roleId: 1,
       city: 'NA'
     });
-    /* res.status(201).json({ message: 'Account created successfully' }); */
     req.flash('success_msg', 'Su cuenta ha sido creada satisfactoriamente');
     res.redirect('/');
+    
   } catch (error) {
     console.error(error); // Log the error for debugging
     res.status(500).json({ message: 'Error creating user' }); // More user-friendly error message
