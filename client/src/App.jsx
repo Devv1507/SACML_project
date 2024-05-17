@@ -25,13 +25,11 @@ function App() {
     <AuthProvider>
       <BrowserRouter>
         <Navbar />
-        <Routes>
-          {/* Public Routes */}
-          <Route path='/' element={<AccessPage />}></Route>
-          <Route path='/api/v1/sign-up' element={<RegisterPage />}></Route>
-        </Routes>
         <AccountProvider>
           <Routes>
+            {/* Public Routes */}
+            <Route path='/' element={<AccessPage />}></Route>
+            <Route path='/api/v1/sign-up' element={<RegisterPage />}></Route>
             {/* Private Routes */}
             <Route element={<ProtectedRoute />}>
               <Route path='/api/v1/home' element={<HomePage />}></Route>
@@ -40,8 +38,8 @@ function App() {
               {/* User Routes */}
               <Route path='/api/v1/home/users/add' element={<UserFormPage />} ></Route>
               <Route path='/api/v1/home/users/:id' element={<UserInfoPage />} ></Route>
-              <Route path='*' element={<h1>Not Found</h1>}></Route>
             </Route>
+            <Route path='*' element={<h1>Not Found</h1>}></Route>
           </Routes>
         </AccountProvider>
       </BrowserRouter>

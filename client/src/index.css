@@ -52,11 +52,6 @@ main {
   margin-top: auto; 
 }
 
-.inputs-welcome{
-  text-align: center;
-}
-
-
 input {
   /* width: 100%; */
   border: 2px solid #ccc; /* Adjust border color as needed */
