@@ -19,12 +19,11 @@ const signUp = async (req, res) => {
       /* return res.status(409).json({ message: 'Email is already registered' }); */
       errors.push({ text: 'El correo ingresado ya se encuentra registrado' });
     }
-    // Validate name, check account from database with same name if any
+    /* // Validate name, check account from database with same name if any
     const existingName = await models.Account.findOne({where: { name } });
     if (existingName) {
-      /* return res.status(409).json({ message: 'Account name is already taken' }); */
       errors.push({ text: 'El nombre de la cuenta ingresado ya se encuentra registrado' });
-    }
+    } */
     // Null, empty or undefined constrains
     if (!name) {
       errors.push({ text: 'Por favor añada un nombre para la cuenta' });
