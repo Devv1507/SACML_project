@@ -8,6 +8,7 @@ function RegisterPage() {
     register,
     handleSubmit,
     formState: { errors },
+    clearErrors,
   } = useForm();
   const { signUp, isAuthenticated, errors: registerErrors } = useAuth();
   console.log(isAuthenticated);
@@ -21,6 +22,15 @@ function RegisterPage() {
     console.log(isAuthenticated);
     if (isAuthenticated) navigate('/api/v1/home');
   }, [isAuthenticated, navigate]);
+
+  useEffect(() => {
+    if (Object.keys(errors).length > 0) {
+      const timer = setTimeout(() => {
+        clearErrors();
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [errors]);
 
   return (
     <div className='container p-3'>

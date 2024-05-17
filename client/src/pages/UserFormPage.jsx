@@ -1,7 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { useAuth } from '../context/authContext';
 import {useAccounts} from '../context/accountContext';
 
 function UserFormPage() {
@@ -9,6 +8,7 @@ function UserFormPage() {
     register,
     handleSubmit,
     formState: { errors },
+    clearErrors,
   } = useForm();
   const {addUser, errors: registerErrors} = useAccounts();
   const navigate = useNavigate();
@@ -17,6 +17,15 @@ function UserFormPage() {
     await addUser(values);
     navigate('/api/v1/home');
   });
+
+  useEffect(() => {
+    if (Object.keys(errors).length > 0) {
+      const timer = setTimeout(() => {
+        clearErrors();
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [errors]);
 
   return (
     <div className='container-p-2'>

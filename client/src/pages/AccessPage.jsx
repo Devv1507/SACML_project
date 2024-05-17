@@ -39,7 +39,7 @@ function AccessPage() {
   return (
     <main className='welcome-page'>
       <div className='h1-main'>
-        <h1>Soluciones E-finance</h1>
+        <h1 className='display-3'>Soluciones E-finance</h1>
       </div>
       <div className='card-body position-absolute top-70 start-50 translate-middle justify-content-center'>
         {loginErrors.map((error, i) => (
