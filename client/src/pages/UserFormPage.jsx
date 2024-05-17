@@ -15,7 +15,7 @@ function UserFormPage() {
 
   const onSubmit = handleSubmit(async (values) => {
     await addUser(values);
-    console.log(values);
+    navigate('/api/v1/home');
   });
 
   return (

@@ -87,7 +87,7 @@ const addOneUser = async (req, res) => {
     });
     // Final response, if all steps correct
     //res.json({ success: true, message: 'User added succesfully' });
-    req.flash('success_msg', 'User created successfully');
+    req.flash('success_msg', 'Usuario creado satisfactoriamente');
     res.redirect('/api/v1/home');
   } catch (error) {
     console.log(error);

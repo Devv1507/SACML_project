@@ -2,14 +2,16 @@ import { useEffect } from 'react';
 import { useAccounts } from '../context/accountContext';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Button  from 'react-bootstrap/Button';
 
 function AllAccountsPage() {
-  const { allAccounts, getAllAccounts } = useAccounts();
+  const { allAccounts, getAllAccounts, deleteAccount } = useAccounts();
   
   useEffect( () => {
     const fetchData = async () => {
       try {
         await getAllAccounts();
+        console.log(allAccounts);
       } catch (error) {
         console.error('Error fetching account data:', error);
       }
@@ -27,20 +29,14 @@ function AllAccountsPage() {
                 <div className='card-body '>
                   <h4 className='card-title d-flex justify-content-between align-items-center'>
                     {account.name}
-                    <a href={`/api/v1/home/update/${account.id}`}>
+                    <Link to={`/api/v1/home/update/${account.id}`}>
                       <FontAwesomeIcon icon='fa-pencil' aria-hidden='true'></FontAwesomeIcon>
-                    </a>
+                    </Link>
                   </h4>
                   <p>{account.email}</p>
-                  <form
-                    action={`/api/v1/home/${account.id}?_method=DELETE`}
-                    method='POST'
-                  >
-                    <input type='hidden' name='_method' value='DELETE' />
-                    <button type='submit' className='btn btn-danger btn-sm'>
+                    <Button className='btn btn-danger btn-sm' onClick={() => deleteAccount(account.id)} >
                       Delete
-                    </button>
-                  </form>
+                    </Button>
                 </div>
               </div>
             </div>

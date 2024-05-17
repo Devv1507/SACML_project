@@ -10,4 +10,4 @@ export const deleteAccountRequest = (id) =>
     axios.delete(`/api/v1/home/${id}`);
 
 export const updateAccountRequest = (account) =>
-    axios.delete(`/api/v1/home/update/${account.id}`, account);
+    axios.put(`/api/v1/home/update/${account.id}`, account);

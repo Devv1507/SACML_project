@@ -10,6 +10,7 @@ function RegisterPage() {
     formState: { errors },
   } = useForm();
   const { signUp, isAuthenticated, errors: registerErrors } = useAuth();
+  console.log(isAuthenticated);
 
   const onSubmit = handleSubmit(async (values) => {
     await signUp(values);
@@ -17,8 +18,9 @@ function RegisterPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    console.log(isAuthenticated);
     if (isAuthenticated) navigate('/api/v1/home');
-  }, [isAuthenticated]);
+  }, [isAuthenticated, navigate]);
 
   return (
     <div className='container p-3'>
