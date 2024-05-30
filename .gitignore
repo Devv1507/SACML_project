@@ -1,5 +1,6 @@
 # Ignore fields related with API keys and database credentials
 *.env
+config.py
 
 # Ignore node_modules folder
 **/node_modules/
