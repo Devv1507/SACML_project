@@ -4,3 +4,11 @@ Flask-Migrate
 psycopg2-binary
 scikit-learn
 pandas
+lime
+matplotlib
+io
+joblib
+numpy
+imbalanced-learn
+seaborn
+setuptools
