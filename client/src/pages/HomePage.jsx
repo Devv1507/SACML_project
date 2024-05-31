@@ -86,6 +86,14 @@ function HomePage() {
                       Gestionar Usuarios
                     </button>
                   </div>
+                  <div className='mb-3 text-center'>
+                    <button
+                      className='btn-primay w-100'
+                      onClick={() => handleClick('api/v1/home/credit-requests/all')}
+                    >
+                      Gestionar Peticiones de Crédito
+                    </button>
+                  </div>
                 </>
               ) : (
                 <>
@@ -94,7 +102,9 @@ function HomePage() {
                       <button
                         type='button'
                         className='btn-primary w-100 btn-block'
-                        disabled
+                        onClick={() =>
+                          handleClick(`api/v1/home/credit-requests/add`)
+                        }
                       >
                         Realizar Petición de Crédito
                       </button>

@@ -29,6 +29,12 @@ module.exports = {
       phone: {
         type: Sequelize.STRING(10),
       },
+      sex: {
+        type: Sequelize.STRING(8),
+      },
+      age: {
+        type: Sequelize.INTEGER,
+      },
       email: {
         unique: true,
         allowNull: false,

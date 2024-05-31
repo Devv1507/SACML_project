@@ -19,6 +19,9 @@ import Footer from './components/Footer';
 import Navbar from './components/Navbar';
 import UserInfoPage from './pages/UserInfoPage';
 import UpdateAccountPage from './pages/UpdateAccountPage';
+import CreditRequestForm from './pages/CreditRequestForm';
+import AllCreditRequests from './pages/AllCreditRequests';
+import SpecificRequestAnalytics from './pages/SpecificRequestAnalytics';
 
 function App() {
   return (
@@ -35,6 +38,9 @@ function App() {
               <Route path='/api/v1/home' element={<HomePage />}></Route>
               <Route path='/api/v1/home/all' element={<AllAccountsPage />} ></Route>
               <Route path='/api/v1/home/update/:id/' element={<UpdateAccountPage />} ></Route>
+              <Route path='api/v1/home/credit-requests/add' element={<CreditRequestForm />}></Route>
+              <Route path='api/v1/home/credit-requests/all' element={<AllCreditRequests />}></Route>
+              <Route path='api/v1/home/credit-requests/analytics/:id' element={<SpecificRequestAnalytics />}></Route>
               {/* User Routes */}
               <Route path='/api/v1/home/users/add' element={<UserFormPage />} ></Route>
               <Route path='/api/v1/home/users/:id' element={<UserInfoPage />} ></Route>

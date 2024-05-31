@@ -1,8 +1,13 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const CreditRequest = sequelize.define('CreditRequest', {
-    amount: DataTypes.FLOAT,
-    description: DataTypes.STRING,
+    job: DataTypes.INTEGER,
+    credit_amount: DataTypes.INTEGER,
+    duration: DataTypes.INTEGER,
+    housing: DataTypes.STRING,
+    savings_account: DataTypes.STRING,
+    checking_account: DataTypes.STRING,
+    purpose: DataTypes.STRING,
     creditHistory: DataTypes.STRING,
     completed: DataTypes.BOOLEAN,
     status: DataTypes.STRING

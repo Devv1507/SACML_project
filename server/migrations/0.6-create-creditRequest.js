@@ -9,11 +9,32 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      amount: {
+      job: {
         allowNull: false,
-        type: Sequelize.FLOAT
+        type: Sequelize.INTEGER
       },
-      description: {
+      credit_amount: {
+        allowNull: false,
+        type: Sequelize.INTEGER
+      },
+      duration: {
+        allowNull: false,
+        type: Sequelize.INTEGER
+      },
+      housing: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
+      savings_account: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
+      checking_account: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
+      purpose: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       creditHistory: {

@@ -6,6 +6,11 @@ import {
   updateAccountRequest,
 } from '../api/account';
 import { addUserRequest } from '../api/users';
+import { 
+  addCreditRequest,
+  getAllCreditRequests,
+  getCreditAnalyticsRequest,
+} from '../api/credit-request';
 
 const AccountContext = createContext();
 
@@ -17,14 +22,15 @@ export const useAccounts = () => {
 };
 
 export function AccountProvider({children}) {
-  const [allAccounts, setAccounts] = useState([]);
-  const [account, setAccount] = useState({});
   const [adminRole, setAdminRole] = useState(false);
   const [userCompleted, setUserCompleted] = useState(false);
-  const [userInfo, setUserInfo] = useState({});
-  
   const [errors, setErrors] = useState([]);
-  
+
+  const [allAccounts, setAccounts] = useState([]);
+  const [account, setAccount] = useState({});
+
+  const [userInfo, setUserInfo] = useState({});
+  const [allCreditPetitions, setCreditPetitions] = useState([]);
 
   const getAllAccounts = async () => {
     try {
@@ -90,6 +96,30 @@ export function AccountProvider({children}) {
     }
   };
 
+  const addCredit = async (credit) => {
+    try {
+      const res = await addCreditRequest(credit);
+      console.log(res.data);
+    } catch (error) {
+      console.error(error);
+      if (!error.response.data) {
+        return setErrors(['No Server Response']);
+      } else if (Array.isArray(error.response.data)) {
+        return setErrors(error.response.data);
+      }
+      setErrors([error.response.data.message]);
+    }
+  };
+
+  const getAllCredit = async () => {
+    try {
+      const res = await getAllCreditRequests();
+      setCreditPetitions(res.data.message);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   // clear errors after 5 seconds
   useEffect(() => {
     if (errors.length > 0) {
@@ -103,10 +133,12 @@ export function AccountProvider({children}) {
   return (
     <AccountContext.Provider
       value={{
-        allAccounts,
-        account,
         adminRole,
         userCompleted,
+        errors,
+
+        allAccounts,
+        account,
         getAccount,
         getAllAccounts,
         updateAccount,
@@ -114,7 +146,10 @@ export function AccountProvider({children}) {
 
         userInfo,
         addUser,
-        errors,
+        
+        allCreditPetitions,
+        addCredit,
+        getAllCredit,
 
       }}
     >

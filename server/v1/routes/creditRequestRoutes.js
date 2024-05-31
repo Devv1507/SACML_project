@@ -1,36 +1,32 @@
 const {Router} = require('express');
 const router = Router();
+// ************************ Controllers & Middlewares ************************
 const {
     getAllCreditRequests,
     getCreditRequestOfUser,
-    renderNewRequest,
     addCreditRequest,
     updateCreditRequestById,
     deleteCredetRequestById,
-    renderUpdateForm,
+
+    flaskAnalytics,
     requestDecision
   } = require('../../controllers/creditRequestController.js');
 const {redirectToLoginIfUnauthorized, checkRole} = require('../../middleware/authorize');
 
-// Import cookie-parser middleware
-const cookieParser = require('cookie-parser');
-router.use(cookieParser());
+// ************************ Validators (Schemas) ************************
 
-/** Private Routes for Admin */
+// ************************ Private Routes ************************
+// (endpoint: /api/v1/home/credit-requests)
+// Private routes for admin
 router.get('/all/', redirectToLoginIfUnauthorized, checkRole([3]),getAllCreditRequests);
 router.delete('/:id', redirectToLoginIfUnauthorized, checkRole([3]), deleteCredetRequestById);
 
+router.get('/analytics/:id', redirectToLoginIfUnauthorized, checkRole([3]), flaskAnalytics);
 router.get('/decision/:id', redirectToLoginIfUnauthorized, checkRole([3]), requestDecision)
 
-/** Users Routes */
-// routes for credit request schema (endpoint: /api/v1/home/credit-requests)
-router.get('/add', redirectToLoginIfUnauthorized, checkRole([2]), renderNewRequest);
+// User avaliable routes
 router.post('/add', redirectToLoginIfUnauthorized, checkRole([2]), addCreditRequest);
-
 router.get('/:id', redirectToLoginIfUnauthorized, checkRole([2,3]), getCreditRequestOfUser);
-
-/* router.put('/:id', authorize.validate, authorize.checkRole([1]), creditRequestController.updateCreditRequestById); */
-router.get('/update/:id', redirectToLoginIfUnauthorized, checkRole([2,3]), renderUpdateForm);
-router.put('/update/:id', redirectToLoginIfUnauthorized, checkRole([2,3]), updateCreditRequestById); 
+router.put('/update/:id', redirectToLoginIfUnauthorized, checkRole([2,3]), updateCreditRequestById);
 
 module.exports = router;

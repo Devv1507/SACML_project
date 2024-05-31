@@ -1,16 +1,6 @@
 const models = require('../models');
 
 // *** Credit Request Form ***
-const renderNewRequest = async (req, res) => {
-  // Validate one credit request per time
-  const { id } = req.userData;
-  const targetRequest = await models.CreditRequest.findOne({ where: { userId: id } });
-  if (targetRequest != null && !targetRequest.completed) {
-    req.flash('info_msg', 'Estimado usuario, debe esperar a que su solicitud en progreso culmine para radicar una nueva.');
-    return res.redirect('/api/v1/home/');
-  }
-  res.render('credit-requests/credit-request-form');
-};
 
 // function to add a credit request
 const addCreditRequest = async (req, res) => {
@@ -19,11 +9,11 @@ const addCreditRequest = async (req, res) => {
   
   // Validate fields on server-side (i.e. nulls)
   const errors = [];
-  if (!body.amount) {
+  if (!body.credit_amount) {
     errors.push({ text: 'Please add an amount' });
   }
-  if (!body.description) {
-    errors.push({ text: 'Please add a description' });
+  if (!body.duration) {
+    errors.push({ text: 'Please add an stimutation of the duration of the deb' });
   }
   if (!body.creditHistory) {
     errors.push({ text: 'Please add some of your credit history' });
@@ -33,13 +23,14 @@ const addCreditRequest = async (req, res) => {
     return res.status(400).json({ succes: false, message: errors });
   }
   try {
+    const {creditHistory, ...newRequest} = body;
     // Save the credit request in db
     await models.CreditRequest.create({
-      ...body,
+      ...newRequest,
+      creditHistory: 'Bueno',
       userId: id
     });
-    req.flash('success_msg', 'Solicitud radicada satisfactoriamente');
-    res.redirect('/api/v1/home/');
+    res.status(201).json({ success: true, message: 'Credit request added succesfully' });
   } catch (error) {
     console.log(error);
     res.status(500).send({ success: false, message: error.message });
@@ -72,27 +63,14 @@ const getAllCreditRequests = async (req, res) => {
   try {
     const allCreditRequests = await models.CreditRequest.findAll();
     if (res.locals.adminRole) {
-      res.render('credit-requests/all-credit-requests', { allCreditRequests });
+      res.json({ success: true, message: allCreditRequests });
     } else {
-      req.flash('error', 'No autorizado');
-      res.redirect('/api/v1/home/');
+      res.status(400).json('Not found');
     }
   } catch (error) {
     console.log(error);
     res.status(500).send({ success: false, message: error.message });
   }
-};
-
-const renderUpdateForm = async (req, res) => {
-  const {id} = req.params;
-  const {adminRole} = res.locals;
-  
-  if (!adminRole &&  id != req.userData.dataValues.id) {        /**** */
-    req.flash("error", "No autorizado");
-    return res.redirect('/api/v1/home/');
-  }
-  const targetRequest = await models.CreditRequest.findOne({where: {userId: id}});
-  res.render('credit-requests/edit-request-form', {targetRequest});
 };
 
 // function to update a particular user by id
@@ -137,6 +115,34 @@ const requestDecision = async (req, res) => {
   }
 }
 
+const axios = require('axios');
+
+const flaskAnalytics = async (req, res) => {
+  try {
+    const { id } = req.params;
+    // Make Flask API request
+    const targetUser = await models.User.findOne({where: { id }});
+    const targetCreditRequest = await models.CreditRequest.findOne({where: { userId: id }});
+    const request = {
+      age : targetUser.age,
+      sex : targetUser.sex,
+      job : targetCreditRequest.job,
+      housing : targetCreditRequest.housing,
+      savings_account : targetCreditRequest.savings_account,
+      checking_account : targetCreditRequest.checking_account,
+      purpose : targetCreditRequest.purpose,
+      credit_amount: targetCreditRequest.credit_amount,
+      duration: targetCreditRequest.duration,
+    }
+    // Send request to Flask API and get response
+    const flaskResponse = await axios.post('http://localhost:9696/predict', request);
+    console.log(flaskResponse.data)
+    res.status(200).send({ success: true, message: flaskResponse.data });
+  } catch (error) {
+    res.status(500).send({ success: false, message: error.message });
+  }
+}
+
 module.exports = {
   getAllCreditRequests,
   getCreditRequestOfUser,
@@ -144,7 +150,6 @@ module.exports = {
   updateCreditRequestById,
   deleteCredetRequestById,
   // need to create other conjuntion functions
-  renderNewRequest,
-  renderUpdateForm,
+  flaskAnalytics,
   requestDecision
 };

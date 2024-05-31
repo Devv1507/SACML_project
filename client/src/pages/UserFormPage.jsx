@@ -78,12 +78,13 @@ function UserFormPage() {
               </select>
             </div>
             <div className='cell'>
-              <input
-                {...register('email', { required: true })}
-                type='email'
-                placeholder='Correo de respaldo'
+              <select
+                {...register('sex', { required: true })}
                 className='wide-square'
-              />
+              >
+                <option value='male'>Sexo: Masculino</option>
+                <option value='female'>Sexo: Femenino</option>
+              </select>
             </div>
           </div>
 
@@ -109,9 +110,9 @@ function UserFormPage() {
             </div>
             <div className='cell'>
               <input
-                {...register('neighboor', { required: true })}
-                type='text'
-                placeholder='Barrio'
+                {...register('age', { required: true })}
+                type='number'
+                placeholder='Edad (en años)'
                 className='wide-square'
               />
             </div>

@@ -79,9 +79,9 @@ const addOneUser = async (req, res) => {
     } */
 
     // Add the new user information with its respectived account email
-    const {name, ...newUser} = body;
+    //const {name, ...newUser} = body;
     await user.update({
-      ...newUser,
+      ...body,
       roleId: 2,
     });
     // Final response, if all steps correct
